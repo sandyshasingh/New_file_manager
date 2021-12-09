@@ -1,0 +1,163 @@
+<resources>
+
+    <attr name="bottom_sheet_bg" format="reference"/>
+    <attr name="textcolorprimarycustom" format="reference"/>
+    <attr name="ic_share_vector" format="reference"/>
+    <attr name="ic_icon_move" format="reference"/>
+    <attr name="cab_rename" format="reference"/>
+    <attr name="ic_icon_copy_to" format="reference"/>
+    <attr name="ic_icon_copy_path" format="reference"/>
+    <attr name="ic_icon_hide" format="reference"/>
+    <attr name="ic_unhide_vector" format="reference"/>
+    <attr name="ic_icon_compress" format="reference"/>
+    <attr name="ic_icon_decompress" format="reference"/>
+    <attr name="ic_delete_vector" format="reference"/>
+    <attr name="ic_properties_vector" format="reference"/>
+
+
+   <!-- <style name="AppThemee" parent="Theme.AppCompat.Light.NoActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>-->
+    <style name="Toolbar.TitleText1" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/text_big</item>
+        <item name="android:textStyle"> bold</item>
+    </style>
+<!--    <style name="AppTheme" parent="ThemeOverlay.AppCompat.Dark">-->
+<!--        -->
+<!--        <item name="colorPrimary">@color/pagestrip</item>-->
+<!--        <item name="colorPrimaryDark">@color/pagestrip</item>-->
+<!--        <item name="colorAccent">@color/pagestrip</item>-->
+<!--        <item name="android:textColorSecondary">#ffffff</item>-->
+<!--        <item name="android:windowBackground">@null</item>-->
+<!--        <item name="android:textColorPrimary">@color/white</item>-->
+<!--        <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>-->
+<!--    </style>-->
+
+    <attr name="filemanageritembackgroud" format="reference" />
+    <attr name="filemanagerSecondaryTextColor" format="reference"/>
+    <attr name="ic_folder_icon" format="reference"/>
+    <attr name="ic_three_dot" format="reference"/>
+    <attr name="fontPath" format="reference"/>
+
+
+    <style name="bs_linearlayout_holder_style">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:paddingStart">@dimen/spacing24</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="AppTheme" parent="ThemeOverlay.AppCompat.Dark">
+
+        <!-- Customize your theme here. -->
+
+        <item name="colorPrimary">@color/pagestrip</item>
+        <item name="colorPrimaryDark">@color/pagestrip</item>
+        <item name="colorAccent">@color/pagestrip</item>
+        <item name="android:textColorSecondary">#ffffff</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:textColorPrimary">@color/white</item>
+
+        <item name="android:itemBackground">?attr/bottom_sheet_bg</item>
+        <item name="android:textColor">?attr/textcolorprimarycustom</item>
+        <item name="ic_share_vector">@drawable/ic_share_vector_black</item>
+        <item name="ic_icon_move">@drawable/ic_icon_move_black</item>
+        <item name="cab_rename">@drawable/cab_rename_black</item>
+        <item name="ic_icon_copy_to">@drawable/ic_icon_copy_to_black</item>
+        <item name="ic_icon_copy_path">@drawable/ic_icon_copy_path_to_clipboard_black</item>
+        <item name="ic_icon_hide">@drawable/ic_icon_hide_black</item>
+        <item name="ic_unhide_vector">@drawable/ic_unhide_vector_black</item>
+        <item name="ic_icon_compress">@drawable/ic_icon_compress_black</item>
+        <item name="ic_icon_decompress">@drawable/ic_icon_decompress_black</item>
+        <item name="ic_delete_vector">@drawable/ic_delete_vector_black</item>
+        <item name="ic_properties_vector">@drawable/ic_properties_vector_black</item>
+
+
+
+
+        <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
+    </style>
+
+    <style name="textstyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">?attr/textcolorprimarycustom</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="TextAppearance.FontPathSOURCESANSPRO" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+<!--
+        <item name="fontPath">font/OpenSans-SemiBold.ttf</item>
+-->
+    </style>
+
+    <style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView"/>
+
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="cab_rename">@drawable/cab_rename_black</item>
+        <item name="ic_home_vector">@drawable/ic_home_vector_black</item>
+        <item name="filemanageritembackgroud">@drawable/rectangle_semitranparent_light_theme</item>
+        <item name="ic_folder_icon">@drawable/ic_icon_folder__light</item>
+        <item name="ic_icon_decompress">@drawable/ic_icon_decompress_black</item>
+        <item name="ic_icon_compress">@drawable/ic_icon_compress_black</item>
+        <item name="ic_icon_hide">@drawable/ic_icon_hide_black</item>
+        <item name="ic_select_all_vector">@drawable/ic_select_all_vector_black</item>
+        <item name="ic_search_vector">@drawable/ic_search_vector_black</item>
+        <item name="ic_three_dot">@drawable/ic_icon_dot_light</item>
+        <item name="ic_icon_copy_to">@drawable/ic_icon_copy_to_black</item>
+        <item name="ic_sort_vector">@drawable/ic_sort_vector_black</item>
+        <item name="ic_icon_copy_path">@drawable/ic_icon_copy_path_to_clipboard_black</item>
+        <item name="ic_properties_vector">@drawable/ic_properties_vector_black</item>
+        <item name="ic_icon_next">@drawable/ic_icon_next_light</item>
+        <item name="textcolorsecondrycustom">@color/material_gray_600</item>
+        <item name="android:textColorPrimary">@color/material_gray_900</item>
+        <item name="android:textColor">@color/material_gray_900</item>
+        <item name="bottom_sheet_bg" >@color/material_gray_100</item>
+        <item name="ic_unhide_vector" >@drawable/ic_unhide_vector_black</item>
+        <item name="ic_plus_vector" >@drawable/ic_plus_vector_black</item>
+        <item name="ic_share_vector" >@drawable/ic_share_vector_black</item>
+        <item name="ic_icon_move" >@drawable/ic_icon_move_black</item>
+        <item name="ic_delete_vector" >@drawable/ic_delete_vector_black</item>
+        <item name="filemanagertextcolor">@color/text_color</item>
+        <item name="bottom_sheet_tint">@color/bottom_sheet_color</item>
+    </style>
+   <!-- <style name="AppTheme.NoActionBar" parent="Base.V7.Theme.AppCompat">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="textcolorprimarycustom">@color/new_primary_color</item>
+        <item name="filemanagerSecondaryTextColor">@color/material_gray_500</item>
+        <item name="ic_folder_icon">@drawable/ic_icon_folder__light</item>
+        <item name="filemanageritembackgroud">@drawable/aura</item>
+        <item name="filemanagertextcolor">@color/primary_text_color</item>
+
+        <item name="bottom_sheet_bg">@color/material_gray_100</item>
+        <item name="ic_three_dot">@drawable/ic_icon_dot_light</item>
+        <item name="bottom_sheet_tint">@color/bottom_sheet_color</item>
+        <item name="textcolorsecondrycustom">@color/hamburger_checked_color</item>
+        <item name="ic_search_vector">@drawable/ic_search_vector_black</item>
+        <item name="ic_home_vector">@drawable/ic_home_vector_black</item>
+        <item name="ic_sort_vector">@drawable/ic_sort_vector_black</item>
+        <item name="ic_icon_next">@drawable/ic_icon_next_light</item>
+        <item name="ic_select_all_vector">@drawable/ic_select_all_vector_black</item>
+        <item name="ic_unhide_vector_dialog">@drawable/ic_unhide_vector_black</item>
+        <item name="ic_plus_vector">@drawable/ic_plus_vector_black</item>
+
+
+
+
+
+    </style>
+-->
+    <color name="pagestrip">#A53B2F</color>
+    <color name="white">#FFFFFF</color>
+    <color name="material_gray_500">#9E9E9E</color>
+
+    <dimen name="text_big">16sp</dimen>
+
+</resources>

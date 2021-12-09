@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/items_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/items_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="10dp"
+            android:visibility="gone"/>
+        <!--  <View
+              android:layout_width="match_parent"
+              android:layout_height=".5dp"
+              android:layout_marginBottom="@dimen/spacing8"
+              android:background="?attr/devider_color"/>-->
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/items_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/my_recyclerView"
+            android:layout_centerHorizontal="true"
+            android:alpha="0.8"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingStart="@dimen/activity_margin"
+            android:paddingEnd="@dimen/activity_margin"
+            android:text="@string/no_items_found"
+            android:textSize="@dimen/bigger_text_size"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+        <com.simplemobiletools.commons.views.MyRecyclerView
+            android:id="@+id/items_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/my_recyclerView"
+            android:layout_above="@+id/bottomnavigation"
+            android:paddingTop="10dp"
+            android:paddingBottom="16dp"
+            android:clipToPadding="false"
+            android:scrollbars="none"
+            app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager" />
+        <com.simplemobiletools.commons.views.FastScroller
+            android:id="@+id/items_fastscroller"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/my_recyclerView"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="@dimen/normal_margin">
+            <include android:id="@+id/vibhor"
+                layout="@layout/fastscroller_handle_vertical" />
+        </com.simplemobiletools.commons.views.FastScroller>
+
+        <include
+            android:layout_height="wrap_content"
+            layout="@layout/layout"
+            android:id="@+id/bottomnavigation"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_frame"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/selector"
+    android:paddingTop="6dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="6dp"
+    android:layout_margin="2dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/item_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:background="?attr/filemanageritembackgroud">
+
+        <ImageView
+            android:id="@+id/item_icon"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            app:srcCompat="?attr/ic_folder_icon"
+            />
+
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_icon"
+            android:ellipsize="middle"
+            android:textStyle="normal"
+            android:textSize="13sp"
+            android:textColor="?attr/textcolorprimarycustom"
+            style="@style/TextAppearance.FontPathSOURCESANSPRO"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"
+            android:singleLine="true"
+            />
+
+        <TextView
+            android:id="@+id/item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_name"
+            android:ellipsize="middle"
+            android:textSize="10sp"
+            android:textColor="?attr/filemanagerSecondaryTextColor"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="5dp"
+            android:singleLine="true"
+            />
+
+        <ImageView
+            android:id="@+id/threedot_grid"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:layout_alignEnd="@+id/item_icon"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:srcCompat="?attr/ic_three_dot" />
+
+        <com.rocks.themelibrary.ui.CheckView
+            android:background="?attr/selectableItemBackground"
+            android:layout_alignEnd="@+id/item_icon"
+            android:id="@+id/item_check_view_grid"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+</FrameLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.simplemobiletools.commons.views.MyRecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/folders_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    android:orientation="horizontal"
+    android:paddingEnd="10dp"
+    app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+<com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:contentInsetStart="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="?attr/colorPrimary">
+    </androidx.appcompat.widget.Toolbar>
+
+
+</com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/settings_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+          <!--<com.simplemobiletools.commons.views.MyTextView
+              android:id="@+id/visibility_label"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/bigger_margin"
+              android:layout_marginTop="@dimen/section_margin"
+              android:text="@string/visibility"
+              android:textAllCaps="true"
+              android:textSize="@dimen/smaller_text_size" />
+
+          <RelativeLayout
+              android:id="@+id/settings_show_hidden_holder"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/medium_margin"
+              android:background="?attr/selectableItemBackground"
+              android:paddingStart="@dimen/normal_margin"
+              android:paddingTop="@dimen/activity_margin"
+              android:paddingEnd="@dimen/normal_margin"
+              android:paddingBottom="@dimen/activity_margin">
+
+              <com.simplemobiletools.commons.views.MySwitchCompat
+                  android:id="@+id/settings_show_hidden"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@null"
+                  android:clickable="false"
+                  android:paddingStart="@dimen/medium_margin"
+                  android:text="@string/show_hidden_items"
+                  app:switchPadding="@dimen/medium_margin" />
+
+          </RelativeLayout>-->
+
+        <RelativeLayout
+            android:id="@+id/settings_enable_root_access_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:background="?attr/selectableItemBackground"
+            android:paddingStart="@dimen/normal_margin"
+            android:paddingTop="@dimen/activity_margin"
+            android:paddingEnd="@dimen/normal_margin"
+            android:paddingBottom="@dimen/activity_margin">
+
+            <com.simplemobiletools.commons.views.MySwitchCompat
+                android:id="@+id/settings_enable_root_access"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:clickable="false"
+                android:paddingStart="@dimen/medium_margin"
+                android:text="@string/enable_root_access"
+                app:switchPadding="@dimen/medium_margin" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

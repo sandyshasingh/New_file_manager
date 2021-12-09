@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/spacing24"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:background="@drawable/bottom_round_corner"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing16"
+        android:src="@drawable/bottom_sheet_top_bar" />
+
+    <!-- <View
+         android:layout_width="match_parent"
+         android:layout_height=".5dp"
+         android:layout_marginBottom="@dimen/spacing8"
+         android:background="?attr/devider_color"/>-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/cab_share"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                app:srcCompat="?attr/ic_share_vector"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                android:text="@string/share"
+                style="@style/bs_textview_style"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cab_move_to"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                app:srcCompat="?attr/ic_icon_move"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                android:text="@string/move_to"
+                style="@style/bs_textview_style"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cab_rename"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                app:srcCompat="?attr/cab_rename"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                android:text="Rename"
+                style="@style/bs_textview_style"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cab_copy_to"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                app:srcCompat="?attr/ic_icon_copy_to"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                android:text="@string/copy_to"
+                style="@style/bs_textview_style"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cab_copy_path"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                android:src="?attr/ic_icon_copy_path"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                style="@style/bs_textview_style"
+                android:text="@string/copy_path"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cab_open_with"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                android:src="@drawable/ic_queue_play_next_grey_900_24dp"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                style="@style/bs_textview_style"
+                android:text="@string/open_with"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cab_hide"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                app:srcCompat="?attr/ic_icon_hide"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                style="@style/bs_textview_style"
+                android:text="@string/hide"
+                />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/cab_unhide"
+            style="@style/bs_linearlayout_holder_style"
+            android:visibility="visible"
+            >
+            <ImageView
+                style="@style/bs_image_style"
+                app:srcCompat="?attr/ic_unhide_vector"
+                />
+            <TextView
+                style="@style/bs_textview_style"
+                android:text="@string/unhide"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cab_compress"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                app:srcCompat="?attr/ic_icon_compress"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                style="@style/bs_textview_style"
+                android:text="@string/compress"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cab_decompress"
+            style="@style/bs_linearlayout_holder_style"
+            >
+
+            <ImageView
+                style="@style/bs_image_style"
+                app:srcCompat="?attr/ic_icon_decompress"
+                />
+            <TextView
+                style="@style/bs_textview_style"
+                android:text="@string/decompress"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cab_delete"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                app:srcCompat="?attr/ic_delete_vector"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                android:text="@string/delete"
+                style="@style/bs_textview_style"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cab_properties"
+            style="@style/bs_linearlayout_holder_style"
+            >
+            <ImageView
+                app:srcCompat="?attr/ic_properties_vector"
+                style="@style/bs_image_style"
+                />
+            <TextView
+                android:text="@string/details"
+                style="@style/bs_textview_style"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
+

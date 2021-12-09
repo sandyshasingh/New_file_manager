@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PermissionActivity">
+    <TextView
+        android:id="@+id/allow_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="ALLOW"
+        android:textStyle="bold"
+        android:textSize="50dp"/>
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_open_settings"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        android:textColor="@color/material_gray_800"-->
+<!--        android:lineSpacingExtra="6dp"-->
+<!--        android:text="1) Open settings\n2) Tap on App permissions \n3) Turn on permissions"-->
+<!--        />-->
+
+    <TextView
+        android:id="@+id/faltu_text"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/allow_tag"
+        app:layout_constraintBottom_toTopOf="@+id/allow_tag"
+        android:layout_marginBottom="10dp"
+        android:textSize="10dp"
+        android:text="To manage file, please allow File Manager to access files on your device"/>
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="Welcome to File Manager"
+        app:layout_constraintStart_toStartOf="@id/allow_tag"
+        app:layout_constraintBottom_toTopOf="@id/faltu_text"
+        android:layout_marginBottom="10dp"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

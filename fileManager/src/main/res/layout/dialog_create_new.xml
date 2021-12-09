@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/activity_margin"
+    android:paddingTop="@dimen/activity_margin"
+    android:paddingEnd="@dimen/activity_margin">
+
+    <EditText
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_new_folder"
+        android:textColorHint="@color/material_gray_500"
+        android:textColor="@color/material_gray_900"
+        style="@style/textstyle"
+        android:singleLine="true"
+        android:drawableEnd="@drawable/ic_cross_vector_black"
+        android:textSize="@dimen/bigger_text_size" />
+
+</RelativeLayout>

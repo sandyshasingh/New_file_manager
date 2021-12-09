@@ -1,0 +1,11 @@
+<resources>
+    <string name="simple_commons">Simple Commons</string>
+    <string name="progress">%1$s / %2$s</string>
+    <string name="donate_url">https://simplemobiletools.com/donate</string>
+    <string name="a_m">a.m.</string>
+    <string name="p_m">p.m.</string>
+
+    <!-- Message digest algorithms -->
+    <string name="md5">MD5</string>
+
+</resources>

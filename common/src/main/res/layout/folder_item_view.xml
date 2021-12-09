@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/folder_layout"
+    android:layout_marginStart="10dp"
+    >
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        >
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/folder_icon"
+            />
+
+        <TextView
+            android:id="@+id/folder_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/folder_icon"
+            android:paddingTop="18dp"
+            android:singleLine="true"
+            android:textColor="?attr/filemanagertextcolor"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:id="@+id/folder_size"
+            android:paddingBottom="10dp"
+            android:ellipsize="middle"
+            android:textColor="?attr/filemanagertextcolor"
+            android:text="jjj"
+            android:textSize="14sp"
+            android:layout_below="@+id/folder_name"/>
+
+        <ProgressBar
+            android:id="@+id/usedMemoryProgress"
+            android:layout_width="110dp"
+            android:layout_height="7dp"
+            android:thumb="@null"
+            android:progress="58"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:layout_below="@+id/folder_size"
+            android:clickable="false"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:progressDrawable="@drawable/progressdrawable_size"
+            />
+    </RelativeLayout>
+
+</FrameLayout>
