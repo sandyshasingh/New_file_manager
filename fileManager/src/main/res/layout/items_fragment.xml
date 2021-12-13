@@ -68,6 +68,7 @@
                 android:clipToPadding="false"
                 android:scrollbars="none"
                 app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager" />
+
             <com.simplemobiletools.commons.views.FastScroller
                 android:id="@+id/items_fastscroller"
                 android:layout_width="wrap_content"
@@ -75,6 +76,7 @@
                 android:layout_below="@+id/my_recyclerView"
                 android:layout_alignParentEnd="true"
                 android:paddingStart="@dimen/normal_margin">
+
                 <include android:id="@+id/vibhor"
                     layout="@layout/fastscroller_handle_vertical"
                     android:visibility="gone"/>

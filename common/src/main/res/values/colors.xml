@@ -4,9 +4,9 @@
     <color name="color_primary_dark">#FFD76D00</color>
     <color name="color_accent">@color/color_primary</color>
     <color name="whatsapp_text_color">#00896f</color>
-    <color name="audio_text_color">#FFE8E2</color>
-    <color name="video_text_color">#BB86FC</color>
-    <color name="photo_text_color">#FCEFC2</color>
+    <color name="audio_text_color">#70000000</color>
+    <color name="video_text_color">#70000000</color>
+    <color name="photo_text_color">#70000000</color>
     <color name="filter_text_color">#A7d129</color>
     <color name="fab_btn_bg">#D8D6FD</color>
     <color name="blue_grey_50">#ECEFF1</color>

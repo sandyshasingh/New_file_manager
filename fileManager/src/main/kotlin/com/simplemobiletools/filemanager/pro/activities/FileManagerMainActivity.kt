@@ -199,8 +199,8 @@ class FileManagerMainActivity : BaseSimpleActivity() {
             else
                 resources.getDrawable(R.drawable.ic_list_black)
         }
-        fragment.setupLayoutManager()
-        fragment.refreshItems(false)
+      //  fragment.setupLayoutManager()
+      //  fragment.refreshItems(false)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -211,7 +211,7 @@ class FileManagerMainActivity : BaseSimpleActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         val path = savedInstanceState.getString(PICKED_PATH) ?: internalStoragePath
-        openPath(path, true)
+        //openPath(path, true)
     }
 
     private fun setupSearch(menu: Menu) {
@@ -285,13 +285,13 @@ class FileManagerMainActivity : BaseSimpleActivity() {
         if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
             val data = intent.data
             if (data?.scheme == "file") {
-                openPath(data.path!!)
+               // openPath(data.path!!)
             } else {
                 val path = getRealPathFromURI(data!!)
                 if (path != null) {
-                    openPath(path)
+                   // openPath(path)
                 } else {
-                    openPath(config.homeFolder)
+                 //   openPath(config.homeFolder)
                 }
             }
 
@@ -299,7 +299,7 @@ class FileManagerMainActivity : BaseSimpleActivity() {
                 tryOpenPathIntent(data.path!!, false)
             }
         } else {
-            openPath(config.homeFolder)
+            //openPath(config.homeFolder)
         }
     }
 
@@ -334,7 +334,7 @@ class FileManagerMainActivity : BaseSimpleActivity() {
             fragment.pathList.clear()
             fragment.pathList.add(internalStoragePath)
             fragment.mView.my_recyclerView?.beGone()
-            openPath(config.homeFolder)
+          //  openPath(config.homeFolder)
         }
     }
 
@@ -369,7 +369,7 @@ class FileManagerMainActivity : BaseSimpleActivity() {
             val i =fragment.pathList.size
             fragment.pathList.removeAt(i - 1)
              val path = fragment.pathList[fragment.pathList.size - 1]
-            openPath(path, false)
+           // openPath(path, false)
         }
     }
 

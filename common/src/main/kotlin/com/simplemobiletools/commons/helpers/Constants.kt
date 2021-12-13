@@ -244,6 +244,12 @@ const val WHATSAPP_ID = 1
 const val VIDEOS_ID = 2
 const val AUDIO_ID = 3
 const val FILTER_DUPLICATE_ID = 4
+const val APPLICATIONS_ID = 5
+const val ZIP_FILES_ID = 6
+const val DOCUMENTS_ID = 7
+const val DOWNLOAD_ID = 8
+
+
 
 // For Folder Header Name
 const val PHOTOS_NAME = "Photos"
@@ -251,6 +257,10 @@ const val WHATSAPP_NAME = "WhatsApp"
 const val VIDEOS_NAME = "Videos"
 const val AUDIO_NAME = "Audio"
 const val FILTER_DUPLICATE_NAME = "Filter Duplicate"
+const val APPLICATION_NAME = "Apps"
+const val ZIP_FILES_NAME = "Zip files"
+const val DOCUMENTS_NAME = "Documents"
+const val DOWNLOAD_NAME = "Download"
 
 // For Folder Click Count
 var PHOTOS_CLICK = 0L
@@ -258,6 +268,10 @@ var WHATSAPP_CLICK = 0L
 var VIDEOS_CLICK = 0L
 var AUDIO_CLICK = 0L
 var FILTER_DUPLICATE_CLICK = 0L
+var APPLICATION_CLICK = 0L
+var ZIP_FILES_CLICK = 0L
+var DOCUMENTS_CLICK = 0L
+var DOWNLOAD_CLICK = 0L
 
 
 // For mLongPress

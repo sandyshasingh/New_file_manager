@@ -57,7 +57,7 @@ import kotlin.collections.ArrayList
 class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var folderItems: ArrayList<FolderItem>, val bottomnavigation: View?, var listItems: MutableList<ListItem>,
                    var listener: ItemOperationsListener?,fastScroller: FastScroller?,  recyclerView: MyRecyclerView,
                    itemClick: (Any) -> Unit) :
-        MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private lateinit var fileDrawable: Drawable
     private var folderDrawable: Drawable? = null
@@ -274,7 +274,7 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
     override fun getIsItemSelectable(position: Int) = !listItems[position].isSectionTitle
 
     override fun getItemSelectionKey(position: Int) =
-            listItems.getOrNull(position)?.path?.hashCode()
+        listItems.getOrNull(position)?.path?.hashCode()
 
     override fun getItemKeyPosition(key: Int) = listItems.indexOfFirst { it.path.hashCode() == key }
 
@@ -531,7 +531,6 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
                 RadioItem(OPEN_AS_AUDIO, res.getString(R.string.audio_file)),
                 RadioItem(OPEN_AS_VIDEO, res.getString(R.string.video_file)),
                 RadioItem(OPEN_AS_OTHER, res.getString(R.string.other_file)))
-
         RadioGroupDialog(activity, items) {
             activity.tryOpenPathIntent(getFirstSelectedItemPath(), false, it as Int)
         }
@@ -898,7 +897,7 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
                 item_section.text = listItem.mName
                 item_section.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize)
             } else {
-                 item_frame?.isSelected = isSelected
+                item_frame?.isSelected = isSelected
                 item_frame1?.isSelected = isSelected
 
                 val fileName = listItem.name
@@ -957,16 +956,16 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
 //                    Log.d("#qwe",pxToDp(16).toString())
 
                     val options = RequestOptions()
-                            .placeholder(drawable)
-                            .transform(CenterCrop(), RoundedCorners(dpToPx(16)))
+                        .placeholder(drawable)
+                        .transform(CenterCrop(), RoundedCorners(dpToPx(16)))
 
                     val itemToLoad = listItem.audioImageUri ?: getImagePathToLoad(listItem.path)
 
                     if (!activity.isDestroyed) {
                         Glide.with(activity)
-                                .load(itemToLoad)
-                                .apply(options)
-                                .into(item_icon)
+                            .load(itemToLoad)
+                            .apply(options)
+                            .into(item_icon)
                     }
                 }
             }
@@ -1026,7 +1025,7 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
 
 
     fun updateFolderItems(folderItems: ArrayList<FolderItem>) {
-       this.folderItems = folderItems
+        this.folderItems = folderItems
         notifyDataSetChanged()
     }
 

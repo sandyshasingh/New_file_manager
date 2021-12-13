@@ -1,8 +1,10 @@
 package com.simplemobiletools.commons
 
+import android.content.ContentValues.TAG
 import android.os.Build
 import android.os.Environment
 import android.os.StatFs
+import android.util.Log
 import androidx.annotation.RequiresApi
 import java.io.File
 import java.lang.StringBuilder
@@ -12,6 +14,17 @@ object MemorySizeUtils {
     fun externalMemoryAvailable(): Boolean {
         return Environment.getExternalStorageState() ==
                 Environment.MEDIA_MOUNTED
+    }
+
+    private fun TotalSDMemory(): Long {
+        val path = Environment.getExternalStorageDirectory()
+        val stat = StatFs(path.absolutePath)
+        val blockSize = stat.blockSize.toLong()
+        val totalBlocks = stat.blockCount.toLong()
+        val totalSpace = totalBlocks * blockSize
+        Log.d(TAG, "Size of total SD Memory: $totalSpace")
+        Log.d(TAG, "External storage emulated: " + Environment.isExternalStorageEmulated())
+        return totalSpace
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)

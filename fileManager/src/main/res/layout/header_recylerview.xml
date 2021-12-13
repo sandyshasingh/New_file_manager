@@ -8,4 +8,5 @@
     android:scrollbars="none"
     android:orientation="horizontal"
     android:paddingEnd="10dp"
-    app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+    app:spanCount="2"
+    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />

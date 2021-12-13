@@ -2,10 +2,12 @@ package com.simplemobiletools.commons.adapters
 
 import android.annotation.SuppressLint
 import android.view.*
+import android.widget.GridLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.view.ActionMode
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.activities.BaseSimpleActivity

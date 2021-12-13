@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,6 +19,7 @@ import com.simplemobiletools.commons.AppProgressDialog
 import com.simplemobiletools.commons.MemorySizeUtils
 import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.commons.adapters.AdapterForFolders
 import com.simplemobiletools.commons.dialogs.StoragePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
@@ -25,6 +27,8 @@ import com.simplemobiletools.commons.interfaces.ItemOperationsListener
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.commons.adapters.AdapterForPath
+import com.simplemobiletools.commons.adapters.AdapterForStorage
+import com.simplemobiletools.commons.models.StorageItem
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.filemanager.pro.R
@@ -36,8 +40,10 @@ import com.simplemobiletools.filemanager.pro.helpers.DataViewModel
 import com.simplemobiletools.filemanager.pro.helpers.MAX_COLUMN_COUNT
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
 import com.simplemobiletools.filemanager.pro.models.ListItem
-import kotlinx.android.synthetic.main.items_fragment.*
-import kotlinx.android.synthetic.main.items_fragment.view.*
+import kotlinx.android.synthetic.main.this_is_it.*
+
+import kotlinx.android.synthetic.main.this_is_it.view.*
+
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -62,8 +68,11 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     private var zoomListener: MyRecyclerView.MyZoomListener? = null
     private var storedItems = ArrayList<ListItem>()
     private var folderItems = ArrayList<FolderItem>()
+    private var storageItems = ArrayList<StorageItem>()
     var pathList = ArrayList<String>()
-    var mainAdapter : ItemsAdapter? = null
+    var mainAdapter : AdapterForFolders? = null
+    var storageAdapter : AdapterForStorage? = null
+
     private var storedTextColor = 0
     private var storedFontSize = 0
     lateinit var mView: View
@@ -78,17 +87,19 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        mView = inflater.inflate(R.layout.items_fragment, container, false)!!
+        mView = inflater.inflate(R.layout.this_is_it, container, false)!!
         sharedPrefrences = activity?.getSharedPrefs()
         baseSimpleActivity = activity as BaseSimpleActivity
-        internalStoragePath = context?.config?.internalStoragePath
+      //  internalStoragePath = context?.config?.internalStoragePath
+/*
 
         model = ViewModelProvider(baseSimpleActivity!!).get(DataViewModel::class.java)
         model?.photoSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
             updatePhotosSize(it)
         })
+*/
 
-        model?.videoSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+      /*  model?.videoSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
             updateVideoSize(it)
             mainAdapter?.updateFolderItems(folderItems)
         })
@@ -97,10 +108,23 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             updateAudioSize(it)
             mainAdapter?.updateFolderItems(folderItems)
         })
+*/
 
-        createFolderList()
-        vibhor?.beGone()
+        //vibhor?.beGone()
         return mView
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        createFolderList()
+        mainAdapter = AdapterForFolders(folderItems, { folder -> headerFolderClick(folder) }, requireActivity())
+        //recyclerView?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        recyclerView?.adapter = mainAdapter
+
+        storageAdapter = AdapterForStorage(storageItems,requireActivity() )
+        rv_storage?.adapter = storageAdapter
+
     }
 
     private fun updatePhotosSize(size : Long){
@@ -138,7 +162,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             AUDIO_CLICK = sharedPrefrences?.getLong(AUDIO_NAME, AUDIO_CLICK)!!
             FILTER_DUPLICATE_CLICK = sharedPrefrences?.getLong(FILTER_DUPLICATE_NAME, FILTER_DUPLICATE_CLICK)!!
         }
-//        ensureBackgroundThread {
+
 
             val internalStoragePath = activity?.baseConfig?.internalStoragePath
 //            val available = MemorySizeUtils.getAvailableInternalMemorySizeInLong()
@@ -148,20 +172,22 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //            val whatsappFolderSize = MemorySizeUtils.formatSize(size)
 
             folderItems.add(FolderItem(PHOTOS_ID, PHOTOS_NAME, R.drawable.ic_icon_photos, getDrawable(R.drawable.rectangle_semitranparent_photo),
-                    activity!!.resources.getColor(R.color.photo_text_color), PHOTOS_CLICK))
+                    requireActivity().resources.getColor(R.color.photo_text_color), PHOTOS_CLICK))
             folderItems.add(FolderItem(WHATSAPP_ID, WHATSAPP_NAME, R.drawable.ic_icon_whtsap, getDrawable(R.drawable.rectangle_semitranparent_whatsapp),
-                    activity!!.resources.getColor(R.color.whatsapp_text_color), WHATSAPP_CLICK))
+                    requireActivity().resources.getColor(R.color.whatsapp_text_color), WHATSAPP_CLICK))
             folderItems.add(FolderItem(VIDEOS_ID, VIDEOS_NAME, R.drawable.ic_icon_videos, getDrawable(R.drawable.rectangle_semitranparent_video),
-                    activity!!.resources.getColor(R.color.video_text_color), VIDEOS_CLICK))
+                    requireActivity().resources.getColor(R.color.video_text_color), VIDEOS_CLICK))
             folderItems.add(FolderItem(AUDIO_ID, AUDIO_NAME, R.drawable.ic_icon_audio, getDrawable(R.drawable.rectangle_semitranparent_audio),
-                    activity!!.resources.getColor(R.color.audio_text_color), AUDIO_CLICK))
+                    requireActivity().resources.getColor(R.color.audio_text_color), AUDIO_CLICK))
             folderItems.add(FolderItem(FILTER_DUPLICATE_ID, FILTER_DUPLICATE_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
-                    activity!!.resources.getColor(R.color.filter_text_color), FILTER_DUPLICATE_CLICK))
-//        }
-    }
+                    requireActivity().resources.getColor(R.color.filter_text_color), FILTER_DUPLICATE_CLICK))
+
+        storageItems.add(StorageItem("Internal storage", getDrawable(R.drawable.rectangle_semitranparent_photo),1024))
+
+ }
 
     fun getDrawable(id: Int): Drawable {
-        return  activity!!.resources.getDrawable(id)
+        return  requireActivity().resources.getDrawable(id)
     }
 
 //    override fun onSaveInstanceState(outState: Bundle) {
@@ -180,7 +206,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     override fun onResume() {
         super.onResume()
-        context!!.updateTextColors(mView as ViewGroup)
+        requireContext().updateTextColors(mView as ViewGroup)
 //        val newTextColor = context!!.config.textColor
 //        if (storedTextColor != newTextColor) {
 //            storedItems = ArrayList()
@@ -210,18 +236,18 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
         scrollStates[currentPath] = getScrollState()!!
         currentPath = realPath
-        showHidden = context!!.config.shouldShowHidden
+        showHidden = requireContext().config.shouldShowHidden
         getItems(currentPath) { originalPath, listItems ->
             if (currentPath != originalPath || !isAdded) {
                 return@getItems
             }
 
-            FileDirItem.sorting = context!!.config.getFolderSorting(currentPath)
+            FileDirItem.sorting = requireContext().config.getFolderSorting(currentPath)
             listItems.sort()
             activity?.runOnUiThread {
                 activity?.invalidateOptionsMenu()
                 addItems(listItems, isHeaderShow)
-                if (context != null && currentViewType != context!!.config.viewType) {
+                if (context != null && currentViewType != requireContext().config.viewType) {
                     setupLayoutManager()
                 }
             }
@@ -243,39 +269,40 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                     firstTime = false
                 }
                 if(pathList.size<=1){
-                    my_recyclerView?.beGone()
+                    recyclerView?.beGone()
                 }else{
-                    my_recyclerView?.beVisible()
+                    recyclerView?.beVisible()
                 }
                 if(adapterForPath == null) {
                     adapterForPath = AdapterForPath(pathList, this@ItemsFragment, requireActivity())
-                    my_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                    my_recyclerView?.adapter = adapterForPath
+//                    my_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//                    my_recyclerView?.adapter = adapterForPath
                 }else{
                     adapterForPath?.updateDataAndNotify(pathList)
                 }
                 if(storedItems.isNotEmpty()) {
                     zrpImage?.beGone()
-                    mainAdapter = ItemsAdapter(activity as BaseSimpleActivity, isHeaderShow, folderItems, bottomnavigation, storedItems, this@ItemsFragment, items_fastscroller, items_list) {
-                        itemClicked(it as FileDirItem)
-                    }.apply {
-                        setupZoomListener(zoomListener)
-                        items_list.adapter = this
-                    }
+               /*     mainAdapter = ItemsAdapter(activity as BaseSimpleActivity, isHeaderShow, folderItems, bottomnavigation, storedItems, this@ItemsFragment, items_fastscroller, items_list) {
+                        itemClicked(it as FileDirItem)*/
+                   /* var adad = folderItems
+                    mainAdapter = AdapterForFolders(folderItems, { folder -> headerFolderClick(folder) }, activity!!)
+                    recyclerView?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+                    recyclerView?.adapter = mainAdapter*/
                 }else{
                     zrpImage?.beVisible()
                 }
 
 
-                items_fastscroller.setViews(items_list, null) {}
+              //  items_fastscroller.setViews(items_list, null) {}
                 getRecyclerLayoutManager().onRestoreInstanceState(scrollStates[currentPath])
                 items_list.onGlobalLayout {
-                    items_fastscroller.setScrollToY(items_list.computeVerticalScrollOffset())
+                //    items_fastscroller.setScrollToY(items_list.computeVerticalScrollOffset())
                     calculateContentHeight(storedItems)
                 }
             }
         }
     }
+
 
     fun setZRPImage(image : ImageView?){
         zrpImage = image
@@ -316,7 +343,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                 } else if (!config.enableRootAccess || !requireContext().isPathOnRoot(path)) {
                     getRegularItemsOf(path, callback)
                 } else {
-                    RootHelpers(activity!!).getFiles(path, callback)
+                    RootHelpers(requireActivity()).getFiles(path, callback)
                 }
             }
         }
@@ -330,8 +357,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             return
         }
 
-        val lastModifieds = if (isRPlus()) context!!.getFolderLastModifieds(path) else HashMap()
-        val isSortingBySize = context!!.config.getFolderSorting(currentPath) and SORT_BY_SIZE != 0
+        val lastModifieds = if (isRPlus()) requireContext().getFolderLastModifieds(path) else HashMap()
+        val isSortingBySize = requireContext().config.getFolderSorting(currentPath) and SORT_BY_SIZE != 0
         if (files != null) {
             for (file in files) {
                 val fileDirItem = getFileDirItemFromFile(file, isSortingBySize, lastModifieds)
@@ -409,12 +436,12 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             } else {
                 if(isFolderView()){
                     if(currentFolderHeader == PHOTOS_NAME) {
-                        val photoList = queryImages(activity!!, null)
+                        val photoList = queryImages(requireActivity(), null)
                         val position = getPositionOfImage(photoList, item.path)
                         //FullScreenPhotos.startFullScreenActivity(activity, FullScreenPhotos::class.java, photoList, position)
                     }
                 }else{
-                    activity!!.tryOpenPathIntent(path, false)
+                    requireActivity().tryOpenPathIntent(path, false)
                 }
             }
         }
@@ -435,7 +462,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                     mView.apply {
                         items_list.beVisible()
                         getRecyclerAdapter()?.updateItems(storedItems)
-                        items_placeholder.beGone()
+                        //items_placeholder.beGone()
                         //  items_placeholder_2.beGone()
                     }
                 }
@@ -474,7 +501,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                         getRecyclerAdapter()?.updateItems(files, text)
                         mView.apply {
                             items_list.beVisibleIf(files.isNotEmpty())
-                            items_placeholder.beVisibleIf(files.isEmpty())
+                            //items_placeholder.beVisibleIf(files.isEmpty())
                             // items_placeholder_2.beGone()
                         }
                     }
@@ -488,8 +515,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         if (context == null) {
             return files
         }
-        val sorting = context!!.config.getFolderSorting(path)
-        FileDirItem.sorting = context!!.config.getFolderSorting(currentPath)
+        val sorting = requireContext().config.getFolderSorting(path)
+        FileDirItem.sorting = requireContext().config.getFolderSorting(currentPath)
         val isSortingBySize = sorting and SORT_BY_SIZE != 0
         File(path).listFiles()?.sortedBy { it.isDirectory }?.forEach {
             if (it.name.contains(text, true)) {
@@ -538,7 +565,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         lastSearchedText = ""
         mView.apply {
             items_list.beVisible()
-            items_placeholder.beGone()
+           // items_placeholder.beGone()
         }
     }
 
@@ -555,7 +582,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     private fun getRecyclerAdapter() = mView.items_list.adapter as? ItemsAdapter
 
     fun setupLayoutManager() {
-        if (context!!.config.viewType == VIEW_TYPE_GRID) {
+        if (requireContext().config.viewType == VIEW_TYPE_GRID) {
             currentViewType = VIEW_TYPE_GRID
             setupGridLayoutManager()
         } else {
@@ -634,8 +661,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         val layoutManager = mView.items_list.layoutManager as MyGridLayoutManager
         val thumbnailHeight = layoutManager.getChildAt(0)?.height ?: 0
         val fullHeight = ((items.size - 1) / layoutManager.spanCount + 1) * thumbnailHeight
-        mView.items_fastscroller.setContentHeight(fullHeight)
-        mView.items_fastscroller.setScrollToY(mView.items_list.computeVerticalScrollOffset())
+//        mView.items_fastscroller.setContentHeight(fullHeight)
+//        mView.items_fastscroller.setScrollToY(mView.items_list.computeVerticalScrollOffset())
     }
 
     fun increaseColumnCount() {
@@ -683,13 +710,13 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             return
         }
 
-        if (context!!.isPathOnRoot(firstPath)) {
-            RootHelpers(activity!!).deleteFiles(files)
+        if (requireContext().isPathOnRoot(firstPath)) {
+            RootHelpers(requireActivity()).deleteFiles(files)
         } else {
             (activity as BaseSimpleActivity).deleteFiles(files, hasFolder) {
                 if (!it) {
-                    activity!!.runOnUiThread {
-                        activity!!.toast(R.string.unknown_error_occurred)
+                    requireActivity().runOnUiThread {
+                        requireActivity().toast(R.string.unknown_error_occurred)
                     }
                 }
             }
@@ -754,15 +781,15 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             }
         }
         if (position == 0) {
-            if(activity!!.hasExternalSDCard() || activity!!.hasOTGConnected()) {
+            if(requireActivity().hasExternalSDCard() || requireActivity().hasOTGConnected()) {
                 StoragePickerDialog(activity as BaseSimpleActivity, currentPath, false) {
                     getRecyclerAdapter()?.finishActMode()
 //                    openPath(it)    //For SD Card And Otg
-                    openPath(activity!!.internalStoragePath)
+                    openPath(requireActivity().internalStoragePath)
                 }
             }else{
                 getRecyclerAdapter()?.finishActMode()
-                openPath(activity!!.internalStoragePath)
+                openPath(requireActivity().internalStoragePath)
             }
         } else {
             if(path!= "$internalStoragePath/$PHOTOS_NAME/"

@@ -49,30 +49,31 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
         fun bindItems(folder: FolderItem, c1: (FolderItem) -> Unit) {
             val folderNameTextView = itemView.folder_name
             val folderIcon = itemView.folder_icon
-            val folderSize = itemView.folder_size
-            val usedMemoryProgress = itemView.usedMemoryProgress
+//            val folderSize = itemView.folder_size
+//            val usedMemoryProgress = itemView.usedMemoryProgress
             val folderLayout = itemView.folder_layout
 
-            usedMemoryProgress.max = (totalSize / 1024).toInt()
-            usedMemoryProgress.progress= folder.size.toInt()
+//            usedMemoryProgress.max = (totalSize / 1024).toInt()
+//            usedMemoryProgress.progress= folder.size.toInt()
             if(isDarkTheme) {
                 folderLayout.setBackgroundDrawable(darkThemeBackground)
             }else{
                 folderLayout.setBackgroundDrawable(folder.backgroundColor)
             }
             folderNameTextView.text = folder.folderName
-            folderSize.text = folder.sizeString
+//            folderSize.text = folder.sizeString
 
             folderNameTextView?.setTypeFaceOpenSensSmBold()
-            folderSize?.setTypeFaceOpenSensSmBold()
+        //    folderSize?.setTypeFaceOpenSensSmBold()
 
             folderNameTextView.setTextColor(folder.textColor)
-            folderSize.setTextColor(folder.textColor)
+            //folderSize.setTextColor(folder.textColor)
 
             folderIcon.setImageResource(folder.folderIcon)
             itemView.setOnClickListener{ c1(folder) }
         }
     }
+
 
     fun updateDataAndNotify(folderDataClassList: List<FolderItem>) {
         try {
