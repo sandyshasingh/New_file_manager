@@ -20,30 +20,32 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 
     class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
         val totalSize = MemorySizeUtils.getTotalInternalMemorySizeInLong()
-        var darkThemeBackground : Drawable? = null
-        var isDarkTheme = false
+       // var darkThemeBackground : Drawable? = null
+       // var isDarkTheme = false
 
-        init {
-            isDarkTheme = mContext.isDarkTheme()
-            if(isDarkTheme) {
-                //  darkThemeBackground = mContext.resources.getDrawable(R.drawable.rectangle_semitranparent_dark_theme)
-            }
-        }
+//        init {
+//            isDarkTheme = mContext.isDarkTheme()
+//            if(isDarkTheme) {
+//                //  darkThemeBackground = mContext.resources.getDrawable(R.drawable.rectangle_semitranparent_dark_theme)
+//            }
+//        }
 
-        fun bindItems(storageItem: StorageItem, c1: (FolderItem) -> Unit) {
+        fun bindItems(storageItem: StorageItem) {
             val storageTextView = itemView.text_internal
             val storageIcon = itemView.icon_internalstorage
             val storageSize = itemView.storage_size
             //val usedMemoryProgress = itemView.usedMemoryProgress
-            val folderLayout = itemView.folder_layout
+          //  val folderLayout = itemView.folder_layout
+
+            storageTextView.text = storageItem.storageTextView
 
 //            usedMemoryProgress.max = (totalSize / 1024).toInt()
 //            usedMemoryProgress.progress= folder.size.toInt()
-            if(isDarkTheme) {
-                folderLayout.setBackgroundDrawable(darkThemeBackground)
-            }else{
-//                folderLayout.setBackgroundDrawable(folder.backgroundColor)
-            }
+//            if(isDarkTheme) {
+//                folderLayout.setBackgroundDrawable(darkThemeBackground)
+//            }else{
+////                folderLayout.setBackgroundDrawable(folder.backgroundColor)
+//            }
 //            storageTextView.text = folder.folderName
            // storageIcon = R.drawable.
 
@@ -64,6 +66,7 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindItems(storageList[position])
 
     }
 

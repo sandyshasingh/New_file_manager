@@ -122,6 +122,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         //recyclerView?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         recyclerView?.adapter = mainAdapter
 
+        rv_storage?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         storageAdapter = AdapterForStorage(storageItems,requireActivity() )
         rv_storage?.adapter = storageAdapter
 
@@ -173,16 +174,28 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
             folderItems.add(FolderItem(PHOTOS_ID, PHOTOS_NAME, R.drawable.ic_icon_photos, getDrawable(R.drawable.rectangle_semitranparent_photo),
                     requireActivity().resources.getColor(R.color.photo_text_color), PHOTOS_CLICK))
-            folderItems.add(FolderItem(WHATSAPP_ID, WHATSAPP_NAME, R.drawable.ic_icon_whtsap, getDrawable(R.drawable.rectangle_semitranparent_whatsapp),
-                    requireActivity().resources.getColor(R.color.whatsapp_text_color), WHATSAPP_CLICK))
+
             folderItems.add(FolderItem(VIDEOS_ID, VIDEOS_NAME, R.drawable.ic_icon_videos, getDrawable(R.drawable.rectangle_semitranparent_video),
                     requireActivity().resources.getColor(R.color.video_text_color), VIDEOS_CLICK))
             folderItems.add(FolderItem(AUDIO_ID, AUDIO_NAME, R.drawable.ic_icon_audio, getDrawable(R.drawable.rectangle_semitranparent_audio),
                     requireActivity().resources.getColor(R.color.audio_text_color), AUDIO_CLICK))
-            folderItems.add(FolderItem(FILTER_DUPLICATE_ID, FILTER_DUPLICATE_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
-                    requireActivity().resources.getColor(R.color.filter_text_color), FILTER_DUPLICATE_CLICK))
 
-        storageItems.add(StorageItem("Internal storage", getDrawable(R.drawable.rectangle_semitranparent_photo),1024))
+             folderItems.add(FolderItem(APPLICATIONS_ID, APPLICATION_NAME, R.drawable.ic_icon_whtsap, getDrawable(R.drawable.rectangle_semitranparent_whatsapp),
+                     requireActivity().resources.getColor(R.color.whatsapp_text_color), APPLICATION_CLICK))
+
+            folderItems.add(FolderItem(ZIP_FILES_ID, ZIP_FILES_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
+                    requireActivity().resources.getColor(R.color.filter_text_color), ZIP_FILES_CLICK))
+
+        folderItems.add(FolderItem(DOCUMENTS_ID, DOCUMENTS_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
+                    requireActivity().resources.getColor(R.color.filter_text_color), DOCUMENTS_CLICK))
+
+        folderItems.add(FolderItem(DOWNLOAD_ID, DOWNLOAD_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
+            requireActivity().resources.getColor(R.color.filter_text_color), DOWNLOAD_CLICK))
+
+
+
+        storageItems.add(StorageItem("Internal storage",  R.drawable.ic_icon_photos,1024))
+        storageItems.add(StorageItem("External storage",R.drawable.ic_icon_photos,2048))
 
  }
 
