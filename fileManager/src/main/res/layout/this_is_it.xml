@@ -39,11 +39,9 @@
             android:scrollbars="none"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recyclerView"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingEnd="10dp"
-
-            app:spanCount="2"
-            app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager" />
+            app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
 
         <RelativeLayout
             android:layout_width="match_parent"

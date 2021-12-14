@@ -315,14 +315,14 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
                 val view = layoutInflater.inflate(R.layout.item_file_dir_list, parent, false)
                 return ViewHolder(view)
             }
-            GRID_DIR -> {
-                val view = layoutInflater.inflate(R.layout.item_grid_dir, parent, false)
-                return ViewHolder(view)
-            }
-            GRID_FILE -> {
-                val view = layoutInflater.inflate(R.layout.item_grid_file, parent, false)
-                return ViewHolder(view)
-            }
+//            GRID_DIR -> {
+//                val view = layoutInflater.inflate(R.layout.item_grid_dir, parent, false)
+//                return ViewHolder(view)
+//            }
+//            GRID_FILE -> {
+//                val view = layoutInflater.inflate(R.layout.item_grid_file, parent, false)
+//                return ViewHolder(view)
+//            }
             else -> {
                 val view = layoutInflater.inflate(R.layout.item_file_dir_list, parent, false)
                 return ViewHolder(view)

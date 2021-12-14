@@ -157,7 +157,7 @@ class FileManagerMainActivity : BaseSimpleActivity() {
             R.id.go_home -> goHome()
             R.id.sort -> showSortingDialog()
             R.id.change_view_type -> changeViewType(item)
-            R.id.increase_column_count -> fragment.increaseColumnCount()
+           // R.id.increase_column_count -> fragment.increaseColumnCount()
             R.id.reduce_column_count -> fragment.reduceColumnCount()
             R.id.refresh -> fragment.refreshItems(false)
 

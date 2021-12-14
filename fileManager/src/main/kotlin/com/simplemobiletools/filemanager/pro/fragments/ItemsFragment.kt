@@ -5,7 +5,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Environment
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +32,7 @@ import com.simplemobiletools.commons.adapters.AdapterForPath
 import com.simplemobiletools.commons.adapters.AdapterForStorage
 import com.simplemobiletools.commons.models.StorageItem
 import com.simplemobiletools.commons.views.MyGridLayoutManager
+import com.simplemobiletools.commons.views.MyLinearLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
@@ -90,25 +93,25 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         mView = inflater.inflate(R.layout.this_is_it, container, false)!!
         sharedPrefrences = activity?.getSharedPrefs()
         baseSimpleActivity = activity as BaseSimpleActivity
-      //  internalStoragePath = context?.config?.internalStoragePath
-/*
+        internalStoragePath = context?.config?.internalStoragePath
+
 
         model = ViewModelProvider(baseSimpleActivity!!).get(DataViewModel::class.java)
         model?.photoSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-            updatePhotosSize(it)
+            //updatePhotosSize(it)
         })
-*/
 
-      /*  model?.videoSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-            updateVideoSize(it)
+
+        model?.videoSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            //updateVideoSize(it)
             mainAdapter?.updateFolderItems(folderItems)
         })
 
         model?.audioSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-            updateAudioSize(it)
+            //updateAudioSize(it)
             mainAdapter?.updateFolderItems(folderItems)
         })
-*/
+
 
         //vibhor?.beGone()
         return mView
@@ -158,7 +161,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     private fun createFolderList() {
         if (sharedPrefrences != null) {
             PHOTOS_CLICK = sharedPrefrences?.getLong(PHOTOS_NAME, PHOTOS_CLICK)!!
-            WHATSAPP_CLICK = sharedPrefrences?.getLong(WHATSAPP_NAME, WHATSAPP_CLICK)!!
+            DOWNLOAD_CLICK = sharedPrefrences?.getLong(DOWNLOAD_NAME, DOWNLOAD_CLICK)!!
             VIDEOS_CLICK = sharedPrefrences?.getLong(VIDEOS_NAME, VIDEOS_CLICK)!!
             AUDIO_CLICK = sharedPrefrences?.getLong(AUDIO_NAME, AUDIO_CLICK)!!
             FILTER_DUPLICATE_CLICK = sharedPrefrences?.getLong(FILTER_DUPLICATE_NAME, FILTER_DUPLICATE_CLICK)!!
@@ -167,7 +170,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
             val internalStoragePath = activity?.baseConfig?.internalStoragePath
 //            val available = MemorySizeUtils.getAvailableInternalMemorySizeInLong()
-//            val totalSize = MemorySizeUtils.getTotalInternalMemorySizeInLong()
+//            val totalSize = MemorySizeUtils.getTotalInternalMemorySize()
+//            Log.d("sandy","$totalSize")
 //            val usedSpace = totalSize - available
 //            val size = getFolderSize(File("$internalStoragePath/$WHATSAPP_NAME"), baseSimpleActivity!!)
 //            val whatsappFolderSize = MemorySizeUtils.formatSize(size)
@@ -193,9 +197,14 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             requireActivity().resources.getColor(R.color.filter_text_color), DOWNLOAD_CLICK))
 
 
+        val totalSize = MemorySizeUtils.getTotalInternalMemorySize()
+        val availableSize = MemorySizeUtils.getAvailableInternalMemorySize()
 
-        storageItems.add(StorageItem("Internal storage",  R.drawable.ic_icon_photos,1024))
-        storageItems.add(StorageItem("External storage",R.drawable.ic_icon_photos,2048))
+
+        storageItems.add(StorageItem("Internal storage",  R.drawable.ic_icon_photos,
+            "$availableSize/$totalSize"
+        ))
+        storageItems.add(StorageItem("External storage",R.drawable.ic_icon_photos,totalSize!!))
 
  }
 
@@ -295,12 +304,29 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                 }
                 if(storedItems.isNotEmpty()) {
                     zrpImage?.beGone()
-               /*     mainAdapter = ItemsAdapter(activity as BaseSimpleActivity, isHeaderShow, folderItems, bottomnavigation, storedItems, this@ItemsFragment, items_fastscroller, items_list) {
-                        itemClicked(it as FileDirItem)*/
-                   /* var adad = folderItems
-                    mainAdapter = AdapterForFolders(folderItems, { folder -> headerFolderClick(folder) }, activity!!)
-                    recyclerView?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-                    recyclerView?.adapter = mainAdapter*/
+                    adapterForPath
+                    getRecyclerAdapter()?.updateListItems(storedItems)
+                    mView.items_list.adapter = ItemsAdapter(
+                        activity as BaseSimpleActivity,
+                        isHeaderShow,
+                        folderItems,
+                        null,
+                        storedItems,
+                        this@ItemsFragment,
+                        null,
+                        items_list
+                    ) {
+                        itemClicked(it as FileDirItem)
+                        var adad = folderItems
+                        mainAdapter = AdapterForFolders(
+                            folderItems,
+                            { folder -> headerFolderClick(folder) },
+                            requireActivity()
+                        )
+                        recyclerView?.layoutManager =
+                            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                        recyclerView?.adapter = mainAdapter
+                    }
                 }else{
                     zrpImage?.beVisible()
                 }
@@ -310,7 +336,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                 getRecyclerLayoutManager().onRestoreInstanceState(scrollStates[currentPath])
                 items_list.onGlobalLayout {
                 //    items_fastscroller.setScrollToY(items_list.computeVerticalScrollOffset())
-                    calculateContentHeight(storedItems)
+                    //calculateContentHeight(storedItems)
                 }
             }
         }
@@ -341,7 +367,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     }
     private fun getScrollState() = getRecyclerLayoutManager().onSaveInstanceState()
 
-    private fun getRecyclerLayoutManager() = (mView.items_list.layoutManager as MyGridLayoutManager)
+    private fun getRecyclerLayoutManager() = (mView.items_list.layoutManager as MyLinearLayoutManager)
 
     private fun getItems(path: String, callback: (originalPath: String, items: ArrayList<ListItem>) -> Unit) {
         skipItemUpdating = false
@@ -597,10 +623,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     fun setupLayoutManager() {
         if (requireContext().config.viewType == VIEW_TYPE_GRID) {
             currentViewType = VIEW_TYPE_GRID
-            setupGridLayoutManager()
+           // setupGridLayoutManager()
         } else {
             currentViewType = VIEW_TYPE_LIST
-            setupListLayoutManager()
+           // setupListLayoutManager()
         }
 
         mView.items_list.adapter = null
@@ -649,39 +675,39 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     private fun initZoomListener() {
         if (context?.config?.viewType == VIEW_TYPE_GRID) {
-            val layoutManager = mView.items_list.layoutManager as MyGridLayoutManager
-            zoomListener = object : MyRecyclerView.MyZoomListener {
-                override fun zoomIn() {
-                    if (layoutManager.spanCount > 1) {
-                        reduceColumnCount()
-                        getRecyclerAdapter()?.finishActMode()
-                    }
-                }
+            val layoutManager = mView.items_list.layoutManager as LinearLayoutManager
+//            zoomListener = object : MyRecyclerView.MyZoomListener {
+//                override fun zoomIn() {
+//                    if (layoutManager.spanCount > 1) {
+//                        reduceColumnCount()
+//                        getRecyclerAdapter()?.finishActMode()
+//                    }
+//                }
 
-                override fun zoomOut() {
-                    if (layoutManager.spanCount < MAX_COLUMN_COUNT) {
-                        increaseColumnCount()
-                        getRecyclerAdapter()?.finishActMode()
-                    }
-                }
-            }
+//                override fun zoomOut() {
+//                    if (layoutManager.spanCount < MAX_COLUMN_COUNT) {
+//                        //increaseColumnCount()
+//                        getRecyclerAdapter()?.finishActMode()
+//                    }
+//                }
+//            }
         } else {
             zoomListener = null
         }
     }
 
-    private fun calculateContentHeight(items: ArrayList<ListItem>) {
-        val layoutManager = mView.items_list.layoutManager as MyGridLayoutManager
-        val thumbnailHeight = layoutManager.getChildAt(0)?.height ?: 0
-        val fullHeight = ((items.size - 1) / layoutManager.spanCount + 1) * thumbnailHeight
-//        mView.items_fastscroller.setContentHeight(fullHeight)
-//        mView.items_fastscroller.setScrollToY(mView.items_list.computeVerticalScrollOffset())
-    }
+//    private fun calculateContentHeight(items: ArrayList<ListItem>) {
+//        val layoutManager = mView.items_list.layoutManager as MyLinearLayoutManager
+//        val thumbnailHeight = layoutManager.getChildAt(0)?.height ?: 0
+//        val fullHeight = ((items.size - 1) / layoutManager.spanCount + 1) * thumbnailHeight
+////        mView.items_fastscroller.setContentHeight(fullHeight)
+////        mView.items_fastscroller.setScrollToY(mView.items_list.computeVerticalScrollOffset())
+//    }
 
-    fun increaseColumnCount() {
-        context?.config?.fileColumnCnt = ++(mView.items_list.layoutManager as MyGridLayoutManager).spanCount
-        columnCountChanged()
-    }
+//    fun increaseColumnCount() {
+//        context?.config?.fileColumnCnt = ++(mView.items_list.layoutManager as MyLinearLayoutManager).spanCount
+//        columnCountChanged()
+//    }
 
     fun reduceColumnCount() {
         context?.config?.fileColumnCnt = --(mView.items_list.layoutManager as MyGridLayoutManager).spanCount
@@ -690,15 +716,16 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     private fun columnCountChanged() {
         mView.items_list.adapter?.notifyDataSetChanged()
-        calculateContentHeight(storedItems)
+        //calculateContentHeight(storedItems)
     }
 
     override fun refreshItems(isHeaderFolder: Boolean) {
         val internalStoragePath = context?.config?.internalStoragePath
         if(isHeaderFolder){
             isHeaderShow = false
+            currentFolderHeader= Environment.DIRECTORY_DOWNLOADS
             currentPath = "$internalStoragePath/$currentFolderHeader"
-            if(currentFolderHeader == WHATSAPP_NAME){
+            if(currentFolderHeader == "Download"){
                 openPath(currentPath)
             }else {
                 storedItems = list
@@ -741,10 +768,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     }
 
     override fun headerFolderClick(folder: FolderItem) {
-        if(folder.id!= FILTER_DUPLICATE_ID) {
-            currentFolderHeader = folder.folderName
-            pathList.add("$internalStoragePath/$currentFolderHeader")
-        }
+//        if(folder.id!= FILTER_DUPLICATE_ID) {
+//            currentFolderHeader = folder.folderName
+//            pathList.add("$internalStoragePath/$currentFolderHeader")
+//        }
         folder.ClickCount++
         when (folder.id) {
             AUDIO_ID -> {
@@ -774,8 +801,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                     }
                 })
             }
-            WHATSAPP_ID -> {
-                WHATSAPP_CLICK++
+            DOWNLOAD_ID -> {
+                DOWNLOAD_CLICK++
                 refreshItems(true)
             }
             FILTER_DUPLICATE_ID -> {

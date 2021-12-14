@@ -31,6 +31,9 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 //        }
 
         fun bindItems(storageItem: StorageItem) {
+            //val totalSize = MemorySizeUtils.getTotalInternalMemorySize()
+           // val availableSize = MemorySizeUtils.getAvailableInternalMemorySize()
+
             val storageTextView = itemView.text_internal
             val storageIcon = itemView.icon_internalstorage
             val storageSize = itemView.storage_size
@@ -38,6 +41,7 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
           //  val folderLayout = itemView.folder_layout
 
             storageTextView.text = storageItem.storageTextView
+            storageSize.text = storageItem.storageSize
 
 //            usedMemoryProgress.max = (totalSize / 1024).toInt()
 //            usedMemoryProgress.progress= folder.size.toInt()

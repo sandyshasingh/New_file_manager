@@ -87,5 +87,10 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
         }
     }
 
+    fun updateFolderItems(folderItems: ArrayList<FolderItem>) {
+        this.folderList = folderItems
+        notifyDataSetChanged()
+    }
+
 }
 
