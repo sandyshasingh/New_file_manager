@@ -90,6 +90,9 @@ class FileManagerMainActivity : BaseSimpleActivity() {
         viewModel?.fetchVideos(this)
         viewModel?.fetchAudios(this)
         viewModel?.fetchImages(this)
+        viewModel?.fetchApps(this)
+        viewModel?.fetchDocuments(this)
+
         fragment.setZRPImage(ZRP_image)
        // mBannerAdmobUnitId = applicationContext?.resources?.getString(R.string.file_manager_banner_unit_id)
 
@@ -149,7 +152,7 @@ class FileManagerMainActivity : BaseSimpleActivity() {
             sharedPrefrences?.edit()?.putLong(WHATSAPP_NAME, WHATSAPP_CLICK)?.apply()
             sharedPrefrences?.edit()?.putLong(VIDEOS_NAME, VIDEOS_CLICK)?.apply()
             sharedPrefrences?.edit()?.putLong(AUDIO_NAME, AUDIO_CLICK)?.apply()
-            sharedPrefrences?.edit()?.putLong(FILTER_DUPLICATE_NAME, FILTER_DUPLICATE_CLICK)?.apply()
+           // sharedPrefrences?.edit()?.putLong(FILTER_DUPLICATE_NAME, FILTER_DUPLICATE_CLICK)?.apply()
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

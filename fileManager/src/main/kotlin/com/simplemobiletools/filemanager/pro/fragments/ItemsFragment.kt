@@ -3,7 +3,11 @@ package com.simplemobiletools.filemanager.pro.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
@@ -14,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,7 +51,6 @@ import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.this_is_it.*
 
 import kotlinx.android.synthetic.main.this_is_it.view.*
-
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -107,10 +111,22 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             mainAdapter?.updateFolderItems(folderItems)
         })
 
+        model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            //updateVideoSize(it)
+            mainAdapter?.updateFolderItems(folderItems)
+        })
+
+        model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            //updateVideoSize(it)
+            mainAdapter?.updateFolderItems(folderItems)
+        })
+
         model?.audioSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
             //updateAudioSize(it)
             mainAdapter?.updateFolderItems(folderItems)
         })
+
+
 
 
         //vibhor?.beGone()
@@ -164,7 +180,9 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             DOWNLOAD_CLICK = sharedPrefrences?.getLong(DOWNLOAD_NAME, DOWNLOAD_CLICK)!!
             VIDEOS_CLICK = sharedPrefrences?.getLong(VIDEOS_NAME, VIDEOS_CLICK)!!
             AUDIO_CLICK = sharedPrefrences?.getLong(AUDIO_NAME, AUDIO_CLICK)!!
-            FILTER_DUPLICATE_CLICK = sharedPrefrences?.getLong(FILTER_DUPLICATE_NAME, FILTER_DUPLICATE_CLICK)!!
+            APPLICATION_CLICK = sharedPrefrences?.getLong(APPLICATION_NAME, APPLICATION_CLICK)!!
+            DOCUMENTS_CLICK = sharedPrefrences?.getLong(DOCUMENTS_NAME, DOCUMENTS_CLICK)!!
+            //FILTER_DUPLICATE_CLICK = sharedPrefrences?.getLong(FILTER_DUPLICATE_NAME, FILTER_DUPLICATE_CLICK)!!
         }
 
 
@@ -197,16 +215,46 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             requireActivity().resources.getColor(R.color.filter_text_color), DOWNLOAD_CLICK))
 
 
-        val totalSize = MemorySizeUtils.getTotalInternalMemorySize()
-        val availableSize = MemorySizeUtils.getAvailableInternalMemorySize()
+        val totalSizeInternal = MemorySizeUtils.getTotalInternalMemorySize()
+        val availableSizeInternal = MemorySizeUtils.getAvailableInternalMemorySize()
+
+        val totalSizeExternal = MemorySizeUtils.getTotalExternalMemorySize()
+        val availableSizeExternal = MemorySizeUtils.getAvailableExternalMemorySize()
+
+        fun String.getAmount(): String {
+            return substring(indexOfFirst { it.isDigit() }, indexOfLast { it.isDigit() } + 1)
+                .filter { it.isDigit() || it == '.' }
+        }
+
+        var total = totalSizeInternal?.getAmount()?.toDouble()
+        var available = availableSizeInternal?.getAmount()?.toDouble()
+        var arcPercent = (available!! / total!!)*100
 
 
         storageItems.add(StorageItem("Internal storage",  R.drawable.ic_icon_photos,
-            "$availableSize/$totalSize"
+            "$availableSizeInternal/$totalSizeInternal",arcPercent
         ))
-        storageItems.add(StorageItem("External storage",R.drawable.ic_icon_photos,totalSize!!))
+
+
+        if(requireActivity().hasExternalSDCard()) {
+            total = totalSizeExternal?.getAmount()?.toDouble()
+            available = availableSizeExternal?.getAmount()?.toDouble()
+            arcPercent = (available!! / total!!)*100
+
+
+
+            storageItems.add(
+                StorageItem(
+                    "External storage",
+                    R.drawable.ic_icon_photos,
+                    "$availableSizeExternal/$totalSizeExternal",arcPercent
+                )
+            )
+        }
 
  }
+
+
 
     fun getDrawable(id: Int): Drawable {
         return  requireActivity().resources.getDrawable(id)
@@ -723,7 +771,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         val internalStoragePath = context?.config?.internalStoragePath
         if(isHeaderFolder){
             isHeaderShow = false
-            currentFolderHeader= Environment.DIRECTORY_DOWNLOADS
+            //currentFolderHeader= Environment.DIRECTORY_DOWNLOADS
             currentPath = "$internalStoragePath/$currentFolderHeader"
             if(currentFolderHeader == "Download"){
                 openPath(currentPath)
@@ -803,15 +851,35 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             }
             DOWNLOAD_ID -> {
                 DOWNLOAD_CLICK++
+                currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 refreshItems(true)
             }
-            FILTER_DUPLICATE_ID -> {
-                FILTER_DUPLICATE_CLICK++
-                val intent = Intent("com.rocks.music.hamburger.FilterDuplicateActivity")
-                startActivity(intent)
+            APPLICATIONS_ID ->{
+                APPLICATION_CLICK++
+                model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+                    if (!it.isNullOrEmpty()) {
+                        list = it as ArrayList<ListItem>
+                        refreshItems(true)
+                    }
+                })
             }
+            DOCUMENTS_ID ->{
+                DOCUMENTS_CLICK++
+                model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+                    if (!it.isNullOrEmpty()) {
+                        list = it as ArrayList<ListItem>
+                        refreshItems(true)
+                    }
+                })
+            }
+//            FILTER_DUPLICATE_ID -> {
+//                FILTER_DUPLICATE_CLICK++
+//                val intent = Intent("com.rocks.music.hamburger.FilterDuplicateActivity")
+//                startActivity(intent)
+//            }
         }
     }
+
 
     override fun breadcrumbClickedNew(path: String, position: Int) {
         val size = pathList.size
@@ -841,3 +909,4 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     }
 }
+

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.github.lzyzsd.circleprogress.ArcProgress
 import com.simplemobiletools.commons.MemorySizeUtils
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.extensions.isDarkTheme
@@ -20,6 +21,7 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 
     class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
         val totalSize = MemorySizeUtils.getTotalInternalMemorySizeInLong()
+        val arcProgress = itemView.findViewById(R.id.arc_progress) as ArcProgress
        // var darkThemeBackground : Drawable? = null
        // var isDarkTheme = false
 
@@ -30,9 +32,13 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 //            }
 //        }
 
+
+
         fun bindItems(storageItem: StorageItem) {
-            //val totalSize = MemorySizeUtils.getTotalInternalMemorySize()
-           // val availableSize = MemorySizeUtils.getAvailableInternalMemorySize()
+
+
+
+
 
             val storageTextView = itemView.text_internal
             val storageIcon = itemView.icon_internalstorage
@@ -42,6 +48,9 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 
             storageTextView.text = storageItem.storageTextView
             storageSize.text = storageItem.storageSize
+            arcProgress.max = 100
+            arcProgress.progress = storageItem.arcPercent.toInt()
+            val ad= arcProgress
 
 //            usedMemoryProgress.max = (totalSize / 1024).toInt()
 //            usedMemoryProgress.progress= folder.size.toInt()
@@ -71,6 +80,7 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(storageList[position])
+
 
     }
 

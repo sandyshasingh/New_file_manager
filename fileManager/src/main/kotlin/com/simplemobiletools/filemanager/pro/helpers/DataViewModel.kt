@@ -7,14 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.simplemobiletools.filemanager.pro.models.ListItem
 
-class DataViewModel(application: Application):  AndroidViewModel(application),PhotoFetcher.FetchPhotosAsyncCompleteListener, AudioFetcher.FetchAudioAsyncCompleteListener,VideoFetcher.FetchVideoAsyncCompleteListener {
+class DataViewModel(application: Application):  AndroidViewModel(application),PhotoFetcher.FetchPhotosAsyncCompleteListener,AppsFetcher.FetchAppsAsyncCompleteListener,DocumentFetcher.FetchDocumentsAsyncCompleteListener, AudioFetcher.FetchAudioAsyncCompleteListener,VideoFetcher.FetchVideoAsyncCompleteListener {
 
     var audios: MutableLiveData<List<ListItem>>? = MutableLiveData()
     var videos: MutableLiveData<List<ListItem>>? = MutableLiveData()
     var photos: MutableLiveData<List<ListItem>>? = MutableLiveData()
+    var apps: MutableLiveData<ArrayList<ListItem>> = MutableLiveData()
     var zip_files: MutableLiveData<List<ListItem>>? = MutableLiveData()
-    var documents: MutableLiveData<List<ListItem>>? = MutableLiveData()
-    var applications: MutableLiveData<List<ListItem>>? = MutableLiveData()
+    var documents: MutableLiveData<List<ListItem>> = MutableLiveData()
     var audioSize = MutableLiveData<Long>()
     var videoSize = MutableLiveData<Long>()
     var photoSize = MutableLiveData<Long>()
@@ -31,6 +31,18 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Ph
         PhotoFetcher(context,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
+    fun fetchApps(context: Context){
+        AppsFetcher(context,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    fun fetchDocuments(context: Context){
+        DocumentFetcher(context,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+     fun fetchZip(context: Context){
+            ZipFetcher(context,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+
+
     override fun fetchAudioCompleted(audiosList: MutableLiveData<List<ListItem>>?, audiosSize: Long) {
         audios = audiosList
         this.audioSize.value = audiosSize
@@ -44,6 +56,14 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Ph
     override fun fetchPhotosCompleted(photosList: MutableLiveData<List<ListItem>>?, photosSize: Long) {
         photos = photosList
         this.photoSize.value = photosSize
+    }
+
+    override fun fetchAppsCompleted(audiosList: ArrayList<ListItem>?) {
+        apps.value = audiosList
+    }
+
+    override fun fetchDocumentsCompleted(documentsList: ArrayList<ListItem>?) {
+        documents.value = documentsList
     }
 
 
