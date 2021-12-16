@@ -7,13 +7,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.simplemobiletools.filemanager.pro.models.ListItem
 
-class DataViewModel(application: Application):  AndroidViewModel(application),PhotoFetcher.FetchPhotosAsyncCompleteListener,AppsFetcher.FetchAppsAsyncCompleteListener,DocumentFetcher.FetchDocumentsAsyncCompleteListener, AudioFetcher.FetchAudioAsyncCompleteListener,VideoFetcher.FetchVideoAsyncCompleteListener {
+class DataViewModel(application: Application):  AndroidViewModel(application),ZipFetcher.FetchZipAsyncCompleteListener,PhotoFetcher.FetchPhotosAsyncCompleteListener,AppsFetcher.FetchAppsAsyncCompleteListener,DocumentFetcher.FetchDocumentsAsyncCompleteListener, AudioFetcher.FetchAudioAsyncCompleteListener,VideoFetcher.FetchVideoAsyncCompleteListener {
 
     var audios: MutableLiveData<List<ListItem>>? = MutableLiveData()
     var videos: MutableLiveData<List<ListItem>>? = MutableLiveData()
     var photos: MutableLiveData<List<ListItem>>? = MutableLiveData()
     var apps: MutableLiveData<ArrayList<ListItem>> = MutableLiveData()
-    var zip_files: MutableLiveData<List<ListItem>>? = MutableLiveData()
+    var zip_files: MutableLiveData<List<ListItem>> = MutableLiveData()
     var documents: MutableLiveData<List<ListItem>> = MutableLiveData()
     var audioSize = MutableLiveData<Long>()
     var videoSize = MutableLiveData<Long>()
@@ -65,6 +65,9 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Ph
     override fun fetchDocumentsCompleted(documentsList: ArrayList<ListItem>?) {
         documents.value = documentsList
     }
+
+    override fun fetchZipCompleted(zipList: ArrayList<ListItem>?) {
+        zip_files.value = zipList    }
 
 
 }

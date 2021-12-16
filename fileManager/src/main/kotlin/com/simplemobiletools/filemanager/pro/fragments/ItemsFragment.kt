@@ -120,6 +120,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             //updateVideoSize(it)
             mainAdapter?.updateFolderItems(folderItems)
         })
+        model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            //updateVideoSize(it)
+            mainAdapter?.updateFolderItems(folderItems)
+        })
 
         model?.audioSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
             //updateAudioSize(it)
@@ -182,6 +186,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             AUDIO_CLICK = sharedPrefrences?.getLong(AUDIO_NAME, AUDIO_CLICK)!!
             APPLICATION_CLICK = sharedPrefrences?.getLong(APPLICATION_NAME, APPLICATION_CLICK)!!
             DOCUMENTS_CLICK = sharedPrefrences?.getLong(DOCUMENTS_NAME, DOCUMENTS_CLICK)!!
+            ZIP_FILES_CLICK = sharedPrefrences?.getLong(ZIP_FILES_NAME, ZIP_FILES_CLICK)!!
             //FILTER_DUPLICATE_CLICK = sharedPrefrences?.getLong(FILTER_DUPLICATE_NAME, FILTER_DUPLICATE_CLICK)!!
         }
 
@@ -866,6 +871,15 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             DOCUMENTS_ID ->{
                 DOCUMENTS_CLICK++
                 model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+                    if (!it.isNullOrEmpty()) {
+                        list = it as ArrayList<ListItem>
+                        refreshItems(true)
+                    }
+                })
+            }
+            ZIP_FILES_ID ->{
+                ZIP_FILES_CLICK++
+                model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
                         refreshItems(true)
