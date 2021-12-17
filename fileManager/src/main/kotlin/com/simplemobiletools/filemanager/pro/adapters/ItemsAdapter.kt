@@ -872,19 +872,6 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
 //        notifyDataSetChanged()
 //    }
 
-    fun isASectionTitle(position: Int) = listItems.getOrNull(position)?.isSectionTitle ?: false
-
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
-        super.onViewRecycled(holder)
-        if (!activity.isDestroyed && !activity.isFinishing) {
-            val icon = holder.itemView.item_icon
-            if (icon != null) {
-                Glide.with(activity).clear(icon)
-            }
-        }
-    }
-
-
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setupView(view: View, listItem: ListItem, holder: ViewHolder, position: Int) {
 
@@ -968,6 +955,19 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
                             .into(item_icon)
                     }
                 }
+            }
+        }
+    }
+
+    fun isASectionTitle(position: Int) = listItems.getOrNull(position)?.isSectionTitle ?: false
+
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        super.onViewRecycled(holder)
+        if (!activity.isDestroyed && !activity.isFinishing) {
+            val icon = holder.itemView.item_icon
+            if (icon != null) {
+                Glide.with(activity).clear(icon)
             }
         }
     }

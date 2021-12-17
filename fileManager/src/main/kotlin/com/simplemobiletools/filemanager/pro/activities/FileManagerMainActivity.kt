@@ -17,12 +17,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuItemCompat.OnActionExpandListener
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.simplemobiletools.commons.AppProgressDialog
 import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.filemanager.pro.ItemsListFragment
 import com.simplemobiletools.filemanager.pro.PermissionActivity
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.dialogs.ChangeSortingDialog
@@ -41,6 +44,7 @@ import java.io.File
 import java.util.*
 
 const val REQUEST_CODE_FOR_STORAGE_PERMISSION =  101
+const val FRAGMENT_STACK = "fragment_stack"
 class FileManagerMainActivity : BaseSimpleActivity() {
     private val PICKED_PATH = "picked_path"
     private var isSearchOpen = false
@@ -66,13 +70,25 @@ class FileManagerMainActivity : BaseSimpleActivity() {
         viewModel = ViewModelProvider(this).get(DataViewModel::class.java)
         setSupportActionBar(toolbar)
 
+      // var userWallet = intent?.getIntExtra("USER_WALLET_PRICE")
+
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+       toolbar?.setNavigationOnClickListener {
+           onBackPressed()
+       }
+
+
+
 //        if(supportActionBar!=null)
 //            supportActionBar?.title = "File Manager"
 
         sharedPrefrences = getSharedPrefs()
-        fragment = (fragment_holder as ItemsFragment).apply {
+       val fragmentManager: FragmentManager = supportFragmentManager
+        fragment = ItemsFragment()
+       fragmentManager.beginTransaction().add(R.id.fragment_holder,fragment).addToBackStack(
+           FRAGMENT_STACK).commit()
+       fragment.apply {
             isGetRingtonePicker = intent.action == RingtoneManager.ACTION_RINGTONE_PICKER
             isGetContentIntent = intent.action == Intent.ACTION_GET_CONTENT
             isPickMultipleIntent = intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
@@ -158,6 +174,7 @@ class FileManagerMainActivity : BaseSimpleActivity() {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.home -> onBackPressed()
             R.id.go_home -> goHome()
             R.id.sort -> showSortingDialog()
             R.id.change_view_type -> changeViewType(item)
@@ -207,10 +224,10 @@ class FileManagerMainActivity : BaseSimpleActivity() {
       //  fragment.refreshItems(false)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(PICKED_PATH, (fragment_holder as ItemsFragment).currentPath)
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        outState.putString(PICKED_PATH, fragment.currentPath)
+//    }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
@@ -367,14 +384,15 @@ class FileManagerMainActivity : BaseSimpleActivity() {
         }
     }
     override fun onBackPressed() {
-        if (fragment.pathList.size <= 1) {
-            finish()
-        }else {
-            val i =fragment.pathList.size
-            fragment.pathList.removeAt(i - 1)
-             val path = fragment.pathList[fragment.pathList.size - 1]
-           // openPath(path, false)
-        }
+//        if (fragment.pathList.size <= 1) {
+//            finish()
+//        }else {
+//            val i =fragment.pathList.size
+//            fragment.pathList.removeAt(i - 1)
+//             val path = fragment.pathList[fragment.pathList.size - 1]
+//           // openPath(path, false)
+//        }
+        super.onBackPressed()
     }
 
     private fun checkIfRootAvailable() {
@@ -440,4 +458,13 @@ class FileManagerMainActivity : BaseSimpleActivity() {
             MenuItemCompat.collapseActionView(searchMenuItem)
         }
     }
+
+    fun onCategoryClick(id: Int) {
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val myFragment = ItemsListFragment.newInstance(id)
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.fragment_holder,myFragment).addToBackStack("")
+        fragmentTransaction.commit()
+    }
+
 }

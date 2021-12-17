@@ -31,9 +31,8 @@
         app:srcCompat="@drawable/zrp_image"
         android:visibility="gone"/>
 
-    <fragment
+    <FrameLayout
         android:id="@+id/fragment_holder"
-        android:name="com.simplemobiletools.filemanager.pro.fragments.ItemsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

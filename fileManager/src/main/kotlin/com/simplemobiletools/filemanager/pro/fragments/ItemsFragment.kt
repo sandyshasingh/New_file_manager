@@ -99,36 +99,13 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         baseSimpleActivity = activity as BaseSimpleActivity
         internalStoragePath = context?.config?.internalStoragePath
 
-
-        model = ViewModelProvider(baseSimpleActivity!!).get(DataViewModel::class.java)
-        model?.photoSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-            //updatePhotosSize(it)
-        })
-
-
-        model?.videoSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-            //updateVideoSize(it)
-            mainAdapter?.updateFolderItems(folderItems)
-        })
-
-        model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-            //updateVideoSize(it)
-            mainAdapter?.updateFolderItems(folderItems)
-        })
-
-        model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-            //updateVideoSize(it)
-            mainAdapter?.updateFolderItems(folderItems)
-        })
         model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
             //updateVideoSize(it)
             mainAdapter?.updateFolderItems(folderItems)
         })
 
-        model?.audioSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-            //updateAudioSize(it)
-            mainAdapter?.updateFolderItems(folderItems)
-        })
+
+
 
 
 
@@ -151,32 +128,32 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     }
 
-    private fun updatePhotosSize(size : Long){
-        folderItems.forEach{
-            if(it.id == PHOTOS_ID){
-                it.size = size/1024
-                it.sizeString = MemorySizeUtils.formatSize(size)
-            }
-        }
-    }
+//    private fun updatePhotosSize(size : Long){
+//        folderItems.forEach{
+//            if(it.id == PHOTOS_ID){
+//                it.size = size/1024
+//                it.sizeString = MemorySizeUtils.formatSize(size)
+//            }
+//        }
+//    }
 
-    private fun updateVideoSize(size: Long) {
-        folderItems.forEach{
-            if(it.id == VIDEOS_ID){
-                it.size = size/1024
-                it.sizeString = MemorySizeUtils.formatSize(size)
-            }
-        }
-    }
+//    private fun updateVideoSize(size: Long) {
+//        folderItems.forEach{
+//            if(it.id == VIDEOS_ID){
+//                it.size = size/1024
+//                it.sizeString = MemorySizeUtils.formatSize(size)
+//            }
+//        }
+//    }
 
-    private fun updateAudioSize(size: Long) {
-        folderItems.forEach{
-            if(it.id == AUDIO_ID){
-                it.size = size/1024
-                it.sizeString = MemorySizeUtils.formatSize(size)
-            }
-        }
-    }
+//    private fun updateAudioSize(size: Long) {
+//        folderItems.forEach{
+//            if(it.id == AUDIO_ID){
+//                it.size = size/1024
+//                it.sizeString = MemorySizeUtils.formatSize(size)
+//            }
+//        }
+//    }
 
     private fun createFolderList() {
         if (sharedPrefrences != null) {
@@ -204,20 +181,21 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
             folderItems.add(FolderItem(VIDEOS_ID, VIDEOS_NAME, R.drawable.ic_icon_videos, getDrawable(R.drawable.rectangle_semitranparent_video),
                     requireActivity().resources.getColor(R.color.video_text_color), VIDEOS_CLICK))
+
             folderItems.add(FolderItem(AUDIO_ID, AUDIO_NAME, R.drawable.ic_icon_audio, getDrawable(R.drawable.rectangle_semitranparent_audio),
                     requireActivity().resources.getColor(R.color.audio_text_color), AUDIO_CLICK))
 
-             folderItems.add(FolderItem(APPLICATIONS_ID, APPLICATION_NAME, R.drawable.ic_icon_whtsap, getDrawable(R.drawable.rectangle_semitranparent_whatsapp),
+            folderItems.add(FolderItem(APPLICATIONS_ID, APPLICATION_NAME, R.drawable.ic_icon_whtsap, getDrawable(R.drawable.rectangle_semitranparent_whatsapp),
                      requireActivity().resources.getColor(R.color.whatsapp_text_color), APPLICATION_CLICK))
 
             folderItems.add(FolderItem(ZIP_FILES_ID, ZIP_FILES_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
                     requireActivity().resources.getColor(R.color.filter_text_color), ZIP_FILES_CLICK))
 
-        folderItems.add(FolderItem(DOCUMENTS_ID, DOCUMENTS_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
-                    requireActivity().resources.getColor(R.color.filter_text_color), DOCUMENTS_CLICK))
+            folderItems.add(FolderItem(DOCUMENTS_ID, DOCUMENTS_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
+                        requireActivity().resources.getColor(R.color.filter_text_color), DOCUMENTS_CLICK))
 
-        folderItems.add(FolderItem(DOWNLOAD_ID, DOWNLOAD_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
-            requireActivity().resources.getColor(R.color.filter_text_color), DOWNLOAD_CLICK))
+            folderItems.add(FolderItem(DOWNLOAD_ID, DOWNLOAD_NAME, R.drawable.ic_icon_duplicate, getDrawable(R.drawable.rectangle_semitranparent_filter),
+                requireActivity().resources.getColor(R.color.filter_text_color), DOWNLOAD_CLICK))
 
 
         val totalSizeInternal = MemorySizeUtils.getTotalInternalMemorySize()
@@ -826,72 +804,12 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //            pathList.add("$internalStoragePath/$currentFolderHeader")
 //        }
         folder.ClickCount++
-        when (folder.id) {
-            AUDIO_ID -> {
-                AUDIO_CLICK++
-                model?.audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            VIDEOS_ID -> {
-                VIDEOS_CLICK++
-                model?.videos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            PHOTOS_ID -> {
-                PHOTOS_CLICK++
-                model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            DOWNLOAD_ID -> {
-                DOWNLOAD_CLICK++
-                currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
-                refreshItems(true)
-            }
-            APPLICATIONS_ID ->{
-                APPLICATION_CLICK++
-                model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            DOCUMENTS_ID ->{
-                DOCUMENTS_CLICK++
-                model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            ZIP_FILES_ID ->{
-                ZIP_FILES_CLICK++
-                model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-//            FILTER_DUPLICATE_ID -> {
-//                FILTER_DUPLICATE_CLICK++
-//                val intent = Intent("com.rocks.music.hamburger.FilterDuplicateActivity")
-//                startActivity(intent)
-//            }
-        }
+//        var USER_WALLET_PRICE = 0
+//        val intent = Intent(requireContext(), FileManagerMainActivity::class.java)
+//        intent.putExtra(USER_WALLET_PRICE,folder.id)
+
+        (activity as FileManagerMainActivity)?.onCategoryClick(folder.id)
+
     }
 
 
