@@ -381,7 +381,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                     mView.item_list_rv.adapter = ItemsListAdapter(
                         activity as BaseSimpleActivity,
                          folderItems,
-                        null,
+                        bottomnavigation,
                         storedItems,
                         this@ItemsListFragment,
                         null,

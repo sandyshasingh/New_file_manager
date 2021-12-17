@@ -88,6 +88,10 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
     override fun mLongClick() {
         isLongPressClick = true
 
+        if(bottomnavigation == null){
+            return
+        }
+
         if(selectedKeys.isNotEmpty()) {
             bottomnavigation?.visibility = View.VISIBLE
         }
