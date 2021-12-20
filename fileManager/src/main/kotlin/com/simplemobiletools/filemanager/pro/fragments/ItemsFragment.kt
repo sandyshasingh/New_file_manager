@@ -1,24 +1,15 @@
 package com.simplemobiletools.filemanager.pro.fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.os.AsyncTask
 import android.os.Bundle
-import android.os.Environment
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +25,7 @@ import com.simplemobiletools.commons.interfaces.ItemOperationsListener
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.commons.adapters.AdapterForPath
+import com.simplemobiletools.filemanager.pro.adapters.AdapterForRecentFiles
 import com.simplemobiletools.commons.adapters.AdapterForStorage
 import com.simplemobiletools.commons.models.StorageItem
 import com.simplemobiletools.commons.views.MyGridLayoutManager
@@ -45,7 +37,6 @@ import com.simplemobiletools.filemanager.pro.adapters.ItemsAdapter
 import com.simplemobiletools.filemanager.pro.extensions.*
 import com.simplemobiletools.filemanager.pro.extensions.getPositionOfImage
 import com.simplemobiletools.filemanager.pro.helpers.DataViewModel
-import com.simplemobiletools.filemanager.pro.helpers.MAX_COLUMN_COUNT
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
 import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.this_is_it.*
@@ -79,6 +70,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     var pathList = ArrayList<String>()
     var mainAdapter : AdapterForFolders? = null
     var storageAdapter : AdapterForStorage? = null
+    var recent_file_line_adapter : AdapterForRecentFiles? = null
 
     private var storedTextColor = 0
     private var storedFontSize = 0
@@ -99,9 +91,15 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         baseSimpleActivity = activity as BaseSimpleActivity
         internalStoragePath = context?.config?.internalStoragePath
 
-        model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-            //updateVideoSize(it)
-            mainAdapter?.updateFolderItems(folderItems)
+//        model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+//            //updateVideoSize(it)
+//            mainAdapter?.updateFolderItems(folderItems)
+//        })
+        model = ViewModelProvider(baseSimpleActivity!!).get(DataViewModel::class.java)
+
+        model?.recent_files?.observe(baseSimpleActivity!!,androidx.lifecycle.Observer {
+                recent_file_line_adapter?.mRecent = it
+                recent_file_line_adapter?.notifyDataSetChanged()
         })
 
 
@@ -125,6 +123,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         rv_storage?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         storageAdapter = AdapterForStorage(storageItems,requireActivity() )
         rv_storage?.adapter = storageAdapter
+
+        recent_file_line?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
+        recent_file_line_adapter = AdapterForRecentFiles(requireActivity() ,null)
+        recent_file_line?.adapter = recent_file_line_adapter
 
     }
 
@@ -473,13 +475,33 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //            activity?.let { getAudioImageFromPath(it, file.path) }
 //        } else null
 
-        return ListItem(curPath, curName, isDirectory, children, size, lastModified, false, null)
+        return ListItem(
+            curPath,
+            curName,
+            isDirectory,
+            children,
+            size,
+            lastModified,
+            false,
+            null,
+            ""
+        )
     }
 
     private fun getListItemsFromFileDirItems(fileDirItems: ArrayList<FileDirItem>): ArrayList<ListItem> {
         val listItems = ArrayList<ListItem>()
         fileDirItems.forEach {
-            val listItem = ListItem(it.path, it.name, it.isDirectory, it.children, it.size, it.modified, false, null)
+            val listItem = ListItem(
+                it.path,
+                it.name,
+                it.isDirectory,
+                it.children,
+                it.size,
+                it.modified,
+                false,
+                null,
+                ""
+            )
             listItems.add(listItem)
         }
         return listItems

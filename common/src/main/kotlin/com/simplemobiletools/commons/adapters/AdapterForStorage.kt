@@ -21,7 +21,7 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 
     class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
         val totalSize = MemorySizeUtils.getTotalInternalMemorySizeInLong()
-        val arcProgress = itemView.findViewById(R.id.arc_progress) as ArcProgress
+        val arcProgress = itemView.arc_progress
        // var darkThemeBackground : Drawable? = null
        // var isDarkTheme = false
 
@@ -35,10 +35,6 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 
 
         fun bindItems(storageItem: StorageItem) {
-
-
-
-
 
             val storageTextView = itemView.text_internal
             val storageIcon = itemView.icon_internalstorage

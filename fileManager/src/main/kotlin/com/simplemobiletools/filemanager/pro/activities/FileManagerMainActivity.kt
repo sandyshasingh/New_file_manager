@@ -109,6 +109,8 @@ class FileManagerMainActivity : BaseSimpleActivity() {
         viewModel?.fetchApps(this)
         viewModel?.fetchDocuments(this)
         viewModel?.fetchZip(this)
+       viewModel?.fetchRecent(this)
+
 
         fragment.setZRPImage(ZRP_image)
        // mBannerAdmobUnitId = applicationContext?.resources?.getString(R.string.file_manager_banner_unit_id)

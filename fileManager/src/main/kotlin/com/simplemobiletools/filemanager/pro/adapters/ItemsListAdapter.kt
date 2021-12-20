@@ -115,9 +115,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         mCopyPath.beVisibleIf(isOneItemSelected())
         checkHideBtnVisibility(mHide, mUnHide, null)
 
-//        mSend.setOnClickListener {
-//            shareFiles(null)
-//        }
+        mSend.setOnClickListener {
+            shareFiles(null)
+        }
         mDelete.setOnClickListener {
             askConfirmDelete()
         }

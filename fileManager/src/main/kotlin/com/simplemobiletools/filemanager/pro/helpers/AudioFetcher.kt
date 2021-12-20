@@ -71,14 +71,16 @@ class AudioFetcher(var context: Context,var fetchAudioAsyncCompleteListener: Fet
                         Log.d("path",data)
                         if(durationInMilisec>0  && !duration?.equals("00:00")!!) {
                             audiosSize += sizeInLong
-                            val item =  ListItem(data,
-                                    name,
-                                    false,
-                                    0,
-                                    sizeInLong,
-                                    date,
-                                    false,
-                                    imageUri
+                            val item =  ListItem(
+                                data,
+                                name,
+                                false,
+                                0,
+                                sizeInLong,
+                                date,
+                                false,
+                                imageUri,
+                                ""
                             )
 //                            item.sizeCalculator = totalSize
                             songsDataClassList.plusAssign(item)

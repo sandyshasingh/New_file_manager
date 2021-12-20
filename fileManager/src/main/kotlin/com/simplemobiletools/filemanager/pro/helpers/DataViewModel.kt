@@ -5,9 +5,12 @@ import android.content.Context
 import android.os.AsyncTask
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.simplemobiletools.filemanager.pro.GroupVideoPhotoAsyncTask
+import com.simplemobiletools.filemanager.pro.GroupedDataClass
 import com.simplemobiletools.filemanager.pro.models.ListItem
 
-class DataViewModel(application: Application):  AndroidViewModel(application),ZipFetcher.FetchZipAsyncCompleteListener,PhotoFetcher.FetchPhotosAsyncCompleteListener,AppsFetcher.FetchAppsAsyncCompleteListener,DocumentFetcher.FetchDocumentsAsyncCompleteListener, AudioFetcher.FetchAudioAsyncCompleteListener,VideoFetcher.FetchVideoAsyncCompleteListener {
+class DataViewModel(application: Application):  AndroidViewModel(application),ZipFetcher.FetchZipAsyncCompleteListener,PhotoFetcher.FetchPhotosAsyncCompleteListener,AppsFetcher.FetchAppsAsyncCompleteListener,DocumentFetcher.FetchDocumentsAsyncCompleteListener,
+    AudioFetcher.FetchAudioAsyncCompleteListener,VideoFetcher.FetchVideoAsyncCompleteListener,GroupVideoPhotoAsyncTask.RecentFetchAsyncCompleteListener {
 
     var audios: MutableLiveData<List<ListItem>>? = MutableLiveData()
     var videos: MutableLiveData<List<ListItem>>? = MutableLiveData()
@@ -18,6 +21,11 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
     var audioSize = MutableLiveData<Long>()
     var videoSize = MutableLiveData<Long>()
     var photoSize = MutableLiveData<Long>()
+    var recent_files : MutableLiveData<Map<String,List<ListItem>>> = MutableLiveData()
+
+    fun fetchRecent(context: Context){
+        GroupVideoPhotoAsyncTask(context,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
 
     fun fetchAudios(context: Context){
         AudioFetcher(context,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -68,6 +76,11 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
 
     override fun fetchZipCompleted(zipList: ArrayList<ListItem>?) {
         zip_files.value = zipList    }
+
+    override fun recentFetchCompleted(recentList: Map<String,List<ListItem>>?) {
+        recent_files.value = recentList
+    }
+
 
 
 }

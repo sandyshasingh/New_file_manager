@@ -61,7 +61,17 @@ class PhotoFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fe
                         val file = File(uri)
                         if (file.exists() && file.length() > 0) {
                             photosSize += fileSizeValue
-                            val photo = ListItem(uri, name, false, 0, fileSizeValue, dateTaken, false, null)
+                            val photo = ListItem(
+                                uri,
+                                name,
+                                false,
+                                0,
+                                fileSizeValue,
+                                dateTaken,
+                                false,
+                                null,
+                                ""
+                            )
 
                             data.add(photo)
                         }

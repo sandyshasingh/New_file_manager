@@ -474,5 +474,9 @@ open class BaseSimpleActivity : AppCompatActivity() {
             toast(R.string.exporting_successful)
         }
     }
+
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//    }
 }
 

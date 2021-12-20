@@ -1,12 +1,10 @@
 package com.simplemobiletools.filemanager.pro.helpers
 
 import android.app.Activity
-import android.content.Context
 import com.simplemobiletools.commons.extensions.areDigitsOnly
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.SORT_BY_SIZE
-import com.simplemobiletools.commons.helpers.WHATSAPP_NAME
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.extensions.config
@@ -46,7 +44,17 @@ class RootHelpers(val activity: Activity) {
                     val file = File(path, line)
                     val fullLine = fullLines.firstOrNull { it.endsWith(" $line") }
                     val isDirectory = fullLine?.startsWith('d') ?: file.isDirectory
-                    val fileDirItem = ListItem(file.absolutePath, line, isDirectory, 0, 0, 0, false, null)
+                    val fileDirItem = ListItem(
+                        file.absolutePath,
+                        line,
+                        isDirectory,
+                        0,
+                        0,
+                        0,
+                        false,
+                        null,
+                        ""
+                    )
                     files.add(fileDirItem)
                     super.commandOutput(id, line)
                 }

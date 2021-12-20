@@ -3,7 +3,6 @@ package com.simplemobiletools.filemanager.pro.helpers
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Environment
-import com.simplemobiletools.commons.helpers.format
 import com.simplemobiletools.filemanager.pro.models.ListItem
 import java.io.File
 import java.util.*
@@ -32,7 +31,17 @@ class ZipFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fetc
                 }
                 else if(fileList[i].path.endsWith(docPattern1)) {
                     //val size = format(fileList[i].length().toDouble(),2)
-                    val hoho = ListItem(fileList[i].path,fileList[i].name,false,0,fileList[i].length(),0L,false,null)
+                    val hoho = ListItem(
+                        fileList[i].path,
+                        fileList[i].name,
+                        false,
+                        0,
+                        fileList[i].length(),
+                        0L,
+                        false,
+                        null,
+                        ""
+                    )
                     fileDataClassList.add(hoho)
                 }
 

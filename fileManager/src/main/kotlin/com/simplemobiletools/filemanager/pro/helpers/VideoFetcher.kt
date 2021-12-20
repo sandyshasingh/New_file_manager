@@ -67,14 +67,16 @@ class VideoFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fe
                         if(durationInMilisec>0  && !duration?.equals("00:00")!!) {
                             videosSize += sizeInLong
                             songsDataClassList.plusAssign(
-                                    ListItem(data,
-                                            name,
-                                            false,
-                                            0,
-                                            sizeInLong,
-                                            date,
-                                            false,
-                                            null
+                                    ListItem(
+                                        data,
+                                        name,
+                                        false,
+                                        0,
+                                        sizeInLong,
+                                        date,
+                                        false,
+                                        null,
+                                        ""
                                     )
                             )
                         }

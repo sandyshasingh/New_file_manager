@@ -8,21 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.commons.AppProgressDialog
 import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.AdapterForFolders
 import com.simplemobiletools.commons.adapters.AdapterForPath
-import com.simplemobiletools.commons.adapters.AdapterForStorage
 import com.simplemobiletools.commons.dialogs.StoragePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.ItemOperationsListener
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.FolderItem
-import com.simplemobiletools.commons.views.MyLinearLayoutManager
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 import com.simplemobiletools.filemanager.pro.adapters.ItemsListAdapter
 import com.simplemobiletools.filemanager.pro.extensions.config
@@ -33,10 +30,7 @@ import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.fragment_items_list.*
 import kotlinx.android.synthetic.main.fragment_items_list.view.*
 import kotlinx.android.synthetic.main.this_is_it.*
-import kotlinx.android.synthetic.main.this_is_it.items_list
-import kotlinx.android.synthetic.main.this_is_it.recyclerView
 import kotlinx.android.synthetic.main.this_is_it.view.*
-import kotlinx.android.synthetic.main.this_is_it.view.items_list
 import java.io.File
 import java.util.HashMap
 
@@ -275,7 +269,17 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
     private fun getListItemsFromFileDirItems(fileDirItems: ArrayList<FileDirItem>): ArrayList<ListItem> {
         val listItems = ArrayList<ListItem>()
         fileDirItems.forEach {
-            val listItem = ListItem(it.path, it.name, it.isDirectory, it.children, it.size, it.modified, false, null)
+            val listItem = ListItem(
+                it.path,
+                it.name,
+                it.isDirectory,
+                it.children,
+                it.size,
+                it.modified,
+                false,
+                null,
+                ""
+            )
             listItems.add(listItem)
         }
         return listItems
@@ -334,7 +338,17 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //            activity?.let { getAudioImageFromPath(it, file.path) }
 //        } else null
 
-        return ListItem(curPath, curName, isDirectory, children, size, lastModified, false, null)
+        return ListItem(
+            curPath,
+            curName,
+            isDirectory,
+            children,
+            size,
+            lastModified,
+            false,
+            null,
+            ""
+        )
     }
 
 
@@ -468,72 +482,73 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
     }
 
     override fun headerFolderClick(folder: FolderItem) {
-        when (folder.id) {
-            AUDIO_ID -> {
-                AUDIO_CLICK++
-                model?.audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            VIDEOS_ID -> {
-                VIDEOS_CLICK++
-                model?.videos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            PHOTOS_ID -> {
-                PHOTOS_CLICK++
-                model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            DOWNLOAD_ID -> {
-                DOWNLOAD_CLICK++
-                currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
-                refreshItems(true)
-            }
-            APPLICATIONS_ID ->{
-                APPLICATION_CLICK++
-                model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            DOCUMENTS_ID ->{
-                DOCUMENTS_CLICK++
-                model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-            ZIP_FILES_ID ->{
-                ZIP_FILES_CLICK++
-                model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
-                        list = it as ArrayList<ListItem>
-                        refreshItems(true)
-                    }
-                })
-            }
-//            FILTER_DUPLICATE_ID -> {
-//                FILTER_DUPLICATE_CLICK++
-//                val intent = Intent("com.rocks.music.hamburger.FilterDuplicateActivity")
-//                startActivity(intent)
+//        when (folder.id) {
+//            AUDIO_ID -> {
+//                AUDIO_CLICK++
+//                model?.audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+//                    if (!it.isNullOrEmpty()) {
+//                        list = it as ArrayList<ListItem>
+//                        refreshItems(true)
+//                    }
+//                })
 //            }
-        }    }
+//            VIDEOS_ID -> {
+//                VIDEOS_CLICK++
+//                model?.videos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+//                    if (!it.isNullOrEmpty()) {
+//                        list = it as ArrayList<ListItem>
+//                        refreshItems(true)
+//                    }
+//                })
+//            }
+//            PHOTOS_ID -> {
+//                PHOTOS_CLICK++
+//                model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+//                    if (!it.isNullOrEmpty()) {
+//                        list = it as ArrayList<ListItem>
+//                        refreshItems(true)
+//                    }
+//                })
+//            }
+//            DOWNLOAD_ID -> {
+//                DOWNLOAD_CLICK++
+//                currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
+//                refreshItems(true)
+//            }
+//            APPLICATIONS_ID ->{
+//                APPLICATION_CLICK++
+//                model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+//                    if (!it.isNullOrEmpty()) {
+//                        list = it as ArrayList<ListItem>
+//                        refreshItems(true)
+//                    }
+//                })
+//            }
+//            DOCUMENTS_ID ->{
+//                DOCUMENTS_CLICK++
+//                model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+//                    if (!it.isNullOrEmpty()) {
+//                        list = it as ArrayList<ListItem>
+//                        refreshItems(true)
+//                    }
+//                })
+//            }
+//            ZIP_FILES_ID ->{
+//                ZIP_FILES_CLICK++
+//                model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+//                    if (!it.isNullOrEmpty()) {
+//                        list = it as ArrayList<ListItem>
+//                        refreshItems(true)
+//                    }
+//                })
+//            }
+////            FILTER_DUPLICATE_ID -> {
+////                FILTER_DUPLICATE_CLICK++
+////                val intent = Intent("com.rocks.music.hamburger.FilterDuplicateActivity")
+////                startActivity(intent)
+////            }
+//        }
+    }
 
     override fun breadcrumbClickedNew(path: String, position: Int) {
         val size = pathList.size
