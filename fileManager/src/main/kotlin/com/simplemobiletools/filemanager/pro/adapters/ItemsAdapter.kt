@@ -931,7 +931,7 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
                     if(folderDrawable!=null)
                         item_icon.setImageDrawable(folderDrawable)
                     else
-                        item_icon.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_folder__light))
+                        item_icon.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_folder__light2))
 
                     item_details?.text = getChildrenCnt(listItem)
                     item_count?.text = getChildrenCnt(listItem)
@@ -983,7 +983,7 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
         return if (isDarkTheme) {
             resources.getDrawable(R.drawable.ic_icon_folder__dark)
         } else {
-            resources.getDrawable(R.drawable.ic_icon_folder__light)
+            resources.getDrawable(R.drawable.ic_icon_folder__light2)
         }
     }
 

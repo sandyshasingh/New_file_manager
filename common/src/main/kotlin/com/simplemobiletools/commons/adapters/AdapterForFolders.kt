@@ -66,11 +66,15 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
             folderNameTextView?.setTypeFaceOpenSensSmBold()
         //    folderSize?.setTypeFaceOpenSensSmBold()
 
-            folderNameTextView.setTextColor(folder.textColor)
+           // folderNameTextView.setTextColor(folder.textColor)
             //folderSize.setTextColor(folder.textColor)
 
             folderIcon.setImageResource(folder.folderIcon)
             itemView.setOnClickListener{ c1(folder) }
+
+
+
+
         }
     }
 

@@ -64,8 +64,10 @@ class FileManagerMainActivity : BaseSimpleActivity() {
         super.onCreate(savedInstanceState)
 
     }*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+       ThemeUtils.onActivityCreateSetTheme(this)
+       super.onCreate(savedInstanceState)
         setContentView(R.layout.file_manager_activity)
         viewModel = ViewModelProvider(this).get(DataViewModel::class.java)
         setSupportActionBar(toolbar)

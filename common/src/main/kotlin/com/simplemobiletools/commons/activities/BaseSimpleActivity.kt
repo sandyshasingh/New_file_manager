@@ -50,7 +50,6 @@ open class BaseSimpleActivity : AppCompatActivity() {
 
 
     /* override fun onCreate(savedInstanceState: Bundle?) {
-         ThemeUtils.onActivityCreateSetTheme(this)
          super.onCreate(savedInstanceState)
      }*/
 

@@ -6,7 +6,7 @@
     <color name="whatsapp_text_color">#00896f</color>
     <color name="audio_text_color">#70000000</color>
     <color name="video_text_color">#70000000</color>
-    <color name="photo_text_color">#70000000</color>
+    <color name="photo_text_color">#000000</color>
     <color name="filter_text_color">#A7d129</color>
     <color name="fab_btn_bg">#D8D6FD</color>
     <color name="blue_grey_50">#ECEFF1</color>
@@ -25,6 +25,9 @@
     <color name="material_gray_400">#bdbdbd</color>
     <color name="material_gray_100">#F5F5F5</color>
     <color name="nit_common_color">#EE3313</color>
+    <color name="btm_background">#282361</color>
+    <color name="halfup_color">#f3f6f9</color>
+
 
     <color name="material_gray_200">#EEEEEE</color>
     <color name="material_gray_600">#757575</color>
@@ -50,6 +53,9 @@
 
     <color name="hint_white">#99FFFFFF</color>
     <color name="hint_black">#66000000</color>
+    <color name="file_manager_textcolor_light">#000000</color>
+    <color name="file_manager_textcolor_dark">#ffffff</color>
+
 
     <!-- Color Customization -->
     <color name="theme_light_text_color">@color/md_grey_600</color>
@@ -392,6 +398,8 @@
     <color name="md_pink_900_dark">#630A3A</color>
     <color name="secondary_text_color">@color/material_gray_500</color>
 
+    <color name="text_color2">#000000</color>
+    <color name="text_color_btmsheet">#ffffff</color>
     <color name="text_color">#616161</color>
     <color name="md_purple_100">#E1BEE7</color>
     <color name="md_purple_200">#CE93D8</color>

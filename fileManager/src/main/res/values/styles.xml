@@ -13,6 +13,7 @@
     <attr name="ic_icon_decompress" format="reference"/>
     <attr name="ic_delete_vector" format="reference"/>
     <attr name="ic_properties_vector" format="reference"/>
+    <attr name="half_up_backgrounndcolor" format="reference"/>
 
 
    <!-- <style name="AppThemee" parent="Theme.AppCompat.Light.NoActionBar">
@@ -68,16 +69,17 @@
         <item name="android:itemBackground">?attr/bottom_sheet_bg</item>
         <item name="android:textColor">?attr/textcolorprimarycustom</item>
         <item name="ic_share_vector">@drawable/ic_share_vector_black</item>
-        <item name="ic_icon_move">@drawable/ic_icon_move_black</item>
-        <item name="cab_rename">@drawable/cab_rename_black</item>
-        <item name="ic_icon_copy_to">@drawable/ic_icon_copy_to_black</item>
+        <item name="ic_icon_move">@drawable/ic_file_manager_move</item>
+        <item name="cab_rename">@drawable/ic_file_manager_rename</item>
+        <item name="ic_icon_copy_to">@drawable/ic_file_manager_copy</item>
         <item name="ic_icon_copy_path">@drawable/ic_icon_copy_path_to_clipboard_black</item>
         <item name="ic_icon_hide">@drawable/ic_icon_hide_black</item>
         <item name="ic_unhide_vector">@drawable/ic_unhide_vector_black</item>
         <item name="ic_icon_compress">@drawable/ic_icon_compress_black</item>
         <item name="ic_icon_decompress">@drawable/ic_icon_decompress_black</item>
-        <item name="ic_delete_vector">@drawable/ic_delete_vector_black</item>
+        <item name="ic_delete_vector">@drawable/ic_file_manager_delete</item>
         <item name="ic_properties_vector">@drawable/ic_properties_vector_black</item>
+        <item name="half_up_backgrounndcolor">@color/halfup_color</item>
 
 
 
@@ -100,32 +102,32 @@
     <style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView"/>
 
     <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="cab_rename">@drawable/cab_rename_black</item>
+        <item name="cab_rename">@drawable/ic_file_manager_rename</item>
         <item name="ic_home_vector">@drawable/ic_home_vector_black</item>
         <item name="filemanageritembackgroud">@drawable/rectangle_semitranparent_light_theme</item>
-        <item name="ic_folder_icon">@drawable/ic_icon_folder__light</item>
+        <item name="ic_folder_icon">@drawable/ic_icon_folder__light2</item>
         <item name="ic_icon_decompress">@drawable/ic_icon_decompress_black</item>
         <item name="ic_icon_compress">@drawable/ic_icon_compress_black</item>
         <item name="ic_icon_hide">@drawable/ic_icon_hide_black</item>
-        <item name="ic_select_all_vector">@drawable/ic_select_all_vector_black</item>
-        <item name="ic_search_vector">@drawable/ic_search_vector_black</item>
+        <item name="ic_select_all_vector">@drawable/ic_file_manager_slct_all</item>
+        <item name="ic_search_vector">@drawable/ic_file_manager_search</item>
         <item name="ic_three_dot">@drawable/ic_icon_dot_light</item>
-        <item name="ic_icon_copy_to">@drawable/ic_icon_copy_to_black</item>
+        <item name="ic_icon_copy_to">@drawable/ic_file_manager_copy</item>
         <item name="ic_sort_vector">@drawable/ic_sort_vector_black</item>
         <item name="ic_icon_copy_path">@drawable/ic_icon_copy_path_to_clipboard_black</item>
         <item name="ic_properties_vector">@drawable/ic_properties_vector_black</item>
         <item name="ic_icon_next">@drawable/ic_icon_next_light</item>
         <item name="textcolorsecondrycustom">@color/material_gray_600</item>
         <item name="android:textColorPrimary">@color/material_gray_900</item>
-        <item name="android:textColor">@color/material_gray_900</item>
-        <item name="bottom_sheet_bg" >@color/material_gray_100</item>
+        <item name="android:textColor">@color/text_color2</item>
+        <item name="bottom_sheet_bg" >@color/btm_background</item>
         <item name="ic_unhide_vector" >@drawable/ic_unhide_vector_black</item>
         <item name="ic_plus_vector" >@drawable/ic_plus_vector_black</item>
         <item name="ic_share_vector" >@drawable/ic_share_vector_black</item>
-        <item name="ic_icon_move" >@drawable/ic_icon_move_black</item>
-        <item name="ic_delete_vector" >@drawable/ic_delete_vector_black</item>
-        <item name="filemanagertextcolor">@color/text_color</item>
-        <item name="bottom_sheet_tint">@color/bottom_sheet_color</item>
+        <item name="ic_icon_move">@drawable/ic_file_manager_move</item>
+        <item name="ic_delete_vector">@drawable/ic_file_manager_delete</item>
+        <item name="filemanagertextcolor">@color/text_color2</item>
+<!--        <item name="bottom_sheet_tint">@color/bottom_sheet_color</item>-->
     </style>
    <!-- <style name="AppTheme.NoActionBar" parent="Base.V7.Theme.AppCompat">
         <item name="windowActionBar">false</item>
@@ -152,8 +154,7 @@
 
 
 
-    </style>
--->
+    </style>-->
     <color name="pagestrip">#A53B2F</color>
     <color name="white">#FFFFFF</color>
     <color name="material_gray_500">#9E9E9E</color>

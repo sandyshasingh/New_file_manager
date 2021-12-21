@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="bottom_sheet_bg" format="reference"/>
+    <attr name="textcolorprimarycustom" format="reference"/>
+    <attr name="ic_share_vector" format="reference"/>
+    <attr name="ic_icon_move" format="reference"/>
+    <attr name="cab_rename" format="reference"/>
+    <attr name="ic_icon_copy_to" format="reference"/>
+    <attr name="ic_icon_copy_path" format="reference"/>
+    <attr name="ic_icon_hide" format="reference"/>
+    <attr name="ic_unhide_vector" format="reference"/>
+    <attr name="ic_icon_compress" format="reference"/>
+    <attr name="ic_icon_decompress" format="reference"/>
+    <attr name="ic_delete_vector" format="reference"/>
+    <attr name="ic_properties_vector" format="reference"/>
+    <attr name="half_up_backgrounndcolor" format="reference"/>
+    <attr name="card_bg" format="reference"/>
+    <attr name="dark_theme_icon" format="reference"/>
+
     <style name="appProgressDialog" parent="android:Theme.Translucent.NoTitleBar">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -20,6 +37,7 @@
         <attr name="matProg_barWidth" format="dimension" />
         <attr name="matProg_linearProgress" format="boolean" />
     </declare-styleable>
+<!--    <attr name=""-->
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@drawable/rectangle_semitranparent_light_theme</item>
 
@@ -67,6 +85,53 @@
 <!--
         <item name="fontPath">fonts/OpenSans-SemiBold.ttf</item>
 -->
+    </style>
+
+    <style name="LightMode" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/blue_grey_100</item>
+        <item name="colorPrimaryDark">@color/hint_white</item>
+        <item name="colorAccent">@color/hint_white</item>
+        <item name="android:textColorSecondary">#ffffff</item>
+        <item name="android:windowBackground">@color/theme_light_background_color</item>
+        <item name="android:textColorPrimary">@color/hint_white</item>
+        <item name="filemanagertextcolor">@color/file_manager_textcolor_light</item>
+
+
+
+
+        <item name="android:itemBackground">?attr/bottom_sheet_bg</item>
+        <item name="android:textColor">?attr/textcolorprimarycustom</item>
+        <item name="ic_share_vector">@drawable/ic_share_vector_black</item>
+        <item name="ic_icon_move">@drawable/ic_file_manager_move</item>
+        <item name="cab_rename">@drawable/ic_file_manager_rename</item>
+        <item name="ic_icon_copy_to">@drawable/ic_file_manager_copy</item>
+        <item name="ic_icon_copy_path">@drawable/ic_icon_copy_path_to_clipboard_black</item>
+        <item name="ic_icon_hide">@drawable/ic_icon_hide_black</item>
+        <item name="ic_unhide_vector">@drawable/ic_unhide_vector_black</item>
+        <item name="ic_icon_compress">@drawable/ic_icon_compress_black</item>
+        <item name="ic_icon_decompress">@drawable/ic_icon_decompress_black</item>
+        <item name="ic_delete_vector">@drawable/ic_file_manager_delete</item>
+        <item name="ic_properties_vector">@drawable/ic_properties_vector_black</item>
+        <item name="half_up_backgrounndcolor">@color/halfup_color</item>
+
+
+
+
+    </style>
+
+    <style name="DarkMode" parent="Theme.AppCompat.NoActionBar">
+        <item name="card_bg">@color/blue_grey_100</item>
+        <item name="filemanagertextcolor">@color/file_manager_textcolor_dark</item>
+        <item name="dark_theme_icon">@drawable/ic_file_doc</item>
+
+    </style>
+
+
+
+    <style name="AppTheme0" parent="LightMode">
+        <item name="colorPrimary">#ffffff</item>
+        <item name="colorPrimaryDark">#cccccc</item>
+        <item name="colorAccent">#ff7200</item>
     </style>
 
     <dimen name="text_medium">14dp</dimen>

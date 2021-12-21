@@ -202,17 +202,10 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                     }
                 })
             }
-//            FILTER_DUPLICATE_ID -> {
-//                FILTER_DUPLICATE_CLICK++
-//                val intent = Intent("com.rocks.music.hamburger.FilterDuplicateActivity")
-//                startActivity(intent)
-//            }
+
         }
 
-//        main_items_rv?.layoutManager = LinearLayoutManager(activity,
-//            LinearLayoutManager.VERTICAL,false)
-//        itemsAdapter = ItemsAdapter(storageItems,requireActivity() )
-//        item_list_rv?.adapter = itemsAdapter
+
     }
 
     fun openPath(path: String, forceRefresh: Boolean = false) {

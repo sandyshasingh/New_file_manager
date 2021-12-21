@@ -48,6 +48,8 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
             arcProgress.progress = storageItem.arcPercent.toInt()
             val ad= arcProgress
 
+            storageIcon.setImageResource(storageItem.storageIcon)
+
 //            usedMemoryProgress.max = (totalSize / 1024).toInt()
 //            usedMemoryProgress.progress= folder.size.toInt()
 //            if(isDarkTheme) {
