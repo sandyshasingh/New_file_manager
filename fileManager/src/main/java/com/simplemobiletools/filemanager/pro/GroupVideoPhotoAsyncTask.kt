@@ -26,7 +26,7 @@ class GroupVideoPhotoAsyncTask(
         var joinedNewList = images
         if (videos != null) {
             joinedNewList?.addAll(videos)
-            joinedNewList?.sorted()
+//            joinedNewList?.sorted()
         }
 
         var recentList = joinedNewList?.groupBy { it.dateModifiedInFormat }
