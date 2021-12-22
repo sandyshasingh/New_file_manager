@@ -7,16 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.simplemobiletools.filemanager.pro.MoreItemsList
 import com.simplemobiletools.filemanager.pro.R
+import com.simplemobiletools.filemanager.pro.extensions.findType
 import com.simplemobiletools.filemanager.pro.extensions.openWith
 import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.recent_file_item.view.*
-import kotlinx.android.synthetic.main.recent_files.view.*
 
-class ChildAdapterForRecentFiles (var mContext: Activity, var mRecent:List<ListItem>?): RecyclerView.Adapter<ChildAdapterForRecentFiles.ViewHolder>() {
+class ChildAdapterForRecentFiles(
+    var mContext: Activity,
+    var mRecent: List<ListItem>?,
+    var listener: MoreItemsList,
+    var key: String?
+): RecyclerView.Adapter<ChildAdapterForRecentFiles.ViewHolder>() {
 
     class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
         val recent_files_item = itemView.child_recent_item
+
     }
 
     private fun openWith(listItem: ListItem?) {
@@ -35,17 +42,47 @@ class ChildAdapterForRecentFiles (var mContext: Activity, var mRecent:List<ListI
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
      //   holder.recent_files.text = mRecent?.keys!!.elementAt(position).toString()
+        var filetype = mRecent?.get(position)?.mPath?.let { mContext.findType(it) }
+        filetype.toString()
+
+        if (filetype != null) {
+            if (filetype.startsWith("video")){
+                holder.itemView.play_pause.visibility = View.VISIBLE
+            }
+            else
+            {
+                holder.itemView.play_pause.visibility = View.GONE
+            }
+        }
+
+        if(mRecent?.size!! > 5 && holder.adapterPosition == 4){
+            holder.itemView.more_items.visibility = View.VISIBLE
+            holder.itemView.play_pause.visibility = View.GONE
+            holder.itemView.more_items.text = "+${mRecent?.size}"
+        }
+        else{
+            holder.itemView.more_items.visibility = View.GONE
+        }
+
         Glide.with(mContext)
             .load(mRecent?.get(position)?.mPath)
             .into(holder.recent_files_item)
 
         holder.itemView.setOnClickListener {
+            if(mRecent?.size!! > 5 && holder.adapterPosition == 4){
+                listener?.moreItemsList(mRecent!!)
+            }
+            else
             openWith(mRecent?.get(position))
         }
 
     }
 
     override fun getItemCount(): Int {
-        return mRecent?.size?:0
+        if(mRecent?.size!! <= 5){
+            return mRecent?.size?:0
+        }
+        else
+            return 5
     }
 }

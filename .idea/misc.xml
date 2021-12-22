@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/rareprob/.gradle/caches/transforms-3/f0bf25ca00dec516a3768217516e4371/transformed/appcompat-1.2.0/res/layout/abc_action_menu_item_layout.xml" value="0.10326086956521739" />
+        <entry key="..\:/Users/rareprob/.gradle/caches/transforms-3/f57567925e7fa33de7bf4ed4afc92d47/transformed/appcompat-1.4.0/res/drawable/abc_item_background_holo_dark.xml" value="0.11354166666666667" />
+        <entry key="..\:/Users/rareprob/.gradle/caches/transforms-3/f57567925e7fa33de7bf4ed4afc92d47/transformed/appcompat-1.4.0/res/drawable/abc_item_background_holo_light.xml" value="0.11354166666666667" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/common/src/main/res/drawable-hdpi/breadcrumb_background.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/common/src/main/res/drawable-mdpi/bottom_round_corner.xml" value="0.1" />
@@ -67,6 +69,7 @@
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/circular_shape.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_app.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_music.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_slect.xml" value="0.11354166666666667" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_storage.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_video.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_video_play.xml" value="0.25833333333333336" />
@@ -78,6 +81,7 @@
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_icon_duplicate.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_icon_folder__dark.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_icon_folder__light.xml" value="0.2351851851851852" />
+        <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_icon_folder__light2.xml" value="0.13802083333333334" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_icon_photos.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_icon_videos.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_icon_whtsap.xml" value="0.16041666666666668" />
@@ -93,12 +97,14 @@
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/file_manager_activity.xml" value="0.2" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/file_manager_bottom_shee.xml" value="0.22327898550724637" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/fragment_items_list.xml" value="0.2128623188405797" />
+        <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/fragment_more_item.xml" value="0.10052083333333334" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/header_recylerview.xml" value="0.22327898550724637" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/item_file_dir_list.xml" value="0.1160081053698075" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/item_grid_dir.xml" value="0.4" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/item_grid_file.xml" value="0.1160081053698075" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/items_fragment.xml" value="0.1" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/layout.xml" value="0.1" />
+        <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/more_items.xml" value="0.10052083333333334" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/recent_file_item.xml" value="0.21354166666666666" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/recent_files.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/storage_card.xml" value="0.22327898550724637" />

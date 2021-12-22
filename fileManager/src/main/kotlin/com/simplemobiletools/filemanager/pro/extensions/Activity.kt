@@ -139,6 +139,16 @@ fun Activity.openPath(path: String, forceChooser: Boolean, openAsType: Int = OPE
         }
     }
 }
+fun Activity.findType(path: String) :String {
+        val newUri = getFinalUriFromPath(path, "com.example.new_file_manager.provider")
+
+        val mimeType = if (getMimeType(OPEN_AS_DEFAULT).isNotEmpty())
+            getMimeType(OPEN_AS_DEFAULT)
+        else {
+            newUri?.let { getUriMimeType(path, it) }
+        }
+    return mimeType.toString()
+}
 fun Activity.openWith(path : String) {
     ensureBackgroundThread {
         val newUri = getFinalUriFromPath(path, "com.example.new_file_manager.provider") ?: return@ensureBackgroundThread

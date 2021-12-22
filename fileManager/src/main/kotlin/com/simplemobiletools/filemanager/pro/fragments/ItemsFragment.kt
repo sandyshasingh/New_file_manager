@@ -31,6 +31,7 @@ import com.simplemobiletools.commons.models.StorageItem
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyLinearLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.filemanager.pro.MoreItemsList
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 import com.simplemobiletools.filemanager.pro.adapters.ItemsAdapter
@@ -46,7 +47,7 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.BreadcrumbsListenerNew {
+class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.BreadcrumbsListenerNew{
 
     private var mProgressDialog: AppProgressDialog? = null
 
@@ -128,7 +129,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
 
         recent_file_line?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
-        recent_file_line_adapter = AdapterForRecentFiles(requireActivity() ,null)
+        recent_file_line_adapter = AdapterForRecentFiles(requireActivity() ,null,activity as FileManagerMainActivity)
         recent_file_line?.adapter = recent_file_line_adapter
 
     }
@@ -835,6 +836,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
         (activity as FileManagerMainActivity)?.onCategoryClick(folder.id)
 
+
+
     }
 
 
@@ -865,5 +868,6 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         }
 
     }
+
 }
 

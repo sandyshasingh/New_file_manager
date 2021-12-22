@@ -981,7 +981,7 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun getFolderDrawable() : Drawable?{
         return if (isDarkTheme) {
-            resources.getDrawable(R.drawable.ic_icon_folder__dark)
+            resources.getDrawable(R.drawable.ic_icon_folder__light2)
         } else {
             resources.getDrawable(R.drawable.ic_icon_folder__light2)
         }

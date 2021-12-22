@@ -12,11 +12,11 @@
         android:icon="?attr/ic_home_vector"
         android:title="@string/go_to_home_folder"
         app:showAsAction="collapseActionView|ifRoom"/>
-    <item
-        android:id="@+id/change_view_type"
-        android:title="@string/change_view_type"
+<!--    <item-->
+<!--        android:id="@+id/change_view_type"-->
+<!--        android:title="@string/change_view_type"-->
 
-        app:showAsAction="always"/>
+<!--        app:showAsAction="always"/>-->
 
     <item
         android:id="@+id/sort"

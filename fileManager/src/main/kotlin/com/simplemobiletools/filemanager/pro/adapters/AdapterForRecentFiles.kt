@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.simplemobiletools.filemanager.pro.MoreItemsList
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.recent_files.view.*
-import java.text.SimpleDateFormat
 
 //import kotlinx.android.synthetic.main.recent_files.view.*
 
-class AdapterForRecentFiles(var mContext: Activity, var mRecent:Map<String,List<ListItem>>?): RecyclerView.Adapter<AdapterForRecentFiles.ViewHolder>() {
+class AdapterForRecentFiles(var mContext: Activity, var mRecent:Map<String,List<ListItem>>?,var listener:MoreItemsList): RecyclerView.Adapter<AdapterForRecentFiles.ViewHolder>() {
 
     class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
 
@@ -29,7 +29,7 @@ class AdapterForRecentFiles(var mContext: Activity, var mRecent:Map<String,List<
 
 
         holder.itemView.recent_file_text.text = mRecent?.keys?.elementAt(position).toString()
-        holder.itemView.recent_file_item.adapter = ChildAdapterForRecentFiles(mContext,mRecent?.values?.elementAt(position))
+        holder.itemView.recent_file_item.adapter = ChildAdapterForRecentFiles(mContext,mRecent?.values?.elementAt(position),listener,mRecent?.keys?.elementAt(position))
     }
 
     override fun getItemCount(): Int {

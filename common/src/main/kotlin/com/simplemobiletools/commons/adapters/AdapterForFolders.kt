@@ -73,8 +73,6 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
             itemView.setOnClickListener{ c1(folder) }
 
 
-
-
         }
     }
 

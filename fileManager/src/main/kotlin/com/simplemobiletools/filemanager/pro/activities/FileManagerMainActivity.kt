@@ -25,9 +25,7 @@ import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
-import com.simplemobiletools.filemanager.pro.ItemsListFragment
-import com.simplemobiletools.filemanager.pro.PermissionActivity
-import com.simplemobiletools.filemanager.pro.R
+import com.simplemobiletools.filemanager.pro.*
 import com.simplemobiletools.filemanager.pro.dialogs.ChangeSortingDialog
 import com.simplemobiletools.filemanager.pro.dialogs.CreateNewItemDialog
 import com.simplemobiletools.filemanager.pro.extensions.config
@@ -37,15 +35,17 @@ import com.simplemobiletools.filemanager.pro.helpers.DataViewModel
 import com.simplemobiletools.filemanager.pro.helpers.MAX_COLUMN_COUNT
 import com.simplemobiletools.filemanager.pro.helpers.MIN_COLUMN_COUNT
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
+import com.simplemobiletools.filemanager.pro.models.ListItem
 import com.stericson.RootTools.RootTools
 import kotlinx.android.synthetic.main.file_manager_activity.*
 import kotlinx.android.synthetic.main.items_fragment.view.*
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 const val REQUEST_CODE_FOR_STORAGE_PERMISSION =  101
 const val FRAGMENT_STACK = "fragment_stack"
-class FileManagerMainActivity : BaseSimpleActivity() {
+class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     private val PICKED_PATH = "picked_path"
     private var isSearchOpen = false
     private var searchMenuItem: MenuItem? = null
@@ -139,7 +139,7 @@ class FileManagerMainActivity : BaseSimpleActivity() {
             findItem(R.id.reduce_column_count).isVisible = config.viewType == VIEW_TYPE_GRID && config.fileColumnCnt > MIN_COLUMN_COUNT
             findItem(R.id.sort).isVisible = isSortByVisible()
 
-            findItem(R.id.change_view_type).icon = drawable()
+            //findItem(R.id.change_view_type).icon = drawable()
         }
         return true
     }
@@ -179,12 +179,12 @@ class FileManagerMainActivity : BaseSimpleActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.home -> onBackPressed()
-            R.id.go_home -> goHome()
-            R.id.sort -> showSortingDialog()
-            R.id.change_view_type -> changeViewType(item)
+           // R.id.go_home -> goHome()
+           // R.id.sort -> showSortingDialog()
+            //R.id.change_view_type -> changeViewType(item)
            // R.id.increase_column_count -> fragment.increaseColumnCount()
-            R.id.reduce_column_count -> fragment.reduceColumnCount()
-            R.id.refresh -> fragment.refreshItems(false)
+//            R.id.reduce_column_count -> fragment.reduceColumnCount()
+//            R.id.refresh -> fragment.refreshItems(false)
 
 //            R.id.settings -> startActivity(Intent(applicationContext, SettingsActivity::class.java))
             R.id.create_new_folder -> createNewItem()
@@ -466,6 +466,19 @@ class FileManagerMainActivity : BaseSimpleActivity() {
     fun onCategoryClick(id: Int) {
         val fragmentManager: FragmentManager = supportFragmentManager
         val myFragment = ItemsListFragment.newInstance(id)
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.fragment_holder,myFragment).addToBackStack("")
+        fragmentTransaction.commit()
+    }
+
+
+
+
+
+    override fun moreItemsList(item: List<ListItem>) {
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val myFragment = MoreItemFragment()
+        myFragment.arrayList = item
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragment_holder,myFragment).addToBackStack("")
         fragmentTransaction.commit()
