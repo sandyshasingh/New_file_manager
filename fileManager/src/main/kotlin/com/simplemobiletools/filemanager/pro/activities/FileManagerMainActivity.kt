@@ -47,6 +47,8 @@ const val REQUEST_CODE_FOR_STORAGE_PERMISSION =  101
 const val FRAGMENT_STACK = "fragment_stack"
 class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     private val PICKED_PATH = "picked_path"
+    var pathList = ArrayList<String>()
+    private lateinit var itemsListFragtment: ItemsListFragment
     private var isSearchOpen = false
     private var searchMenuItem: MenuItem? = null
     var sharedPrefrences : SharedPreferences? = null
@@ -70,15 +72,15 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
        super.onCreate(savedInstanceState)
         setContentView(R.layout.file_manager_activity)
         viewModel = ViewModelProvider(this).get(DataViewModel::class.java)
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
 
       // var userWallet = intent?.getIntExtra("USER_WALLET_PRICE")
 
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-       toolbar?.setNavigationOnClickListener {
-           onBackPressed()
-       }
+//       toolbar?.setNavigationOnClickListener {
+//           onBackPressed()
+//       }
 
 
 
@@ -88,8 +90,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         sharedPrefrences = getSharedPrefs()
        val fragmentManager: FragmentManager = supportFragmentManager
         fragment = ItemsFragment()
-       fragmentManager.beginTransaction().add(R.id.fragment_holder,fragment).addToBackStack(
-           FRAGMENT_STACK).commit()
+       fragmentManager.beginTransaction().replace(R.id.fragment_holder,fragment).commit()
        fragment.apply {
             isGetRingtonePicker = intent.action == RingtoneManager.ACTION_RINGTONE_PICKER
             isGetContentIntent = intent.action == Intent.ACTION_GET_CONTENT
@@ -351,13 +352,15 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
             newPath = internalStoragePath
         }
 
-        (fragment_holder as ItemsFragment).openPath(newPath, forceRefresh)
+        itemsListFragtment.openPath(newPath, forceRefresh)
+
+
     }
 
     private fun goHome() {
         if (config.homeFolder != fragment.currentPath) {
-            fragment.pathList.clear()
-            fragment.pathList.add(internalStoragePath)
+            pathList.clear()
+            pathList.add(internalStoragePath)
             fragment.mView.my_recyclerView?.beGone()
           //  openPath(config.homeFolder)
         }
@@ -388,15 +391,15 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         }
     }
     override fun onBackPressed() {
-//        if (fragment.pathList.size <= 1) {
-//            finish()
-//        }else {
-//            val i =fragment.pathList.size
-//            fragment.pathList.removeAt(i - 1)
-//             val path = fragment.pathList[fragment.pathList.size - 1]
-//           // openPath(path, false)
-//        }
-        super.onBackPressed()
+        if (pathList.size <= 1) {
+            super.onBackPressed()
+        }else {
+            val i =pathList.size
+            pathList.removeAt(i - 1)
+             val path = pathList[pathList.size - 1]
+            openPath(path, false)
+        }
+        //super.onBackPressed()
     }
 
     private fun checkIfRootAvailable() {
@@ -465,9 +468,10 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
     fun onCategoryClick(id: Int) {
         val fragmentManager: FragmentManager = supportFragmentManager
-        val myFragment = ItemsListFragment.newInstance(id)
+
+        itemsListFragtment = ItemsListFragment.newInstance(id)
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.fragment_holder,myFragment).addToBackStack("")
+        fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment).addToBackStack("")
         fragmentTransaction.commit()
     }
 

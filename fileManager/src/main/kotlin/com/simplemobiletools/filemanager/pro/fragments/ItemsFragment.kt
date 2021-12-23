@@ -68,7 +68,6 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     private var storedItems = ArrayList<ListItem>()
     private var folderItems = ArrayList<FolderItem>()
     private var storageItems = ArrayList<StorageItem>()
-    var pathList = ArrayList<String>()
     var mainAdapter : AdapterForFolders? = null
     var storageAdapter : AdapterForStorage? = null
     var recent_file_line_adapter : AdapterForRecentFiles? = null
@@ -119,7 +118,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         createFolderList()
 
         rv_storage?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-        storageAdapter = AdapterForStorage(storageItems,requireActivity() )
+        storageAdapter = AdapterForStorage(storageItems,{ storage -> storageFolderClick(storage) },requireActivity() )
         rv_storage?.adapter = storageAdapter
 
         mainAdapter = AdapterForFolders(folderItems, { folder -> headerFolderClick(folder) }, requireActivity())
@@ -161,6 +160,20 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //        }
 //    }
 
+
+    fun itemClick(list : Any ,position: Int, forceRefresh: Boolean)
+    {
+            itemClicked(list as FileDirItem)
+            var adad = folderItems
+            mainAdapter = AdapterForFolders(
+                folderItems,
+                { folder -> headerFolderClick(folder) },
+                requireActivity()
+            )
+            recyclerView?.layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView?.adapter = mainAdapter
+    }
     private fun createFolderList() {
         if (sharedPrefrences != null) {
             PHOTOS_CLICK = sharedPrefrences?.getLong(PHOTOS_NAME, PHOTOS_CLICK)!!
@@ -220,7 +233,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         var arcPercent = (available!! / total!!)*100
 
 
-        storageItems.add(StorageItem("Internal storage",  R.drawable.ic_file_manager_storage,
+        storageItems.add(StorageItem(
+            INTERNAL_STORAGE,"Internal storage",  R.drawable.ic_file_manager_storage,
             "$availableSizeInternal/$totalSizeInternal",arcPercent
         ))
 
@@ -234,6 +248,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
             storageItems.add(
                 StorageItem(
+                    EXTERNAL_STORAGE,
                     "External storage",
                     R.drawable.ic_file_manager_external_storage,
                     "$availableSizeExternal/$totalSizeExternal",arcPercent
@@ -324,20 +339,20 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                 dismissDialog()
                 storedItems = items
                 if(firstTime) {
-                    pathList.add(currentPath)
+                    (activity as FileManagerMainActivity).pathList.add(currentPath)
                     firstTime = false
                 }
-                if(pathList.size<=1){
+                if((activity as FileManagerMainActivity).pathList.size<=1){
                     recyclerView?.beGone()
                 }else{
                     recyclerView?.beVisible()
                 }
                 if(adapterForPath == null) {
-                    adapterForPath = AdapterForPath(pathList, this@ItemsFragment, requireActivity())
+                    adapterForPath = AdapterForPath((activity as FileManagerMainActivity).pathList, this@ItemsFragment, requireActivity())
 //                    my_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 //                    my_recyclerView?.adapter = adapterForPath
                 }else{
-                    adapterForPath?.updateDataAndNotify(pathList)
+                    adapterForPath?.updateDataAndNotify((activity as FileManagerMainActivity).pathList)
                 }
                 if(storedItems.isNotEmpty()) {
                     zrpImage?.beGone()
@@ -352,18 +367,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                         this@ItemsFragment,
                         null,
                         items_list
-                    ) {
-                        itemClicked(it as FileDirItem)
-                        var adad = folderItems
-                        mainAdapter = AdapterForFolders(
-                            folderItems,
-                            { folder -> headerFolderClick(folder) },
-                            requireActivity()
-                        )
-                        recyclerView?.layoutManager =
-                            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                        recyclerView?.adapter = mainAdapter
-                    }
+                    ,{list,position -> itemClick(list,position,false)})
                 }else{
                     zrpImage?.beVisible()
                 }
@@ -513,7 +517,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     private fun itemClicked(item: FileDirItem) {
         if (item.isDirectory) {
-            pathList.add(item.path)
+            (activity as FileManagerMainActivity).pathList.add(item.path)
             (activity as? FileManagerMainActivity)?.apply {
                 skipItemUpdating = isSearchOpen
                 openedDirectory()
@@ -840,12 +844,16 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     }
 
+    override fun storageFolderClick(storage: StorageItem) {
+        (activity as FileManagerMainActivity)?.onCategoryClick(storage.id)
+    }
+
 
     override fun breadcrumbClickedNew(path: String, position: Int) {
-        val size = pathList.size
+        val size = (activity as FileManagerMainActivity).pathList.size
         for(i in 0 until size){
             if(i>position) {
-                pathList.removeAt(pathList.size - 1)
+                (activity as FileManagerMainActivity).pathList.removeAt((activity as FileManagerMainActivity).pathList.size - 1)
             }
         }
         if (position == 0) {

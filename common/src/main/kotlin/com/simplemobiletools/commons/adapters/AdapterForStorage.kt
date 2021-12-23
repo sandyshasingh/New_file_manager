@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.folder_item_view.view.*
 import kotlinx.android.synthetic.main.storage_card.view.*
 import kotlinx.android.synthetic.main.storage_card.view.folder_layout as folder_layout1
 
-class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Context):RecyclerView.Adapter<AdapterForStorage.ViewHolder>() {
+class AdapterForStorage(var storageList:ArrayList<StorageItem>, private val clickListener: (StorageItem) -> Unit, var mContext: Context):RecyclerView.Adapter<AdapterForStorage.ViewHolder>() {
 
     class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
         val totalSize = MemorySizeUtils.getTotalInternalMemorySizeInLong()
@@ -34,7 +34,7 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 
 
 
-        fun bindItems(storageItem: StorageItem) {
+        fun bindItems(storageItem: StorageItem, c1: (StorageItem) -> Unit) {
 
             val storageTextView = itemView.text_internal
             val storageIcon = itemView.icon_internalstorage
@@ -50,6 +50,7 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
 
             storageIcon.setImageResource(storageItem.storageIcon)
 
+            itemView.setOnClickListener{ c1(storageItem) }
 //            usedMemoryProgress.max = (totalSize / 1024).toInt()
 //            usedMemoryProgress.progress= folder.size.toInt()
 //            if(isDarkTheme) {
@@ -77,7 +78,7 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, var mContext: Co
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(storageList[position])
+        holder.bindItems(storageList[position], clickListener)
 
 
     }

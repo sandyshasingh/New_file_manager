@@ -51,7 +51,7 @@ import kotlin.collections.ArrayList
 
 class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayList<FolderItem>, val bottomnavigation: View?, var listItems: MutableList<ListItem>,
                         var listener: ItemOperationsListener?, fastScroller: FastScroller?, recyclerView: MyRecyclerView,
-                        itemClick: (Any) -> Unit) :
+                        itemClick: (Any,Int) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private var fontSize = 0f

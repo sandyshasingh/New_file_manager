@@ -18,12 +18,13 @@ import com.simplemobiletools.commons.interfaces.MyActionModeCallback
 import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.commons.views.pathList
 //import es.dmoral.toasty.Toasty
 import java.util.*
 import kotlin.collections.ArrayList
 
 abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyclerView: MyRecyclerView, val fastScroller: FastScroller? = null,
-                                     val itemClick: (Any) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                                     val itemClick: (Any,Int) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected val baseConfig = activity.baseConfig
     protected val resources = activity.resources!!
     protected val layoutInflater = activity.layoutInflater
@@ -355,7 +356,7 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
                 val isSelected = selectedKeys.contains(getItemSelectionKey(position))
                 toggleItemSelection(!isSelected, position, true, null)
             } else {
-                itemClick.invoke(any)
+                itemClick.invoke(any,position)
             }
             if(selectedKeys.size>0){
                 if(bottomNavigation!=null && bottomNavigation?.visibility==View.GONE) {

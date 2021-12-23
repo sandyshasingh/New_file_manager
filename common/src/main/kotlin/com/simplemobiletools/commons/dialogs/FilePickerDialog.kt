@@ -137,14 +137,14 @@ class FilePickerDialog(val activity: BaseSimpleActivity,
         }
 
         val sortedItems = items.sortedWith(compareBy({ !it.isDirectory }, { it.name.toLowerCase() }))
-        val adapter = FilepickerItemsAdapter(activity, sortedItems, mDialogView.filepicker_list) {
-            if ((it as FileDirItem).isDirectory) {
-                currPath = it.path
-                tryUpdateItems()
-            } else if (pickFile) {
-                currPath = it.path
-                verifyPath()
-            }
+        val adapter = FilepickerItemsAdapter(activity, sortedItems, mDialogView.filepicker_list) { list, position ->
+                            if ((list as FileDirItem).isDirectory) {
+                    currPath = list.path
+                    tryUpdateItems()
+                } else if (pickFile) {
+                    currPath = list.path
+                    verifyPath()
+                }
         }
 
         val layoutManager = mDialogView.filepicker_list.layoutManager as LinearLayoutManager

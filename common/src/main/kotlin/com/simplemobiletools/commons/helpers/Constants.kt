@@ -248,6 +248,9 @@ const val APPLICATIONS_ID = 5
 const val ZIP_FILES_ID = 6
 const val DOCUMENTS_ID = 7
 const val DOWNLOAD_ID = 8
+const val INTERNAL_STORAGE = 9
+const val EXTERNAL_STORAGE = 10
+
 
 
 

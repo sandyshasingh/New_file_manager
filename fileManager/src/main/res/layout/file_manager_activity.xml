@@ -7,23 +7,37 @@
     android:orientation="vertical">
 
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:background="@color/black_20"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:layout_marginStart="@dimen/spacing24"
+        android:layout_marginEnd="@dimen/spacing24"
+        android:layout_marginTop="@dimen/spacing24"
+        android:paddingRight="10dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            app:contentInsetStart="0dp"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            app:title="File Manager"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:titleTextAppearance="@style/Toolbar.TitleText1"
-            android:background="?attr/colorPrimary"
-            >
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+        <ImageView android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_alignParentStart="true"
+            android:foregroundGravity="center"
+            android:src="@drawable/ic_file_manager_delete"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="70dp"/>
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_height="15dp"/>
+
+
+
+
+    </RelativeLayout>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

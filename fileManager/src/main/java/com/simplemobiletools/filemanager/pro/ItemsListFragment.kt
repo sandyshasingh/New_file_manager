@@ -3,6 +3,7 @@ package com.simplemobiletools.filemanager.pro
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +21,11 @@ import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.ItemOperationsListener
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.FolderItem
+import com.simplemobiletools.commons.models.StorageItem
+import com.simplemobiletools.commons.views.pathList
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 import com.simplemobiletools.filemanager.pro.adapters.ItemsListAdapter
-import com.simplemobiletools.filemanager.pro.extensions.config
-import com.simplemobiletools.filemanager.pro.extensions.isPathOnRoot
+import com.simplemobiletools.filemanager.pro.extensions.*
 import com.simplemobiletools.filemanager.pro.helpers.DataViewModel
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
 import com.simplemobiletools.filemanager.pro.models.ListItem
@@ -39,21 +41,25 @@ const val PARAM_ID = "idExtra"
 class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.BreadcrumbsListenerNew {
 
     var currentPath = ""
+    var mainAdapter : AdapterForFolders? = null
     private var currentViewType = VIEW_TYPE_LIST
     private var storedItems = ArrayList<ListItem>()
     lateinit var mView: View
+    var isGetContentIntent = false
+    var isGetRingtonePicker = false
+    private var isSearchOpen = false
+
     private var skipItemUpdating = false
     private var showHidden = false
     private var firstTime = true
     var adapterForPath : AdapterForPath? = null
-    var pathList = ArrayList<String>()
     private var scrollStates = HashMap<String, Parcelable>()
     var list : ArrayList<ListItem> = ArrayList()
     private var folderItems = ArrayList<FolderItem>()
     var currentFolderHeader = ""
     var model : DataViewModel? = null
     private var baseSimpleActivity : BaseSimpleActivity? = null
-    var mainAdapter : AdapterForFolders? = null
+//    var mainAdapter : AdapterForFolders? = null
 
 
     private var internalStoragePath : String? = ""
@@ -62,7 +68,6 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
     private var mProgressDialog: AppProgressDialog? = null
 
-    var itemsAdapter : ItemsListAdapter? = null
 
     companion object {
 
@@ -202,6 +207,18 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                     }
                 })
             }
+            INTERNAL_STORAGE -> {
+
+               // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
+                currentFolderHeader = "Internal"
+                refreshItems(true)
+            }
+            EXTERNAL_STORAGE -> {
+
+                // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
+                currentFolderHeader = "External"
+                refreshItems(true)
+            }
 
         }
 
@@ -210,12 +227,12 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
     fun openPath(path: String, forceRefresh: Boolean = false) {
 
-        getItems(currentPath) { originalPath, listItems ->
-            if (currentPath != originalPath || !isAdded) {
+        getItems(path) { originalPath, listItems ->
+            if (path != originalPath || !isAdded) {
                 return@getItems
             }
 
-            FileDirItem.sorting = requireContext().config.getFolderSorting(currentPath)
+            FileDirItem.sorting = requireContext().config.getFolderSorting(path)
             listItems.sort()
             activity?.runOnUiThread {
                 activity?.invalidateOptionsMenu()
@@ -358,8 +375,55 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         } catch (e: Exception) {
         }
     }
+    private fun itemClicked(item: FileDirItem) {
+        if (item.isDirectory) {
+            (activity as FileManagerMainActivity).pathList.add(item.path)
+            (activity as? FileManagerMainActivity)?.apply {
+                skipItemUpdating = isSearchOpen
+                openedDirectory()
+            }
+            openPath(item.path)
+        } else {
+            val path = item.path
+            if (isGetContentIntent) {
+                (activity as FileManagerMainActivity).pickedPath(path)
+            } else if (isGetRingtonePicker) {
+                if (path.isAudioFast()) {
+                    (activity as FileManagerMainActivity).pickedRingtone(path)
+                } else {
+                    activity?.toast(R.string.select_audio_file)
+                }
+            } else {
 
-    private fun addItems(items: ArrayList<ListItem>, forceRefresh: Boolean = false) {
+                    requireActivity().tryOpenPathIntent(path, false)
+                }
+
+        }
+    }
+    fun itemClick(list : ListItem ,position: Int, forceRefresh: Boolean)
+    {
+       /* var mList : ArrayList<ListItem>? = null
+        if(list is List<*>)
+        {
+           mList =  list as ArrayList<ListItem>
+        }*/
+        itemClicked(list as FileDirItem)
+//            Log.d("@openPath","called")
+//            val openFolder= list.mPath!!
+//            openPath(openFolder)
+
+//                        var adad = folderItems
+//                        mainAdapter = AdapterForFolders(
+//                            folderItems,
+//                            { folder -> headerFolderClick(folder) },
+//                            requireActivity()
+//                        )
+//                        item_list_rv?.layoutManager =
+//                            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//                        item_list_rv?.adapter = mainAdapter
+          }
+
+    private fun addItems(items: ArrayList<ListItem>,forceRefresh: Boolean = false) {
         skipItemUpdating = false
 
         mView.apply {
@@ -370,16 +434,16 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 dismissDialog()
                 storedItems = items
                 if(firstTime) {
-                    pathList.add(currentPath)
+                    (activity as FileManagerMainActivity).pathList.add(currentPath)
                     firstTime = false
                 }
 
                 if(adapterForPath == null) {
-                    adapterForPath = AdapterForPath(pathList, this@ItemsListFragment, requireActivity())
+                    adapterForPath = AdapterForPath((activity as FileManagerMainActivity).pathList, this@ItemsListFragment, requireActivity())
 //                    my_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 //                    my_recyclerView?.adapter = adapterForPath
                 }else{
-                    adapterForPath?.updateDataAndNotify(pathList)
+                    adapterForPath?.updateDataAndNotify((activity as FileManagerMainActivity).pathList)
                 }
                 if(storedItems.isNotEmpty()) {
 
@@ -393,7 +457,11 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                         this@ItemsListFragment,
                         null,
                         item_list_rv
-                    ) {
+                    ) { list, position -> itemClick(list as ListItem, position, false) }/*{
+                        Log.d("@openPath","called")
+                        var openFolder=items[position].mPath
+                        openPath(openFolder)
+
 //                        var adad = folderItems
 //                        mainAdapter = AdapterForFolders(
 //                            folderItems,
@@ -403,7 +471,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //                        item_list_rv?.layoutManager =
 //                            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 //                        item_list_rv?.adapter = mainAdapter
-                    }
+                    }*/
                 }
 
 
@@ -429,12 +497,23 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
     override fun refreshItems(isHeaderFolder: Boolean) {
         val internalStoragePath = context?.config?.internalStoragePath
+        val externalStoragePath = context?.config?.sdCardPath
         if(isHeaderFolder){
             //currentFolderHeader= Environment.DIRECTORY_DOWNLOADS
             currentPath = "$internalStoragePath/$currentFolderHeader"
             if(currentFolderHeader == "Download"){
+                (activity as FileManagerMainActivity).pathList.add(currentPath)
                 openPath(currentPath)
-            }else {
+            }else if(currentFolderHeader == "Internal"){
+                currentPath = "$internalStoragePath"
+                (activity as FileManagerMainActivity).pathList.add(currentPath)
+                openPath(currentPath)
+            }else if(currentFolderHeader == "External"){
+                currentPath = "$externalStoragePath"
+                (activity as FileManagerMainActivity).pathList.add(currentPath)
+                openPath(currentPath)
+            }
+            else {
                 storedItems = list
                 addItems(storedItems, true)
             }
@@ -543,11 +622,15 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //        }
     }
 
+    override fun storageFolderClick(storage: StorageItem) {
+        TODO("Not yet implemented")
+    }
+
     override fun breadcrumbClickedNew(path: String, position: Int) {
-        val size = pathList.size
+        val size = (activity as FileManagerMainActivity).pathList.size
         for(i in 0 until size){
             if(i>position) {
-                pathList.removeAt(pathList.size - 1)
+                (activity as FileManagerMainActivity).pathList.removeAt((activity as FileManagerMainActivity).pathList.size - 1)
             }
         }
         if (position == 0) {

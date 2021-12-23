@@ -2,6 +2,7 @@ package com.simplemobiletools.commons.interfaces
 
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.FolderItem
+import com.simplemobiletools.commons.models.StorageItem
 import java.util.*
 
 interface ItemOperationsListener {
@@ -12,5 +13,7 @@ interface ItemOperationsListener {
     fun selectedPaths(paths: ArrayList<String>)
 
     fun headerFolderClick(folder : FolderItem)
+
+    fun storageFolderClick(storage:StorageItem)
 
 }
