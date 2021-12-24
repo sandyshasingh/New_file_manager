@@ -11,22 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginStart="10dp"
         >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/fdr"
-            android:layout_width="48dp"
+            android:layout_width="64dp"
             app:cardCornerRadius="8dp"
             android:layout_centerHorizontal="true"
-            android:layout_height="43dp">
+            android:layout_height="59dp">
             <ImageView
                 android:id="@+id/folder_icon"
                 android:padding="4dp"
-                android:layout_width="40dp"
+                android:layout_width="56dp"
                 android:layout_gravity="center"
-                android:layout_height="40dp" />
+                android:layout_height="56dp" />
 
         </androidx.cardview.widget.CardView>
 

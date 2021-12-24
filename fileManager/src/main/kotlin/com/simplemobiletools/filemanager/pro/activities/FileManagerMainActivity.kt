@@ -115,7 +115,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
        viewModel?.fetchRecent(this)
 
 
-        fragment.setZRPImage(ZRP_image)
+//        fragment.setZRPImage(ZRP_image)
        // mBannerAdmobUnitId = applicationContext?.resources?.getString(R.string.file_manager_banner_unit_id)
 
 //        loadAds()

@@ -232,11 +232,15 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         var available = availableSizeInternal?.getAmount()?.toDouble()
         var arcPercent = (available!! / total!!)*100
 
+        text_internal.text = "Internal storage"
+        icon_internalstorage.setImageResource(R.drawable.ic_file_manager_storage)
+        storage_size.text = "$availableSizeInternal/$totalSizeInternal"
+        arc_progress.max = 100
+        arc_progress.progress = arcPercent.toInt()
 
-        storageItems.add(StorageItem(
-            INTERNAL_STORAGE,"Internal storage",  R.drawable.ic_file_manager_storage,
-            "$availableSizeInternal/$totalSizeInternal",arcPercent
-        ))
+
+
+
 
 
         if(requireActivity().hasExternalSDCard()) {
@@ -244,6 +248,12 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             available = availableSizeExternal?.getAmount()?.toDouble()
             arcPercent = (available!! / total!!)*100
 
+            rv_storage.visibility = View.VISIBLE
+
+            storageItems.add(StorageItem(
+                INTERNAL_STORAGE,"Internal storage",  R.drawable.ic_file_manager_storage,
+                "$availableSizeInternal/$totalSizeInternal",arcPercent
+            ))
 
 
             storageItems.add(
@@ -384,9 +394,9 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     }
 
 
-    fun setZRPImage(image : ImageView?){
-        zrpImage = image
-    }
+//    fun setZRPImage(image : ImageView?){
+//        zrpImage = image
+//    }
     private fun showDialog() {
         try {
             //Dismiss if already exist

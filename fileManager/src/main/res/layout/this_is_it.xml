@@ -9,25 +9,111 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-           android:id="@+id/rv_storage"
+        <FrameLayout
+            android:id="@+id/top_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:background="?attr/half_up_backgrounndcolor"
             android:paddingBottom="20dp"
             android:paddingTop="10dp"
+            android:background="?attr/half_up_backgrounndcolor"
+            app:layout_constraintLeft_toLeftOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_storage"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/only_internal"
+                xmlns:custom="http://schemas.android.com/tools"
+                app:contentPadding="4dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:cardBackgroundColor="#282361"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/folder_layout"
+
+                    android:padding="10dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginRight="20dp">
+
+                    <ImageView
+                        android:id="@+id/icon_internalstorage"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"/>
+                    <TextView
+                        android:id="@+id/text_internal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Internal storage"
+                        android:textColor="#ffffff"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintTop_toBottomOf="@id/icon_internalstorage"
+                        app:layout_constraintLeft_toLeftOf="parent"/>
+                    <TextView
+                        android:id="@+id/storage_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="//////////// "
+                        android:textColor="#ffffff"
+
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintTop_toBottomOf="@id/text_internal"
+                        app:layout_constraintStart_toStartOf="@id/text_internal"/>
 
 
-            />
+
+
+                    <com.github.lzyzsd.circleprogress.ArcProgress
+                        android:id="@+id/arc_progress"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="15dp"
+
+                        app:layout_constraintRight_toRightOf="parent"
+
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="50dp"
+                        app:arc_finished_color="#f4ac40"
+                        custom:arc_progress="0"
+                        app:arc_text_color="#f4ac40"
+                        app:arc_text_size="10dp"
+                        app:arc_suffix_text_size="0dp"
+                        app:arc_unfinished_color="@color/black_20" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+        </FrameLayout>
+
+
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/rv_storage"
+            app:layout_constraintTop_toBottomOf="@id/top_recyclerview"
             app:layout_constraintLeft_toLeftOf="parent"
             android:paddingBottom="20dp"
             app:spanCount="2"
