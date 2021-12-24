@@ -7,12 +7,16 @@ import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.media.RingtoneManager
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
@@ -49,7 +53,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     private val PICKED_PATH = "picked_path"
     var pathList = ArrayList<String>()
     private lateinit var itemsListFragtment: ItemsListFragment
-    private var isSearchOpen = false
+    private var isSearchOpen = true
     private var searchMenuItem: MenuItem? = null
     var sharedPrefrences : SharedPreferences? = null
     private lateinit var fragment: ItemsFragment
@@ -99,6 +103,30 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         if(intent!=null){
             intent.extras
         }
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        search_df?.apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            isSubmitButtonEnabled = false
+            queryHint = getString(R.string.search)
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String) = false
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    if (isSearchOpen) {
+                        fragment.searchQueryChanged(newText)
+                    }
+                    return true
+                }
+            })
+
+        }
+
+        val searchView = findViewById<View>(R.id.search_df) as SearchView?
+        val searchEditText =
+            searchView?.findViewById<View>(R.id.search_src_text) as EditText?
+        searchEditText?.setTextColor(resources.getColor(R.color.btm_background))
+        searchEditText?.setHintTextColor(resources.getColor(R.color.hint_black))
 
         if (savedInstanceState == null) {
             tryInitFileManager()
@@ -162,7 +190,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
     private fun isSortByVisible(): Boolean {
         val path = fragment.currentPath
-        return !(path == "$internalStoragePath/$AUDIO_NAME" || path == "$internalStoragePath/$VIDEOS_NAME" || path == "$internalStoragePath/$WHATSAPP_NAME"
+        return !(path == "$internalStoragePath/$AUDIO_NAME" || path == "$internalStoragePath/$VIDEOS_NAME"
                 || path == "$internalStoragePath/$FILTER_DUPLICATE_NAME" || path == "$internalStoragePath/$PHOTOS_NAME")
     }
 
@@ -171,7 +199,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         super.onPause()
         if(sharedPrefrences!=null) {
             sharedPrefrences?.edit()?.putLong(PHOTOS_NAME, PHOTOS_CLICK)?.apply()
-            sharedPrefrences?.edit()?.putLong(WHATSAPP_NAME, WHATSAPP_CLICK)?.apply()
+           // sharedPrefrences?.edit()?.putLong(WHATSAPP_NAME, WHATSAPP_CLICK)?.apply()
             sharedPrefrences?.edit()?.putLong(VIDEOS_NAME, VIDEOS_CLICK)?.apply()
             sharedPrefrences?.edit()?.putLong(AUDIO_NAME, AUDIO_CLICK)?.apply()
            // sharedPrefrences?.edit()?.putLong(FILTER_DUPLICATE_NAME, FILTER_DUPLICATE_CLICK)?.apply()

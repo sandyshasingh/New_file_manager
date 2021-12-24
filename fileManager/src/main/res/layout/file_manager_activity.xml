@@ -26,6 +26,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:gravity="center"
                 android:background="@drawable/rounded_toolbar"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
@@ -33,15 +34,16 @@
                 android:layout_marginBottom="10dp">
 
                 <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"/>
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_file_manager_video"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
                 <androidx.appcompat.widget.SearchView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"/>
+                    android:id="@+id/search_df"
+                    android:layout_marginStart="@dimen/spacing16"
+                    android:layout_width="match_parent"
+                    app:queryHint="sfjsnfjisadnf"
+                    android:layout_height="30dp"/>
 
 
 

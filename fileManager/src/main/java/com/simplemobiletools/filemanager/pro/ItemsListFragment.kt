@@ -1,5 +1,7 @@
 package com.simplemobiletools.filemanager.pro
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
@@ -63,7 +65,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
 
     private var internalStoragePath : String? = ""
-
+    private val sharedPrefFile = "com.example.new_file_manager"
 
 
     private var mProgressDialog: AppProgressDialog? = null
@@ -90,7 +92,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        val sharedPreferences: SharedPreferences? = activity?.getSharedPreferences(sharedPrefFile,
+            Context.MODE_PRIVATE)
 
 
         val bundle = arguments
@@ -166,6 +169,12 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                     }
                 })
             }
+            SHORTCUT_ID -> {
+                currentFolderHeader = "Internal"
+                refreshItems(true)
+
+            }
+
             PHOTOS_ID -> {
                 PHOTOS_CLICK++
                 model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {

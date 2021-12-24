@@ -67,6 +67,7 @@
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/bottom_round_corner.xml" value="0.13541666666666666" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/cancel_edittext.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/circular_shape.xml" value="0.25833333333333336" />
+        <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_add.xml" value="0.14375" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_app.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_music.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_file_manager_slect.xml" value="0.11354166666666667" />
@@ -88,6 +89,7 @@
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_list.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/ic_list_black.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/rounded_imageview.xml" value="0.25833333333333336" />
+        <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/drawable/rounded_recent_file.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout-v21/items_fragment.xml" value="0.2421875" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/activity_permission.xml" value="0.6567796610169492" />
         <entry key="..\:/Users/rareprob/AndroidStudioProjects/New_File_Manager/fileManager/src/main/res/layout/activity_settings.xml" value="0.10326086956521739" />

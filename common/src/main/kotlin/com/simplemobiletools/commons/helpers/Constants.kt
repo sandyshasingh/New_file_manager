@@ -239,8 +239,9 @@ const val GRID_DIR = 11
 const val GRID_FILE = 12
 
 // For Folder Header Id
-const val PHOTOS_ID = 0
-const val WHATSAPP_ID = 1
+const val SHORTCUT_ID = 0
+const val PHOTOS_ID = 1
+
 const val VIDEOS_ID = 2
 const val AUDIO_ID = 3
 const val FILTER_DUPLICATE_ID = 4
@@ -256,7 +257,7 @@ const val EXTERNAL_STORAGE = 10
 
 // For Folder Header Name
 const val PHOTOS_NAME = "Photos"
-const val WHATSAPP_NAME = "WhatsApp"
+const val SHORTCUT_NAME = "Shortcut"
 const val VIDEOS_NAME = "Videos"
 const val AUDIO_NAME = "Audio"
 const val FILTER_DUPLICATE_NAME = "Filter Duplicate"

@@ -125,6 +125,9 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         //recyclerView?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         recyclerView?.adapter = mainAdapter
 
+        only_internal.setOnClickListener {   (activity as FileManagerMainActivity)?.onCategoryClick(
+            INTERNAL_STORAGE)  }
+
 
 
         recent_file_line?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
@@ -194,6 +197,9 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //            val usedSpace = totalSize - available
 //            val size = getFolderSize(File("$internalStoragePath/$WHATSAPP_NAME"), baseSimpleActivity!!)
 //            val whatsappFolderSize = MemorySizeUtils.formatSize(size)
+
+        folderItems.add(FolderItem(SHORTCUT_ID, SHORTCUT_NAME, R.drawable.ic_file_manager_add, getDrawable(R.drawable.rectangle_semitranparent_photo),
+            requireActivity().resources.getColor(R.color.photo_text_color), PHOTOS_CLICK))
 
             folderItems.add(FolderItem(PHOTOS_ID, PHOTOS_NAME, R.drawable.ic_file_manager_image, getDrawable(R.drawable.rectangle_semitranparent_photo),
                     requireActivity().resources.getColor(R.color.photo_text_color), PHOTOS_CLICK))
@@ -837,6 +843,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     override fun selectedPaths(paths: ArrayList<String>) {
         (activity as FileManagerMainActivity).pickedPaths(paths)
     }
+
+
 
     override fun headerFolderClick(folder: FolderItem) {
 //        if(folder.id!= FILTER_DUPLICATE_ID) {
