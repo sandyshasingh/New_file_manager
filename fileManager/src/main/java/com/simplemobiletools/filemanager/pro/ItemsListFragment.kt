@@ -77,12 +77,14 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
 
         var folderClicked:Int? = 0
+        var folderPath:String?=null
 
 
-        fun newInstance(name: Int) : ItemsListFragment {
+        fun newInstance(name: Int,path: String) : ItemsListFragment {
             val myFragment = ItemsListFragment()
             val bundle = Bundle()
             bundle.putInt(PARAM_ID, name)
+            bundle.putString("Path",path)
             myFragment?.arguments = bundle
             return myFragment
         }
@@ -93,10 +95,9 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         super.onCreate(savedInstanceState)
 
 
-
-
         val bundle = arguments
         folderClicked = bundle?.getInt(PARAM_ID)
+        folderPath = bundle?.getString("Path")
     }
 
 
@@ -156,6 +157,12 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 add_the_shortcut.visibility = View.VISIBLE
 
                 refreshItems(true)
+
+            }
+            SHORTCUT_FOLDER_ID ->{
+
+                (activity as FileManagerMainActivity).pathList.add(folderPath!!)
+                openPath(folderPath!!)
 
             }
 

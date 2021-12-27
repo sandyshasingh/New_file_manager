@@ -127,7 +127,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         recyclerView?.adapter = mainAdapter
 
         only_internal.setOnClickListener {   (activity as FileManagerMainActivity)?.onCategoryClick(
-            INTERNAL_STORAGE)  }
+            INTERNAL_STORAGE,"abc")  }
 
 
 
@@ -169,9 +169,9 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
         for(i in set)
         {
-            folderItems.add(FolderItem(SHORTCUT_FOLDER_ID,SHORTCUT_FOLDER_NAME, R.drawable.ic_icon_folder__light2,
+            folderItems.add(FolderItem(SHORTCUT_FOLDER_ID,i.getFilenameFromPath(), R.drawable.ic_icon_folder__light2,
                 getDrawable(R.drawable.rectangle_semitranparent_filter)!!,
-                this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK))
+                this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK,0,i))
 //            FolderItem(ZIP_FILES_ID, ZIP_FILES_NAME, R.drawable.ic_file_manager_zip, getDrawable(R.drawable.rectangle_semitranparent_filter),
 //                this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK))
         }
@@ -244,9 +244,9 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         if (set != null) {
             for(i in set)
             {
-                folderItems.add(FolderItem(SHORTCUT_FOLDER_ID,SHORTCUT_FOLDER_NAME, R.drawable.ic_icon_folder__light2,
+                folderItems.add(FolderItem(SHORTCUT_FOLDER_ID,i.getFilenameFromPath(), R.drawable.ic_icon_folder__light2,
                     getDrawable(R.drawable.rectangle_semitranparent_filter)!!,
-                    this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK))
+                    this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK,0,i))
     //            FolderItem(ZIP_FILES_ID, ZIP_FILES_NAME, R.drawable.ic_file_manager_zip, getDrawable(R.drawable.rectangle_semitranparent_filter),
     //                this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK))
             }
@@ -886,14 +886,14 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //        val intent = Intent(requireContext(), FileManagerMainActivity::class.java)
 //        intent.putExtra(USER_WALLET_PRICE,folder.id)
 
-        (activity as FileManagerMainActivity)?.onCategoryClick(folder.id)
+        (activity as FileManagerMainActivity)?.onCategoryClick(folder.id,folder.sizeString!!)
 
 
 
     }
 
     override fun storageFolderClick(storage: StorageItem) {
-        (activity as FileManagerMainActivity)?.onCategoryClick(storage.id)
+        (activity as FileManagerMainActivity)?.onCategoryClick(storage.id,"abc")
     }
 
 

@@ -500,10 +500,10 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         }
     }
 
-    fun onCategoryClick(id: Int) {
+    fun onCategoryClick(id: Int,path: String) {
         val fragmentManager: FragmentManager = supportFragmentManager
 
-        itemsListFragtment = ItemsListFragment.newInstance(id)
+        itemsListFragtment = ItemsListFragment.newInstance(id,path)
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment).addToBackStack("")
         fragmentTransaction.commit()
@@ -519,6 +519,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         set=set.plus(item)
        sharedPreferences?.edit().apply(){
             this?.putStringSet("SHORTCUT_FOLDERS",set)
+           this?.apply()
         }
        fragment.add_the_shortcutfolder(set)
     }
