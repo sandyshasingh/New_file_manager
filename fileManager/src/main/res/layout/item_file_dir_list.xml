@@ -88,13 +88,14 @@
                 android:visibility="gone"
                 />
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="28dp"
-                android:id="@+id/threedot"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:srcCompat="?attr/ic_three_dot"
-                />
+<!--            <ImageView-->
+<!--                android:layout_width="25dp"-->
+<!--                android:layout_height="28dp"-->
+<!--                -->
+<!--                android:id="@+id/circle"-->
+<!--                android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--                app:srcCompat="@drawable/ic_file_manager_slect"-->
+<!--                />-->
 
         </LinearLayout>
     </RelativeLayout>

@@ -29,6 +29,7 @@ import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.filemanager.pro.*
 import com.simplemobiletools.filemanager.pro.dialogs.ChangeSortingDialog
 import com.simplemobiletools.filemanager.pro.dialogs.CreateNewItemDialog
@@ -46,6 +47,7 @@ import kotlinx.android.synthetic.main.items_fragment.view.*
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 const val REQUEST_CODE_FOR_STORAGE_PERMISSION =  101
 const val FRAGMENT_STACK = "fragment_stack"
@@ -60,10 +62,13 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     private var isDarkTheme = false
     var viewModel : DataViewModel? = null
     private var mProgressDialog: AppProgressDialog? = null
+    private val sharedPrefFile = "com.example.new_file_manager"
+    private var folderItems = ArrayList<FolderItem>()
 
-   /* override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase!!))
-    }*/
+
+    /* override fun attachBaseContext(newBase: Context) {
+         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase!!))
+     }*/
 
 
    /* override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,6 +121,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
                     if (isSearchOpen) {
                         fragment.searchQueryChanged(newText)
                     }
+
                     return true
                 }
             })
@@ -191,7 +197,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     private fun isSortByVisible(): Boolean {
         val path = fragment.currentPath
         return !(path == "$internalStoragePath/$AUDIO_NAME" || path == "$internalStoragePath/$VIDEOS_NAME"
-                || path == "$internalStoragePath/$FILTER_DUPLICATE_NAME" || path == "$internalStoragePath/$PHOTOS_NAME")
+                 || path == "$internalStoragePath/$PHOTOS_NAME")
     }
 
 
@@ -453,7 +459,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
     fun pickedPath(path: String) {
         val resultIntent = Intent()
-        val uri = getFilePublicUri(File(path), "com.rocks.music.videoplayer.provider")
+        val uri = getFilePublicUri(File(path), "com.example.new_file_manager")
         val type = path.getMimeType()
         resultIntent.setDataAndType(uri, type)
         resultIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
@@ -462,7 +468,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     }
 
     fun pickedRingtone(path: String) {
-        val uri = getFilePublicUri(File(path), "com.rocks.music.videoplayer.provider")
+        val uri = getFilePublicUri(File(path), "com.example.new_file_manager")
         val type = path.getMimeType()
         Intent().apply {
             setDataAndType(uri, type)
@@ -474,7 +480,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     }
 
     fun pickedPaths(paths: ArrayList<String>) {
-        val newPaths = paths.map { getFilePublicUri(File(it), "com.rocks.music.videoplayer.provider") } as ArrayList
+        val newPaths = paths.map { getFilePublicUri(File(it), "com.example.new_file_manager") } as ArrayList
         val clipData = ClipData("Attachment", arrayOf(paths.getMimeType()), ClipData.Item(newPaths.removeAt(0)))
         newPaths.forEach {
             clipData.addItem(ClipData.Item(it))
@@ -504,6 +510,22 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     }
 
 
+    fun onAddShortcutClicked(item:String){
+        val sharedPreferences: SharedPreferences? = getSharedPreferences(sharedPrefFile,
+            Context.MODE_PRIVATE)
+        var set:Set<String>?=sharedPreferences?.getStringSet("SHORTCUT_FOLDERS",null)
+        if(set == null)
+            set = HashSet()
+        set=set.plus(item)
+       sharedPreferences?.edit().apply(){
+            this?.putStringSet("SHORTCUT_FOLDERS",set)
+        }
+       fragment.add_the_shortcutfolder(set)
+    }
+
+// fun getDrawable(id: Int): Drawable {
+//        return  this.resources.getDrawable(id)
+//    }
 
 
 

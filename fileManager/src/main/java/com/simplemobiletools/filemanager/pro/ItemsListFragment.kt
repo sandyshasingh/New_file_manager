@@ -63,7 +63,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
     private var baseSimpleActivity : BaseSimpleActivity? = null
 //    var mainAdapter : AdapterForFolders? = null
 
-
+    var add_shortcut_path = ""
     private var internalStoragePath : String? = ""
     private val sharedPrefFile = "com.example.new_file_manager"
 
@@ -92,8 +92,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sharedPreferences: SharedPreferences? = activity?.getSharedPreferences(sharedPrefFile,
-            Context.MODE_PRIVATE)
+
 
 
         val bundle = arguments
@@ -119,28 +118,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //            //updateVideoSize(it)
 //            mainAdapter?.updateFolderItems(folderItems)
 //        })
-//
-//        model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-//            //updateVideoSize(it)
-//            mainAdapter?.updateFolderItems(folderItems)
-//        })
-//
-//        model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-//            //updateVideoSize(it)
-//            mainAdapter?.updateFolderItems(folderItems)
-//        })
-//        model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-//            //updateVideoSize(it)
-//            mainAdapter?.updateFolderItems(folderItems)
-//        })
-//
-//        model?.audioSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-//            //updateAudioSize(it)
-//            mainAdapter?.updateFolderItems(folderItems)
-//        })
 
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_items_list, container, false)
         return mView
     }
 
@@ -150,6 +128,9 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //        itemsAdapter = ItemsListAdapter(storageItems,requireActivity() )
 //        item_list_rv?.adapter = itemsAdapter
 
+        add_the_shortcut?.setOnClickListener {
+            (activity as FileManagerMainActivity).onAddShortcutClicked(add_shortcut_path)
+        }
         when (folderClicked) {
             AUDIO_ID -> {
                 AUDIO_CLICK++
@@ -171,6 +152,9 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             }
             SHORTCUT_ID -> {
                 currentFolderHeader = "Internal"
+
+                add_the_shortcut.visibility = View.VISIBLE
+
                 refreshItems(true)
 
             }
@@ -391,6 +375,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 skipItemUpdating = isSearchOpen
                 openedDirectory()
             }
+            add_shortcut_path = item.path
             openPath(item.path)
         } else {
             val path = item.path

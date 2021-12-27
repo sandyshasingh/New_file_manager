@@ -1,6 +1,7 @@
 package com.simplemobiletools.filemanager.pro.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -66,12 +67,12 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     private var scrollStates = HashMap<String, Parcelable>()
     private var zoomListener: MyRecyclerView.MyZoomListener? = null
     private var storedItems = ArrayList<ListItem>()
-    private var folderItems = ArrayList<FolderItem>()
+    var folderItems = ArrayList<FolderItem>()
     private var storageItems = ArrayList<StorageItem>()
     var mainAdapter : AdapterForFolders? = null
     var storageAdapter : AdapterForStorage? = null
     var recent_file_line_adapter : AdapterForRecentFiles? = null
-
+    private val sharedPrefFile = "com.example.new_file_manager"
     private var storedTextColor = 0
     private var storedFontSize = 0
     lateinit var mView: View
@@ -164,6 +165,20 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //    }
 
 
+    fun add_the_shortcutfolder(set: Set<String>){
+
+        for(i in set)
+        {
+            folderItems.add(FolderItem(SHORTCUT_FOLDER_ID,SHORTCUT_FOLDER_NAME, R.drawable.ic_icon_folder__light2,
+                getDrawable(R.drawable.rectangle_semitranparent_filter)!!,
+                this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK))
+//            FolderItem(ZIP_FILES_ID, ZIP_FILES_NAME, R.drawable.ic_file_manager_zip, getDrawable(R.drawable.rectangle_semitranparent_filter),
+//                this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK))
+        }
+        mainAdapter?.notifyDataSetChanged()
+
+    }
+
     fun itemClick(list : Any ,position: Int, forceRefresh: Boolean)
     {
             itemClicked(list as FileDirItem)
@@ -221,6 +236,21 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
             folderItems.add(FolderItem(DOWNLOAD_ID, DOWNLOAD_NAME, R.drawable.ic_file_manager_download, getDrawable(R.drawable.rectangle_semitranparent_filter),
                 requireActivity().resources.getColor(R.color.photo_text_color), DOWNLOAD_CLICK))
+
+        val sharedPreferences: SharedPreferences? = activity?.getSharedPreferences(sharedPrefFile,
+            Context.MODE_PRIVATE)
+       var set = sharedPreferences?.getStringSet("SHORTCUT_FOLDERS",null)
+
+        if (set != null) {
+            for(i in set)
+            {
+                folderItems.add(FolderItem(SHORTCUT_FOLDER_ID,SHORTCUT_FOLDER_NAME, R.drawable.ic_icon_folder__light2,
+                    getDrawable(R.drawable.rectangle_semitranparent_filter)!!,
+                    this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK))
+    //            FolderItem(ZIP_FILES_ID, ZIP_FILES_NAME, R.drawable.ic_file_manager_zip, getDrawable(R.drawable.rectangle_semitranparent_filter),
+    //                this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK))
+            }
+        }
 
 
         val totalSizeInternal = MemorySizeUtils.getTotalInternalMemorySize()

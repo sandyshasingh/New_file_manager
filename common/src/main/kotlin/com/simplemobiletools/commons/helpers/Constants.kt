@@ -244,7 +244,7 @@ const val PHOTOS_ID = 1
 
 const val VIDEOS_ID = 2
 const val AUDIO_ID = 3
-const val FILTER_DUPLICATE_ID = 4
+const val SHORTCUT_FOLDER_ID = 4
 const val APPLICATIONS_ID = 5
 const val ZIP_FILES_ID = 6
 const val DOCUMENTS_ID = 7
@@ -260,7 +260,7 @@ const val PHOTOS_NAME = "Photos"
 const val SHORTCUT_NAME = "Shortcut"
 const val VIDEOS_NAME = "Videos"
 const val AUDIO_NAME = "Audio"
-const val FILTER_DUPLICATE_NAME = "Filter Duplicate"
+const val SHORTCUT_FOLDER_NAME = "Filter Duplicate"
 const val APPLICATION_NAME = "Apps"
 const val ZIP_FILES_NAME = "Zip files"
 const val DOCUMENTS_NAME = "Documents"

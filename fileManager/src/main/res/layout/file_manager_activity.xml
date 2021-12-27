@@ -43,6 +43,8 @@
                     android:layout_marginStart="@dimen/spacing16"
                     android:layout_width="match_parent"
                     app:queryHint="sfjsnfjisadnf"
+                    android:iconifiedByDefault="false"
+                    android:textSize="15dp"
                     android:layout_height="30dp"/>
 
 

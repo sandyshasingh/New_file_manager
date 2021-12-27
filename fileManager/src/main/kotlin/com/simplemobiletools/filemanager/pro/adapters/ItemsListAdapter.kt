@@ -259,12 +259,12 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
                 if(isLongPressClick){
                     item_check_view?.beVisible()
                     item_check_view_grid?.beVisible()
-                    threedot?.beGone()
+                    //threedot?.beGone()
                     threedot_grid?.beGone()
                 }else{
                     item_check_view?.beGone()
                     item_check_view_grid?.beGone()
-                    threedot?.beVisible()
+                   // threedot?.beVisible()
                     threedot_grid?.beVisible()
                 }
 
@@ -282,9 +282,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
                     holder.viewClicked(listItem, position)
                 }
 
-                threedot?.setOnClickListener{
-                    showBottomSheet(listItem, position)
-                }
+//                threedot?.setOnClickListener{
+//                    showBottomSheet(listItem, position)
+//                }
                 threedot_grid?.setOnClickListener{
                     showBottomSheet( listItem, position)
                 }
