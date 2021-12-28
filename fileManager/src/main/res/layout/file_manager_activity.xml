@@ -1,75 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/main_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
-        app:elevation="0dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:title="/rocks_player"
-            android:background="?attr/half_up_backgrounndcolor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextAppearance="@style/Toolbar.TitleText"
+            android:background="?attr/half_up_backgrounndcolor"
+            android:title="/rocks_player"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:titleTextAppearance="@style/Toolbar.TitleText">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:gravity="center"
-                android:background="@drawable/rounded_toolbar"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_toolbar"
+                android:gravity="right">
 
-                <ImageView
+                <!--<ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_file_manager_video"/>
+                    android:src="@drawable/ic_file_manager_video" />-->
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/search_df"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing16"
-                    android:layout_width="match_parent"
-                    app:queryHint="sfjsnfjisadnf"
-                    android:iconifiedByDefault="false"
                     android:textSize="15dp"
-                    android:layout_height="30dp"/>
 
-
-
-
-
-
-
-
+                    app:queryHint="sfjsnfjisadnf" />
 
 
             </LinearLayout>
-
-
-
-
-
 
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/fragment_holder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

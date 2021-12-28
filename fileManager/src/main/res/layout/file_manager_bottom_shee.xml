@@ -35,10 +35,13 @@
             <ImageView
                 app:srcCompat="?attr/ic_share_vector"
                 style="@style/bs_image_style"
+
+
                 />
             <TextView
                 android:text="@string/share"
                 style="@style/bs_textview_style"
+
                 />
 
         </LinearLayout>

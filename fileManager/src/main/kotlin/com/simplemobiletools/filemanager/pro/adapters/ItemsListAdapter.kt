@@ -61,6 +61,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
     private var fileDrawables = HashMap<String, Drawable>()
     private lateinit var fileDrawable: Drawable
     private var isDarkTheme = false
+    private var currentItemsHash = listItems.hashCode()
 
     init {
 //       setupDragListener(true)
@@ -196,6 +197,22 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
             this.listItems = listItems
             notifyDataSetChanged()
         }
+    }
+    fun updateItems(newItems: ArrayList<ListItem>, highlightText: String = "") {
+        if (newItems.hashCode() != currentItemsHash) {
+            currentItemsHash = newItems.hashCode()
+            textToHighlight = highlightText
+//            listItems = newItems.clone() as ArrayList<ListItem>
+            notifyDataSetChanged()
+            (bottomnavigation)
+        } else if (textToHighlight != highlightText) {
+            textToHighlight = highlightText
+            notifyDataSetChanged()
+        }
+
+        listItems = newItems
+        notifyDataSetChanged()
+        fastScroller?.measureRecyclerView()
     }
 
     override fun actionItemPressed(id: Int) {

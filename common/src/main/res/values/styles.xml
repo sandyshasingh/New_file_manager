@@ -64,14 +64,13 @@
     <style name="bs_image_style">
         <item name="android:layout_width">22dp</item>
         <item name="android:layout_height">22dp</item>
-        <item name="android:tint">?attr/bottom_sheet_tint</item>
         <item name="android:layout_weight">0</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
     <style name="bs_textview_style" parent="android:Widget.TextView">
         <item name="android:textSize">@dimen/text_medium</item>
         <!-- <item name="android:tint">?attr/textcolorsecondrycustom</item>-->
-        <item name="android:textColor">?attr/textcolorsecondrycustom</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:layout_weight">0</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">wrap_content</item>
@@ -91,10 +90,12 @@
         <item name="colorPrimary">@color/blue_grey_100</item>
         <item name="colorPrimaryDark">@color/hint_white</item>
         <item name="colorAccent">@color/hint_white</item>
-        <item name="android:textColorSecondary">#ffffff</item>
+        <item name="android:textColorSecondary">@color/material_gray_900</item>
         <item name="android:windowBackground">@color/theme_light_background_color</item>
         <item name="android:textColorPrimary">@color/hint_white</item>
         <item name="filemanagertextcolor">@color/file_manager_textcolor_light</item>
+        <item name="ic_unhide_vector_dialog">@drawable/ic_unhide_for_dialog</item>
+        <item name="ic_plus_vector">@drawable/ic_plus_vector</item>
 
 
 
@@ -135,4 +136,5 @@
     </style>
 
     <dimen name="text_medium">14dp</dimen>
+    <color name="white">#FFFFFF</color>
 </resources>

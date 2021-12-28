@@ -672,8 +672,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                 }
             }
 
-            /*
-            It is for whole phone searching directory and files both
+            //It is for whole phone searching directory and files both
 
             if (it.isDirectory) {
                 if (it.name.contains(text, true)) {
@@ -690,7 +689,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                         files.add(fileDirItem)
                     }
                 }
-            }*/
+            }
         }
         return files
     }

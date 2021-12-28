@@ -119,20 +119,21 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (isSearchOpen) {
-                        fragment.searchQueryChanged(newText)
+                        itemsListFragtment.searchQueryChanged(newText)
                     }
 
                     return true
                 }
             })
 
+
         }
 
-        val searchView = findViewById<View>(R.id.search_df) as SearchView?
-        val searchEditText =
-            searchView?.findViewById<View>(R.id.search_src_text) as EditText?
-        searchEditText?.setTextColor(resources.getColor(R.color.btm_background))
-        searchEditText?.setHintTextColor(resources.getColor(R.color.hint_black))
+//        val searchView = findViewById<View>(R.id.search_df) as SearchView?
+//        val searchEditText =
+//            searchView?.findViewById<View>(R.id.search_src_text) as EditText?
+//        searchEditText?.setTextColor(resources.getColor(R.color.btm_background))
+//        searchEditText?.setHintTextColor(resources.getColor(R.color.hint_black))
 
         if (savedInstanceState == null) {
             tryInitFileManager()
@@ -286,7 +287,8 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (isSearchOpen) {
-                        fragment.searchQueryChanged(newText)
+                        itemsListFragtment.searchQueryChanged(newText)
+                      //  fragment.searchQueryChanged(newText)
                     }
                     return true
                 }
@@ -296,13 +298,15 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 isSearchOpen = true
-                fragment.searchOpened()
+               // fragment.searchOpened()
+                itemsListFragtment.searchOpened()
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
                 isSearchOpen = false
-                fragment.searchClosed()
+               // fragment.searchClosed()
+                itemsListFragtment.searchClosed()
                 return true
             }
         })

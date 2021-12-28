@@ -15,9 +15,18 @@
     android:layout_marginBottom="2dp"
     android:paddingStart="10dp">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/breadcrumb_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+/>
     <com.simplemobiletools.commons.views.MyRecyclerView
         android:id="@+id/item_list_rv"
         android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
         android:layout_height="match_parent"
         app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager"
         />

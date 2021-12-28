@@ -111,43 +111,43 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
         mCopyPath.beVisibleIf(isOneItemSelected())
         checkHideBtnVisibility(mHide, mUnHide, null)
 
-        mSend.setOnClickListener {
-            shareFiles(null)
-        }
-        mDelete.setOnClickListener {
-            askConfirmDelete()
-        }
-        mMove.setOnClickListener {
-            copyMoveTo(false, null)
-        }
-        mRename.setOnClickListener {
-            displayRenameDialog(null)
-        }
-        mProperties.setOnClickListener {
-            showProperties(null)
-        }
-
-        mCopyTo.setOnClickListener {
-            copyMoveTo(true, null)
-        }
-        mCopyPath.setOnClickListener {
-            copyPath(null)
-        }
-        mOpenWith.setOnClickListener {
-            openWith(null)
-        }
-        mHide.setOnClickListener {
-            toggleFileVisibility(true, null)
-        }
-        mUnHide.setOnClickListener {
-            toggleFileVisibility(false, null)
-        }
-        mCompress.setOnClickListener {
-            compressSelection(null)
-        }
-        mDecompress.setOnClickListener {
-            decompressSelection(null)
-        }
+//        mSend.setOnClickListener {
+//            shareFiles(null)
+//        }
+//        mDelete.setOnClickListener {
+//            askConfirmDelete()
+//        }
+//        mMove.setOnClickListener {
+//            copyMoveTo(false, null)
+//        }
+//        mRename.setOnClickListener {
+//            displayRenameDialog(null)
+//        }
+//        mProperties.setOnClickListener {
+//            showProperties(null)
+//        }
+//
+//        mCopyTo.setOnClickListener {
+//            copyMoveTo(true, null)
+//        }
+//        mCopyPath.setOnClickListener {
+//            copyPath(null)
+//        }
+//        mOpenWith.setOnClickListener {
+//            openWith(null)
+//        }
+//        mHide.setOnClickListener {
+//            toggleFileVisibility(true, null)
+//        }
+//        mUnHide.setOnClickListener {
+//            toggleFileVisibility(false, null)
+//        }
+//        mCompress.setOnClickListener {
+//            compressSelection(null)
+//        }
+//        mDecompress.setOnClickListener {
+//            decompressSelection(null)
+//        }
     }
 
     override fun getActionMenuId() = R.menu.menu_favorites

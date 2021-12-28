@@ -17,7 +17,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/fdr"
-            android:layout_width="64dp"
+            android:layout_width="59dp"
             app:cardCornerRadius="8dp"
             android:layout_centerHorizontal="true"
             android:layout_height="59dp">

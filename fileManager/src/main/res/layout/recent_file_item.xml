@@ -12,7 +12,7 @@
         android:id="@+id/child_recent_item"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:scaleType="fitXY"
+        android:scaleType="center"
 
 
         />
