@@ -1,10 +1,13 @@
 package com.simplemobiletools.filemanager.pro
 
+import android.app.Activity
 import android.content.Context
 import android.database.Cursor
 import android.os.AsyncTask
 import android.provider.MediaStore
 import android.util.Log
+import com.simplemobiletools.commons.AppProgressDialog
+import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.helpers.format
 import com.simplemobiletools.commons.helpers.timeConversionInMinSec
 import com.simplemobiletools.filemanager.pro.models.ListItem
@@ -12,11 +15,18 @@ import java.io.File
 import java.text.SimpleDateFormat
 
 class GroupVideoPhotoAsyncTask(
-    var context: Context,
+    var context: Activity,
     var recentFetchAsyncCompleteListener: RecentFetchAsyncCompleteListener
+
 ) : AsyncTask<Void, Void, Map<String, List<ListItem>>>() {
 
     var recentfileDataClassList: ArrayList<GroupedDataClass> = ArrayList()
+   // private var mProgressDialog: AppProgressDialog? = null
+
+//    override fun onPreExecute() {
+//        super.onPreExecute()
+//        //showDialog()
+//    }
 
     override fun doInBackground(vararg p0: Void?): Map<String, List<ListItem>>? {
         val images = getImages()
@@ -43,6 +53,19 @@ class GroupVideoPhotoAsyncTask(
         // return
         return recentList
     }
+//    private fun showDialog() {
+//        try {
+//            //Dismiss if already exist
+////            dismissDialog()
+//            if (ThemeUtils.getActivityIsAlive(context)) {
+//                mProgressDialog = AppProgressDialog(context)
+//                mProgressDialog?.setCancelable(true)
+//                mProgressDialog?.setCanceledOnTouchOutside(true)
+//                mProgressDialog?.show()
+//            }
+//        } catch (e: Exception) {
+//        }
+//    }
 
     private val IMAGE_PROJECTION = arrayOf(
         MediaStore.Images.ImageColumns._ID,
@@ -214,6 +237,7 @@ class GroupVideoPhotoAsyncTask(
     override fun onPostExecute(result: Map<String, List<ListItem>>?) {
         super.onPostExecute(result)
         recentFetchAsyncCompleteListener.recentFetchCompleted(result)
+        //mProgressDialog?.dismiss()
 
     }
 

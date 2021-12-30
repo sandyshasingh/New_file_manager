@@ -1,5 +1,6 @@
 package com.simplemobiletools.filemanager.pro.helpers
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.AsyncTask
@@ -23,7 +24,7 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
     var photoSize = MutableLiveData<Long>()
     var recent_files : MutableLiveData<Map<String,List<ListItem>>> = MutableLiveData()
 
-    fun fetchRecent(context: Context){
+    fun fetchRecent(context: Activity){
         GroupVideoPhotoAsyncTask(context,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 

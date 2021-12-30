@@ -97,6 +97,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         sharedPrefrences = activity?.getSharedPrefs()
         baseSimpleActivity = activity as BaseSimpleActivity
         internalStoragePath = context?.config?.internalStoragePath
+           showDialog()
 
 //        model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
 //            //updateVideoSize(it)
@@ -105,8 +106,12 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         model = ViewModelProvider(baseSimpleActivity!!).get(DataViewModel::class.java)
 
         model?.recent_files?.observe(baseSimpleActivity!!,androidx.lifecycle.Observer {
+           // (activity as FileManagerMainActivity)?.mProgressDialog?.dismiss()
+                mProgressDialog?.dismiss()
                 recent_file_line_adapter?.mRecent = it
                 recent_file_line_adapter?.notifyDataSetChanged()
+
+               // loader.visibility=View.GONE
         })
 
 

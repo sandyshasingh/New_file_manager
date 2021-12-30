@@ -125,6 +125,16 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+       <!-- <ProgressBar
+              android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/loader"
+            android:focusable="true"
+            android:indeterminateTint="@color/pagestrip"
+            app:layout_constraintBottom_toTopOf="@+id/items_list"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>-->
+
 
         <com.simplemobiletools.commons.views.MyRecyclerView
             xmlns:android="http://schemas.android.com/apk/res/android"

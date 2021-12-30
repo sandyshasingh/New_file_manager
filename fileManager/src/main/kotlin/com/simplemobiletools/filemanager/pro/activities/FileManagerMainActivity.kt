@@ -62,9 +62,10 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     private lateinit var fragment: ItemsFragment
     private var isDarkTheme = false
     var viewModel : DataViewModel? = null
-    private var mProgressDialog: AppProgressDialog? = null
+
     private val sharedPrefFile = "com.example.new_file_manager"
     private var folderItems = ArrayList<FolderItem>()
+     var mProgressDialog: AppProgressDialog? = null
 
 
     /* override fun attachBaseContext(newBase: Context) {
@@ -175,6 +176,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         viewModel?.fetchDocuments(this)
         viewModel?.fetchZip(this)
        viewModel?.fetchRecent(this)
+//        showDialog()
 
 
 //        fragment.setZRPImage(ZRP_image)
@@ -221,6 +223,8 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
                 resources.getDrawable(R.drawable.ic_grid_black)
         }
     }
+
+
 
     private fun isSortByVisible(): Boolean {
         val path = fragment.currentPath
