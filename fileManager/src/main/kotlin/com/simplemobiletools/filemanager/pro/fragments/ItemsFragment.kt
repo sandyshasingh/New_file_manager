@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Environment
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -626,8 +628,9 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                     if (lastSearchedText != searchText) {
                         return@ensureBackgroundThread
                     }
-                    val files = searchFiles(searchText, currentPath)
+                    val files = searchFiles(searchText, Environment.getExternalStorageDirectory().absolutePath)
                     files.sortBy { it.getParentPath() }
+                    Log.d("sanidhya","$files")
 
                     /*
                     It is for showing file path above all same directry files

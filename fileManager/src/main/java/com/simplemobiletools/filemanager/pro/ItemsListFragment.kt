@@ -51,7 +51,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
     var isGetContentIntent = false
     var isGetRingtonePicker = false
     private var isSearchOpen = false
-
+    var searchClicked = false
     private var skipItemUpdating = false
     private var showHidden = false
     private var firstTime = true
@@ -129,6 +129,18 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //        item_list_rv?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
 //        itemsAdapter = ItemsListAdapter(storageItems,requireActivity() )
 //        item_list_rv?.adapter = itemsAdapter
+
+        if(searchClicked){
+            mView.item_list_rv.adapter = ItemsListAdapter(
+                activity as BaseSimpleActivity,
+                folderItems,
+                bottomnavigation,
+                storedItems,
+                this@ItemsListFragment,
+                null,
+                item_list_rv
+            ) { list, position -> itemClick(list as ListItem, position, false) }
+        }
 
         add_the_shortcut?.setOnClickListener {
             (activity as FileManagerMainActivity).onAddShortcutClicked(add_shortcut_path)
@@ -648,8 +660,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 }
             }
 
-            /*
-            It is for whole phone searching directory and files both
+            //It is for whole phone searching directory and files both
 
             if (it.isDirectory) {
                 if (it.name.contains(text, true)) {
@@ -666,7 +677,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                         files.add(fileDirItem)
                     }
                 }
-            }*/
+            }
         }
         return files
     }
@@ -682,7 +693,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             when {
                 searchText.isEmpty() -> activity?.runOnUiThread {
                     mView.apply {
-                        items_list.beVisible()
+                         //items_list.beVisible()
                         getRecyclerAdapter()?.updateItems(storedItems)
                         //items_placeholder.beGone()
                         //  items_placeholder_2.beGone()
@@ -702,8 +713,9 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                     if (lastSearchedText != searchText) {
                         return@ensureBackgroundThread
                     }
-                    val files = searchFiles(searchText, currentPath)
+                    val files = searchFiles(searchText, Environment.getExternalStorageDirectory().absolutePath)
                     files.sortBy { it.getParentPath() }
+                    Log.d("sanidhya","$files")
 
                     /*
                     It is for showing file path above all same directry files
@@ -721,11 +733,11 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
                     activity?.runOnUiThread {
                         getRecyclerAdapter()?.updateItems(files, text)
-                        mView.apply {
-                            items_list.beVisibleIf(files.isNotEmpty())
-                            //items_placeholder.beVisibleIf(files.isEmpty())
-                            // items_placeholder_2.beGone()
-                        }
+//                        mView.apply {
+//                            //items_list.beVisibleIf(files.isNotEmpty())
+//                            //items_placeholder.beVisibleIf(files.isEmpty())
+//                            // items_placeholder_2.beGone()
+//                        }
                     }
                 }
             }

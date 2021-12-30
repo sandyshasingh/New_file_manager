@@ -54,7 +54,8 @@ const val FRAGMENT_STACK = "fragment_stack"
 class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     private val PICKED_PATH = "picked_path"
     var pathList = ArrayList<String>()
-    private lateinit var itemsListFragtment: ItemsListFragment
+    var itemsListFragtment:ItemsListFragment?=null
+  //  var searchFragment= SearchFragment()
     private var isSearchOpen = true
     private var searchMenuItem: MenuItem? = null
     var sharedPrefrences : SharedPreferences? = null
@@ -99,6 +100,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         sharedPrefrences = getSharedPrefs()
        val fragmentManager: FragmentManager = supportFragmentManager
         fragment = ItemsFragment()
+
        fragmentManager.beginTransaction().replace(R.id.fragment_holder,fragment).commit()
        fragment.apply {
             isGetRingtonePicker = intent.action == RingtoneManager.ACTION_RINGTONE_PICKER
@@ -110,6 +112,13 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         }
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        search_df.setOnSearchClickListener {
+            itemsListFragtment = ItemsListFragment()
+            itemsListFragtment?.searchClicked=true
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment!!).addToBackStack("")
+            fragmentTransaction.commit()
+        }
         search_df?.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             isSubmitButtonEnabled = false
@@ -119,7 +128,10 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (isSearchOpen) {
-                        itemsListFragtment.searchQueryChanged(newText)
+                        //fragment.searchQueryChanged(newText)
+
+                       // searchFragment.searchQueryChanged(newText)
+                        itemsListFragtment?.searchQueryChanged(newText)
                     }
 
                     return true
@@ -129,11 +141,11 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
         }
 
-//        val searchView = findViewById<View>(R.id.search_df) as SearchView?
-//        val searchEditText =
-//            searchView?.findViewById<View>(R.id.search_src_text) as EditText?
-//        searchEditText?.setTextColor(resources.getColor(R.color.btm_background))
-//        searchEditText?.setHintTextColor(resources.getColor(R.color.hint_black))
+        val searchView = findViewById<View>(R.id.search_df) as SearchView?
+        val searchEditText =
+            searchView?.findViewById<View>(R.id.search_src_text) as EditText?
+        searchEditText?.setTextColor(resources.getColor(R.color.btm_background))
+        searchEditText?.setHintTextColor(resources.getColor(R.color.hint_black))
 
         if (savedInstanceState == null) {
             tryInitFileManager()
@@ -287,8 +299,9 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (isSearchOpen) {
-                        itemsListFragtment.searchQueryChanged(newText)
-                      //  fragment.searchQueryChanged(newText)
+                        itemsListFragtment?.searchQueryChanged(newText)
+                       // searchFragment.searchQueryChanged(newText)
+                        //fragment.searchQueryChanged(newText)
                     }
                     return true
                 }
@@ -298,15 +311,15 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 isSearchOpen = true
-               // fragment.searchOpened()
-                itemsListFragtment.searchOpened()
+                fragment.searchOpened()
+                itemsListFragtment?.searchOpened()
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
                 isSearchOpen = false
-               // fragment.searchClosed()
-                itemsListFragtment.searchClosed()
+                fragment.searchClosed()
+                itemsListFragtment?.searchClosed()
                 return true
             }
         })
@@ -390,7 +403,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
             newPath = internalStoragePath
         }
 
-        itemsListFragtment.openPath(newPath, forceRefresh)
+        itemsListFragtment?.openPath(newPath, forceRefresh)
 
 
     }
@@ -509,7 +522,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
         itemsListFragtment = ItemsListFragment.newInstance(id,path)
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment).addToBackStack("")
+        fragmentTransaction.add(R.id.fragment_holder, itemsListFragtment!!).addToBackStack("")
         fragmentTransaction.commit()
     }
 
