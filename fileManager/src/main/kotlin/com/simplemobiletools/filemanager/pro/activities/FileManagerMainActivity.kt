@@ -118,7 +118,22 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment!!).addToBackStack("")
             fragmentTransaction.commit()
+
+            isSearchOpen = true
+            //fragment.searchOpened()
+            itemsListFragtment?.searchOpened()
+             true
         }
+        search_df.setOnCloseListener (SearchView.OnCloseListener { //your code here
+            isSearchOpen = false
+            // fragment.searchClosed()
+            itemsListFragtment?.searchClosed()
+             true
+        })
+
+
+
+
         search_df?.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             isSubmitButtonEnabled = false
@@ -311,14 +326,14 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 isSearchOpen = true
-                fragment.searchOpened()
+                //fragment.searchOpened()
                 itemsListFragtment?.searchOpened()
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
                 isSearchOpen = false
-                fragment.searchClosed()
+               // fragment.searchClosed()
                 itemsListFragtment?.searchClosed()
                 return true
             }

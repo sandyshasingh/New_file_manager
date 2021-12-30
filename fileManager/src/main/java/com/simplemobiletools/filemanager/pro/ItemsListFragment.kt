@@ -685,6 +685,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
     fun searchQueryChanged(text: String) {
         val searchText = text.trim()
         lastSearchedText = searchText
+       // supportLoaderManager.initLoader(0, null, this)
         ensureBackgroundThread {
             if (context == null) {
                 return@ensureBackgroundThread
@@ -733,11 +734,11 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
                     activity?.runOnUiThread {
                         getRecyclerAdapter()?.updateItems(files, text)
-//                        mView.apply {
+                        mView.apply {
 //                            //items_list.beVisibleIf(files.isNotEmpty())
 //                            //items_placeholder.beVisibleIf(files.isEmpty())
 //                            // items_placeholder_2.beGone()
-//                        }
+                        }
                     }
                 }
             }

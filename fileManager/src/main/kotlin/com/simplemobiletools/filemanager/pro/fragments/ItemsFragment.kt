@@ -87,6 +87,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     var model : DataViewModel? = null
     var zrpImage : ImageView? = null
 
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        supportLoaderManager.initLoader(0, null, this)
+//    }
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mView = inflater.inflate(R.layout.this_is_it, container, false)!!
