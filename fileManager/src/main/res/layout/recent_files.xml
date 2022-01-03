@@ -7,8 +7,8 @@
         android:id="@+id/recent_file_dot"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_marginStart="10dp"
-        android:src="@drawable/ic_file_manager_slect"
+
+        android:src="@drawable/ic_file_manager_slect2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -16,10 +16,19 @@
         android:id="@+id/recent_file_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="10dp"
         app:layout_constraintLeft_toRightOf="@+id/recent_file_dot"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:textColor="?attr/filemanagertextcolor"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="120dp"
+        android:background="@color/black_20"
+        app:layout_constraintTop_toBottomOf="@id/recent_file_dot"
+        app:layout_constraintStart_toStartOf="@id/recent_file_dot"
+        app:layout_constraintEnd_toEndOf="@id/recent_file_dot"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recent_file_item"
@@ -27,6 +36,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/recent_file_text"
         android:orientation="horizontal"
+        android:layout_marginStart="10dp"
         android:paddingTop="5dp"
         android:paddingLeft="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

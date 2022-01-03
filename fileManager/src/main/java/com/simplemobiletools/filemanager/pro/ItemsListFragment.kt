@@ -762,7 +762,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         skipItemUpdating = false
         lastSearchedText = ""
         mView.apply {
-            items_list.beVisible()
+            //items_list.beVisible()
             // items_placeholder.beGone()
         }
     }

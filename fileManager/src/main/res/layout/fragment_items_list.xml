@@ -11,8 +11,8 @@
     android:foreground="@drawable/selector"
     android:paddingTop="10dp"
     android:paddingBottom="6dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp"
+
+
     android:paddingStart="10dp">
 
     <androidx.recyclerview.widget.RecyclerView

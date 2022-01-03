@@ -25,9 +25,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_toolbar"
                 android:gravity="right">
@@ -39,10 +39,12 @@
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/search_df"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing16"
                     android:textSize="15dp"
+
 
 
                     app:queryHint="sfjsnfjisadnf" />

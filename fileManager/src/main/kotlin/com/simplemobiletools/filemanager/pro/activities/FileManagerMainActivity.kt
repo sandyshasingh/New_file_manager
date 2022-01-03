@@ -190,11 +190,11 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         config.temporarilyShowHidden = false
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         setupSearch(menu)
         return super.onCreateOptionsMenu(menu)
-    }
+    }*/
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu!!.apply {
@@ -306,7 +306,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         //openPath(path, true)
     }
 
-    private fun setupSearch(menu: Menu) {
+  /*  private fun setupSearch(menu: Menu) {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchMenuItem = menu.findItem(R.id.search)
         (searchMenuItem!!.actionView as SearchView).apply {
@@ -342,7 +342,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
                 return true
             }
         })
-    }
+    }*/
 
 
     private fun tryInitFileManager() {
@@ -353,6 +353,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
             } else {
                 val intent = Intent(this, PermissionActivity::class.java).apply {  }
                 startActivityForResult(intent,REQUEST_CODE_FOR_STORAGE_PERMISSION)
+              //  startActivityForResult(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,Uri.parse("package:$packageName")), REQUEST_CODE_TO_MANAGE_EXTERNAL_STORAGE)
                // toast(R.string.no_storage_permissions)
                // finish()
             }
@@ -365,7 +366,8 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         if(requestCode == REQUEST_CODE_FOR_STORAGE_PERMISSION)
         {
             isAskingPermissions = false
-            if (hasPermission(PERMISSION_WRITE_STORAGE))
+
+            if (checkPermission(PERMISSION_WRITE_STORAGE))
             {
                 initFileManager()
             }

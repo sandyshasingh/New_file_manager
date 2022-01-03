@@ -107,9 +107,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
         model?.recent_files?.observe(baseSimpleActivity!!,androidx.lifecycle.Observer {
            // (activity as FileManagerMainActivity)?.mProgressDialog?.dismiss()
-                mProgressDialog?.dismiss()
+
                 recent_file_line_adapter?.mRecent = it
                 recent_file_line_adapter?.notifyDataSetChanged()
+            mProgressDialog?.dismiss()
 
                // loader.visibility=View.GONE
         })
@@ -284,6 +285,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         storage_size.text = "$availableSizeInternal/$totalSizeInternal"
         arc_progress.max = 100
         arc_progress.progress = arcPercent.toInt()
+        arc_progress.suffixText = "%"
+        //arc_progress.text.ap
 
 
 
@@ -296,6 +299,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             arcPercent = (available!! / total!!)*100
 
             rv_storage.visibility = View.VISIBLE
+            only_internal.visibility = View.GONE
 
             storageItems.add(StorageItem(
                 INTERNAL_STORAGE,"Internal storage",  R.drawable.ic_file_manager_storage,

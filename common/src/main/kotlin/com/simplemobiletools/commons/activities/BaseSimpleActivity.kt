@@ -9,6 +9,7 @@ import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.PersistableBundle
 import android.provider.DocumentsContract
 import android.telecom.TelecomManager
@@ -398,7 +399,8 @@ open class BaseSimpleActivity : AppCompatActivity() {
 
     fun handlePermission(permissionId: Int, callback: (granted: Boolean) -> Unit) {
         actionOnPermission = null
-        if (hasPermission(permissionId)) {
+
+        if (checkPermission(permissionId)) {
             callback(true)
         } else {
             isAskingPermissions = true
@@ -412,7 +414,18 @@ open class BaseSimpleActivity : AppCompatActivity() {
                 GENERIC_PERM_HANDLER
             )*/
         }
+
     }
+
+    fun checkPermission(permissionId: Int) : Boolean{
+        return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Environment.isExternalStorageManager()
+        }
+        else{
+            hasPermission(permissionId)
+        }
+    }
+
 
     /* override fun onRequestPermissionsResult(
          requestCode: Int,
