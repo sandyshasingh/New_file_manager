@@ -88,7 +88,7 @@
 
     <style name="LightMode" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/blue_grey_100</item>
-        <item name="colorPrimaryDark">@color/hint_white</item>
+        <item name="colorPrimaryDark">@color/btm_background</item>
         <item name="colorAccent">@color/hint_white</item>
         <item name="android:textColorSecondary">@color/material_gray_900</item>
         <item name="android:windowBackground">@color/theme_light_background_color</item>
