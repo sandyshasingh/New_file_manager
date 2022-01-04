@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,6 +34,7 @@ import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
 import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.fragment_items_list.*
 import kotlinx.android.synthetic.main.fragment_items_list.view.*
+import kotlinx.android.synthetic.main.item_file_dir_list.*
 import kotlinx.android.synthetic.main.this_is_it.*
 import kotlinx.android.synthetic.main.this_is_it.view.*
 import java.io.File
@@ -44,7 +46,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
     var currentPath = ""
     private var lastSearchedText = ""
-    var mainAdapter : AdapterForFolders? = null
+    var mainAdapter : ItemsListAdapter? = null
     private var currentViewType = VIEW_TYPE_LIST
     private var storedItems = ArrayList<ListItem>()
     lateinit var mView: View
@@ -138,12 +140,15 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 storedItems,
                 this@ItemsListFragment,
                 null,
-                item_list_rv
+                item_list_rv, folderClicked == SHORTCUT_ID
             ) { list, position -> itemClick(list as ListItem, position, false) }
         }
 
         add_the_shortcut?.setOnClickListener {
-            (activity as FileManagerMainActivity).onAddShortcutClicked(add_shortcut_path)
+//            (activity as FileManagerMainActivity).onAddShortcutClicked(add_shortcut_path)
+           // item_check_view.visibility = View.VISIBLE
+           mainAdapter?.addFiles(null)
+
         }
         when (folderClicked) {
             AUDIO_ID -> {
@@ -463,15 +468,19 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
                     adapterForPath
                     getRecyclerAdapter()?.updateListItems(storedItems)
-                    mView.item_list_rv.adapter = ItemsListAdapter(
+                     mainAdapter = ItemsListAdapter(
                         activity as BaseSimpleActivity,
                          folderItems,
                         bottomnavigation,
                         storedItems,
                         this@ItemsListFragment,
                         null,
-                        item_list_rv
-                    ) { list, position -> itemClick(list as ListItem, position, false) }/*{
+                        item_list_rv, folderClicked == SHORTCUT_ID
+                    ) { list, position -> itemClick(list as ListItem, position, false) }
+                    mView.item_list_rv.adapter = mainAdapter
+
+
+                /*{
                         Log.d("@openPath","called")
                         var openFolder=items[position].mPath
                         openPath(openFolder)
@@ -520,7 +529,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 openPath(currentPath)
             }else if(currentFolderHeader == "Internal"){
                 currentPath = "$internalStoragePath"
-                (activity as FileManagerMainActivity).pathList.add(currentPath)
+               // (activity as FileManagerMainActivity).pathList.add(currentPath)
                 openPath(currentPath)
             }else if(currentFolderHeader == "External"){
                 currentPath = "$externalStoragePath"

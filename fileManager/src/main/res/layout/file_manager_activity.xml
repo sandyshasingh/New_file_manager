@@ -39,7 +39,7 @@
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/search_df"
-
+                    app:searchIcon="@drawable/ic_file_manager_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing16"

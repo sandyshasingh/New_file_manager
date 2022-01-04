@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable
 import android.media.RingtoneManager
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -114,11 +115,17 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         search_df.setOnSearchClickListener {
-            itemsListFragtment = ItemsListFragment()
+//            itemsListFragtment = ItemsListFragment()
             itemsListFragtment?.searchClicked=true
-            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment!!).addToBackStack("")
-            fragmentTransaction.commit()
+            val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
+            if (fragment !is ItemsListFragment){
+
+                onCategoryClick(INTERNAL_STORAGE,"abc")
+            }
+
+//            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+//            fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment!!).addToBackStack("")
+//            fragmentTransaction.commit()
 
             isSearchOpen = true
             //fragment.searchOpened()
@@ -129,7 +136,19 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
             isSearchOpen = false
             // fragment.searchClosed()
             itemsListFragtment?.searchClosed()
-             true
+            val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
+            if (fragment is ItemsListFragment){
+                onBackPressed()
+                //onBackPressed()
+
+            }
+
+
+             false
+
+            //super.onBackPressed()
+
+
         })
 
 
@@ -145,9 +164,16 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (isSearchOpen) {
                         //fragment.searchQueryChanged(newText)
-
+                        //showDialog()
                        // searchFragment.searchQueryChanged(newText)
-                        itemsListFragtment?.searchQueryChanged(newText)
+                           if(TextUtils.isEmpty(newText))
+                           {
+
+                           }
+                        else
+                           {
+                               itemsListFragtment?.searchQueryChanged(newText)
+                           }
                     }
 
                     return true
@@ -465,12 +491,15 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     override fun onBackPressed() {
         if (pathList.size <= 1) {
             super.onBackPressed()
-        }else {
+        }
+        else {
             val i =pathList.size
             pathList.removeAt(i - 1)
              val path = pathList[pathList.size - 1]
             openPath(path, false)
         }
+//        if(search_df.isIconified)
+//            search_df.isIconified = false
         //super.onBackPressed()
     }
 
@@ -548,18 +577,23 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
     }
 
 
-    fun onAddShortcutClicked(item:String){
+    fun onAddShortcutClicked(item:ArrayList<String>){
         val sharedPreferences: SharedPreferences? = getSharedPreferences(sharedPrefFile,
             Context.MODE_PRIVATE)
         var set:Set<String>?=sharedPreferences?.getStringSet("SHORTCUT_FOLDERS",null)
         if(set == null)
             set = HashSet()
-        set=set.plus(item)
+        for (value in item){
+            set=set?.plus(value)
+        }
+
        sharedPreferences?.edit().apply(){
             this?.putStringSet("SHORTCUT_FOLDERS",set)
            this?.apply()
         }
-       fragment.add_the_shortcutfolder(set)
+        if (set != null) {
+            fragment.add_the_shortcutfolder(set)
+        }
     }
 
 // fun getDrawable(id: Int): Drawable {

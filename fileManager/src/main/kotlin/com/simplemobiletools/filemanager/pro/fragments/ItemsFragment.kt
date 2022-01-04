@@ -610,125 +610,125 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     private fun isFolderView(): Boolean {
         return ( currentPath == "$internalStoragePath/$PHOTOS_NAME")
     }
-    fun searchQueryChanged(text: String) {
-        val searchText = text.trim()
-        lastSearchedText = searchText
-        ensureBackgroundThread {
-            if (context == null) {
-                return@ensureBackgroundThread
-            }
-
-            when {
-                searchText.isEmpty() -> activity?.runOnUiThread {
-                    mView.apply {
-                        items_list.beVisible()
-                        getRecyclerAdapter()?.updateItems(storedItems)
-                        //items_placeholder.beGone()
-                        //  items_placeholder_2.beGone()
-                    }
-                }
-                /*
-                It is for search when searching character is more than 1
-
-                searchText.length == 1 -> activity?.runOnUiThread {
-                     mView.apply {
-                         items_list.beGone()
-                         items_placeholder.beVisible()
-                         items_placeholder_2.beVisible()
-                     }
-                 }*/
-                else -> {
-                    if (lastSearchedText != searchText) {
-                        return@ensureBackgroundThread
-                    }
-                    val files = searchFiles(searchText, Environment.getExternalStorageDirectory().absolutePath)
-                    files.sortBy { it.getParentPath() }
-                    Log.d("sanidhya","$files")
-
-                    /*
-                    It is for showing file path above all same directry files
-
-                    val listItems = ArrayList<ListItem>()
-                     var previousParent = ""
-                     files.forEach {
-                         val parent = it.mPath.getParentPath()
-                         if (parent != previousParent && context != null) {
-                             listItems.add(ListItem("", context!!.humanizePath(parent), false, 0, 0, 0, true))
-                             previousParent = parent
-                         }
-                         listItems.add(it)
-                     }*/
-
-                    activity?.runOnUiThread {
-                        getRecyclerAdapter()?.updateItems(files, text)
-                        mView.apply {
-                            items_list.beVisibleIf(files.isNotEmpty())
-                            //items_placeholder.beVisibleIf(files.isEmpty())
-                            // items_placeholder_2.beGone()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun searchFiles(text: String, path: String): ArrayList<ListItem> {
-        val files = ArrayList<ListItem>()
-        if (context == null) {
-            return files
-        }
-        val sorting = requireContext().config.getFolderSorting(path)
-        FileDirItem.sorting = requireContext().config.getFolderSorting(currentPath)
-        val isSortingBySize = sorting and SORT_BY_SIZE != 0
-        File(path).listFiles()?.sortedBy { it.isDirectory }?.forEach {
-            if (it.name.contains(text, true)) {
-                val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
-                if (fileDirItem != null) {
-                    files.add(fileDirItem)
-                }
-            }
-
-            //It is for whole phone searching directory and files both
-
-            if (it.isDirectory) {
-                if (it.name.contains(text, true)) {
-                    val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
-                    if (fileDirItem != null) {
-                        files.add(fileDirItem)
-                    }
-                }
-                files.addAll(searchFiles(text, it.absolutePath))
-            } else {
-                if (it.name.contains(text, true)) {
-                    val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
-                    if (fileDirItem != null) {
-                        files.add(fileDirItem)
-                    }
-                }
-            }
-        }
-        return files
-    }
-
-    fun searchOpened() {
-        isSearchOpen = true
-        lastSearchedText = ""
-//        items_fab.beGone()
-    }
-
-    fun searchClosed() {
-        isSearchOpen = false
-//        items_fab.beVisible()
-        if (!skipItemUpdating) {
-            getRecyclerAdapter()?.updateItems(storedItems)
-        }
-        skipItemUpdating = false
-        lastSearchedText = ""
-        mView.apply {
-            items_list.beVisible()
-           // items_placeholder.beGone()
-        }
-    }
+//    fun searchQueryChanged(text: String) {
+//        val searchText = text.trim()
+//        lastSearchedText = searchText
+//        ensureBackgroundThread {
+//            if (context == null) {
+//                return@ensureBackgroundThread
+//            }
+//
+//            when {
+//                searchText.isEmpty() -> activity?.runOnUiThread {
+//                    mView.apply {
+//                        items_list.beVisible()
+//                        getRecyclerAdapter()?.updateItems(storedItems)
+//                        //items_placeholder.beGone()
+//                        //  items_placeholder_2.beGone()
+//                    }
+//                }
+//                /*
+//                It is for search when searching character is more than 1
+//
+//                searchText.length == 1 -> activity?.runOnUiThread {
+//                     mView.apply {
+//                         items_list.beGone()
+//                         items_placeholder.beVisible()
+//                         items_placeholder_2.beVisible()
+//                     }
+//                 }*/
+//                else -> {
+//                    if (lastSearchedText != searchText) {
+//                        return@ensureBackgroundThread
+//                    }
+//                    val files = searchFiles(searchText, Environment.getExternalStorageDirectory().absolutePath)
+//                    files.sortBy { it.getParentPath() }
+//                    Log.d("sanidhya","$files")
+//
+//                    /*
+//                    It is for showing file path above all same directry files
+//
+//                    val listItems = ArrayList<ListItem>()
+//                     var previousParent = ""
+//                     files.forEach {
+//                         val parent = it.mPath.getParentPath()
+//                         if (parent != previousParent && context != null) {
+//                             listItems.add(ListItem("", context!!.humanizePath(parent), false, 0, 0, 0, true))
+//                             previousParent = parent
+//                         }
+//                         listItems.add(it)
+//                     }*/
+//
+//                    activity?.runOnUiThread {
+//                        getRecyclerAdapter()?.updateItems(files, text)
+//                        mView.apply {
+//                            items_list.beVisibleIf(files.isNotEmpty())
+//                            //items_placeholder.beVisibleIf(files.isEmpty())
+//                            // items_placeholder_2.beGone()
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    private fun searchFiles(text: String, path: String): ArrayList<ListItem> {
+//        val files = ArrayList<ListItem>()
+//        if (context == null) {
+//            return files
+//        }
+//        val sorting = requireContext().config.getFolderSorting(path)
+//        FileDirItem.sorting = requireContext().config.getFolderSorting(currentPath)
+//        val isSortingBySize = sorting and SORT_BY_SIZE != 0
+//        File(path).listFiles()?.sortedBy { it.isDirectory }?.forEach {
+//            if (it.name.contains(text, true)) {
+//                val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
+//                if (fileDirItem != null) {
+//                    files.add(fileDirItem)
+//                }
+//            }
+//
+//            //It is for whole phone searching directory and files both
+//
+//            if (it.isDirectory) {
+//                if (it.name.contains(text, true)) {
+//                    val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
+//                    if (fileDirItem != null) {
+//                        files.add(fileDirItem)
+//                    }
+//                }
+//                files.addAll(searchFiles(text, it.absolutePath))
+//            } else {
+//                if (it.name.contains(text, true)) {
+//                    val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
+//                    if (fileDirItem != null) {
+//                        files.add(fileDirItem)
+//                    }
+//                }
+//            }
+//        }
+//        return files
+//    }
+//
+//    fun searchOpened() {
+//        isSearchOpen = true
+//        lastSearchedText = ""
+////        items_fab.beGone()
+//    }
+//
+//    fun searchClosed() {
+//        isSearchOpen = false
+////        items_fab.beVisible()
+//        if (!skipItemUpdating) {
+//            getRecyclerAdapter()?.updateItems(storedItems)
+//        }
+//        skipItemUpdating = false
+//        lastSearchedText = ""
+//        mView.apply {
+//            items_list.beVisible()
+//           // items_placeholder.beGone()
+//        }
+//    }
 
 //    private fun createNewItem() {
 //        CreateNewItemDialog(activity as BaseSimpleActivity, currentPath) {

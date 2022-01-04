@@ -30,6 +30,7 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.filemanager.pro.ListItemDiffCallback
 import com.simplemobiletools.filemanager.pro.R
+import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 import com.simplemobiletools.filemanager.pro.dialogs.CompressAsDialog
 import com.simplemobiletools.filemanager.pro.extensions.*
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
@@ -50,7 +51,7 @@ import java.util.zip.ZipOutputStream
 import kotlin.collections.ArrayList
 
 class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayList<FolderItem>, val bottomnavigation: View?, var listItems: MutableList<ListItem>,
-                        var listener: ItemOperationsListener?, fastScroller: FastScroller?, recyclerView: MyRecyclerView,
+                        var listener: ItemOperationsListener?, fastScroller: FastScroller?, recyclerView: MyRecyclerView,var shortcutClicked:Boolean,
                         itemClick: (Any,Int) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
@@ -67,8 +68,18 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
 //       setupDragListener(true)
         isDarkTheme = activity.isDarkTheme()
         initDrawables()
+
+        isLongPressClick = shortcutClicked
+        actModeCallback.isSelectable = shortcutClicked
+        shortcut = shortcutClicked
+        if (shortcutClicked){
+            bottomnavigation?.visibility = View.GONE
+        }
+
 //        updateFontSizes()
     }
+
+
 
     private fun initDrawables() {
         folderDrawable = getFolderDrawable()
@@ -83,6 +94,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
             resources.getDrawable(R.drawable.ic_icon_folder__light2)
         }
     }
+
+
+
 
 
 
@@ -172,6 +186,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
                 listener,
                 !fileDirItem.isSectionTitle,
                 !fileDirItem.isSectionTitle,
+
                 bottomnavigation
             ) { itemView, layoutPosition ->
                 setupView(itemView, fileDirItem, holder, position)
@@ -293,10 +308,10 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
                     item_check_view_grid?.setChecked(false)
                 }
                 item_check_view?.setOnClickListener {
-                    holder.viewClicked(listItem, position)
+                    holder.viewClicked(listItem, position, false)
                 }
                 item_check_view_grid?.setOnClickListener{
-                    holder.viewClicked(listItem, position)
+                    holder.viewClicked(listItem, position, false)
                 }
 
 //                threedot?.setOnClickListener{
@@ -725,6 +740,22 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         mUnHide.beVisibleIf(hiddenCnt > 0)
     }
 
+     fun addFiles(listItem: ListItem?){
+        var selectedItems = getSelectedFileDirItems()
+        if(listItem!=null) {
+            selectedItems = arrayListOf(listItem)
+        }
+        var pathss : ArrayList<String>?=null
+         for (values in selectedItems){
+             pathss?.add(values.path)
+           //  paths.add(values.toString())
+         }
+//        selectedItems.forEach {
+//            addFileUris(it.path, paths)
+//        }
+        (activity as FileManagerMainActivity).onAddShortcutClicked(pathss!!)
+    }
+
     private fun shareFiles(listItem: ListItem?) {
         var selectedItems = getSelectedFileDirItems()
         if(listItem!=null) {
@@ -736,6 +767,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         }
         activity.sharePaths(paths)
     }
+
     private fun askConfirmDelete() {
         val selectionSize = selectedKeys.size
         val items = resources.getQuantityString(R.plurals.delete_items, selectionSize, selectionSize)

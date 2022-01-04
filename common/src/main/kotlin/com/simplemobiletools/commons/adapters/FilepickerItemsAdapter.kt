@@ -3,7 +3,6 @@ package com.simplemobiletools.commons.adapters
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.util.TypedValue
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup

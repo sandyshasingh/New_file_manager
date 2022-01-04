@@ -2,12 +2,10 @@ package com.simplemobiletools.commons.adapters
 
 import android.annotation.SuppressLint
 import android.view.*
-import android.widget.GridLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.view.ActionMode
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
@@ -18,7 +16,6 @@ import com.simplemobiletools.commons.interfaces.MyActionModeCallback
 import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.commons.views.pathList
 //import es.dmoral.toasty.Toasty
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,6 +24,7 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
                                      val itemClick: (Any,Int) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected val baseConfig = activity.baseConfig
     protected val resources = activity.resources!!
+    protected var shortcut:Boolean=false
     protected val layoutInflater = activity.layoutInflater
     protected var actModeCallback: MyActionModeCallback
     protected var selectedKeys = LinkedHashSet<Int>()
@@ -329,7 +327,7 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
 
                 if (allowSingleClick) {
                     setOnClickListener {
-                        viewClicked(any,position)
+                        viewClicked(any, position, true)
                     }
                     setOnLongClickListener {
                         if (allowLongClick) {
@@ -338,7 +336,7 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
                             notifyDataSetChanged()
                         }
                         else {
-                            viewClicked(any, position)
+                            viewClicked(any, position, false)
                         }
                         true
                     }
@@ -351,15 +349,29 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
 
 
 
-        fun viewClicked(any: Any, position: Int) {
-            if (actModeCallback.isSelectable) {
+        fun viewClicked(any: Any, position: Int, fromItemClicked: Boolean) {
+//            if(fromItemClicked && actModeCallback.isSelectable){
+//                itemClick.invoke(any,position)
+//               // bottomNavigation?.visibility=View.GONE
+//            }
+            if(actModeCallback.isSelectable && (!shortcut || !fromItemClicked ))
+            {
+                val isSelected = selectedKeys.contains(getItemSelectionKey(position))
+                toggleItemSelection(!isSelected, position, true, null)
+            }
+            else {
+                itemClick.invoke(any,position)
+            }
+            var fromShortcut = fromItemClicked && actModeCallback.isSelectable
+
+            /*if (actModeCallback.isSelectable) {
                 val isSelected = selectedKeys.contains(getItemSelectionKey(position))
                 toggleItemSelection(!isSelected, position, true, null)
             } else {
                 itemClick.invoke(any,position)
-            }
+            }*/
             if(selectedKeys.size>0){
-                if(bottomNavigation!=null && bottomNavigation?.visibility==View.GONE) {
+                if(bottomNavigation!=null && bottomNavigation?.visibility==View.GONE && fromShortcut) {
                     bottomNavigation?.visibility=View.VISIBLE
                 }
             }

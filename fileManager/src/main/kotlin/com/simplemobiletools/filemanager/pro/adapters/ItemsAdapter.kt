@@ -6,7 +6,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.View
@@ -914,10 +913,10 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
                     item_check_view_grid?.setChecked(false)
                 }
                 item_check_view?.setOnClickListener {
-                    holder.viewClicked(listItem, position)
+                    holder.viewClicked(listItem, position,false)
                 }
                 item_check_view_grid?.setOnClickListener{
-                    holder.viewClicked(listItem, position)
+                    holder.viewClicked(listItem, position, false)
                 }
 
 //                threedot?.setOnClickListener{

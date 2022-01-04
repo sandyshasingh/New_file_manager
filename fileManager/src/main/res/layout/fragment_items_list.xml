@@ -38,17 +38,24 @@
         android:layout_width="match_parent"
         android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/add_the_shortcut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ADD"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:textColor="@color/pagestrip"
-        />
+
+
+        <TextView
+            android:id="@+id/add_the_shortcut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+
+            android:gravity="center"
+            android:text="ADD"
+
+            android:textColor="@color/pagestrip"
+
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+
+
+
 
 </RelativeLayout>
