@@ -43,11 +43,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing16"
+
+
                     android:textSize="15dp"
 
 
 
-                    app:queryHint="sfjsnfjisadnf" />
+                    app:queryHint="sfjsnfjisadnf"
+                    />
 
 
             </LinearLayout>
