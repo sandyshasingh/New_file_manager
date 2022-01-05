@@ -52,8 +52,8 @@ import kotlin.collections.ArrayList
 
 class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayList<FolderItem>, val bottomnavigation: View?, var listItems: MutableList<ListItem>,
                         var listener: ItemOperationsListener?, fastScroller: FastScroller?, recyclerView: MyRecyclerView,var shortcutClicked:Boolean,
-                        itemClick: (Any,Int) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+                        itemClick: (Any,Int) -> Unit,isAddEnabled: (Boolean) -> Unit) :
+    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick,isAddEnabled) {
 
     private var fontSize = 0f
     private var textToHighlight = ""
@@ -109,6 +109,8 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
 
         if(selectedKeys.isNotEmpty()) {
             bottomnavigation?.visibility = View.VISIBLE
+
+
         }
 
         val mSend: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_send)!!
@@ -745,7 +747,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         if(listItem!=null) {
             selectedItems = arrayListOf(listItem)
         }
-        var pathss : ArrayList<String>?=null
+        var pathss : ArrayList<String>?= ArrayList()
          for (values in selectedItems){
              pathss?.add(values.path)
            //  paths.add(values.toString())
@@ -754,6 +756,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
 //            addFileUris(it.path, paths)
 //        }
         (activity as FileManagerMainActivity).onAddShortcutClicked(pathss!!)
+         pathss.clear()
     }
 
     private fun shareFiles(listItem: ListItem?) {

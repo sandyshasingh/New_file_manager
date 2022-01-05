@@ -2,6 +2,7 @@ package com.simplemobiletools.filemanager.pro
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
@@ -141,7 +142,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 this@ItemsListFragment,
                 null,
                 item_list_rv, folderClicked == SHORTCUT_ID
-            ) { list, position -> itemClick(list as ListItem, position, false) }
+           ,{ list, position -> itemClick(list as ListItem, position, false) },{ isEnabled -> isAddEnabled(isEnabled) } )
+
         }
 
         add_the_shortcut?.setOnClickListener {
@@ -442,6 +444,16 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //                        item_list_rv?.adapter = mainAdapter
           }
 
+    fun isAddEnabled(isEnabled : Boolean){
+
+        if (isEnabled){
+            text_add_the_shortcut.setTextColor(
+                Color.parseColor("#000000")
+            )
+        }
+
+    }
+
     private fun addItems(items: ArrayList<ListItem>,forceRefresh: Boolean = false) {
         skipItemUpdating = false
 
@@ -476,7 +488,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                         this@ItemsListFragment,
                         null,
                         item_list_rv, folderClicked == SHORTCUT_ID
-                    ) { list, position -> itemClick(list as ListItem, position, false) }
+                    ,{ list, position -> itemClick(list as ListItem, position, false) },{ isEnabled -> isAddEnabled(isEnabled) })
                     mView.item_list_rv.adapter = mainAdapter
 
 

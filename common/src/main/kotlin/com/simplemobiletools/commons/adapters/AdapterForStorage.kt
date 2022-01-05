@@ -1,6 +1,7 @@
 package com.simplemobiletools.commons.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,10 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, private val clic
     class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
         val totalSize = MemorySizeUtils.getTotalInternalMemorySizeInLong()
         val arcProgress = itemView.arc_progress
+        var storageCard = itemView.storage_card
+        val storageTextView = itemView.text_internal
+        val storageSize = itemView.storage_size
+
        // var darkThemeBackground : Drawable? = null
        // var isDarkTheme = false
 
@@ -36,9 +41,10 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, private val clic
 
         fun bindItems(storageItem: StorageItem, c1: (StorageItem) -> Unit) {
 
-            val storageTextView = itemView.text_internal
+
+
             val storageIcon = itemView.icon_internalstorage
-            val storageSize = itemView.storage_size
+
             //val usedMemoryProgress = itemView.usedMemoryProgress
           //  val folderLayout = itemView.folder_layout
 
@@ -79,6 +85,13 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, private val clic
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(storageList[position], clickListener)
+        if(position == 1){
+           holder.storageCard.setCardBackgroundColor(Color.WHITE)
+            holder.storageTextView.setTextColor(Color.parseColor("#282361"))
+            holder.storageSize.setTextColor(Color.parseColor("#313131"))
+            holder.arcProgress.textColor = mContext.resources.getColor(R.color.btm_background)
+            holder.arcProgress.finishedStrokeColor =  mContext.resources.getColor(R.color.btm_background)
+        }
 
 
     }

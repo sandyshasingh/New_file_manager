@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Environment
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +32,6 @@ import com.simplemobiletools.commons.models.StorageItem
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyLinearLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.filemanager.pro.MoreItemsList
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 import com.simplemobiletools.filemanager.pro.adapters.ItemsAdapter
@@ -177,9 +174,9 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //    }
 
 
-    fun add_the_shortcutfolder(set: Set<String>){
+    fun add_the_shortcutfolder(arrayList :ArrayList<String>){
 
-        for(i in set)
+        for(i in arrayList)
         {
             folderItems.add(FolderItem(SHORTCUT_FOLDER_ID,i.getFilenameFromPath(), R.drawable.ic_icon_folder__light2,
                 getDrawable(R.drawable.rectangle_semitranparent_filter)!!,

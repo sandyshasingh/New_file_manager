@@ -9,7 +9,9 @@
         android:supportsRtl="true">
         <activity
             android:name=".PermissionActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/LightMode"
+            />
         <activity
             android:name=".activities.FileManagerMainActivity"
             android:exported="true"

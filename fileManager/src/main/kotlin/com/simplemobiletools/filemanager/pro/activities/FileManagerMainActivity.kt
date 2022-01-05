@@ -592,7 +592,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
            this?.apply()
         }
         if (set != null) {
-            fragment.add_the_shortcutfolder(set)
+            fragment.add_the_shortcutfolder(item)
         }
     }
 

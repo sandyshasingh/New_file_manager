@@ -20,8 +20,11 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import java.util.*
 import kotlin.collections.ArrayList
 
-abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyclerView: MyRecyclerView, val fastScroller: FastScroller? = null,
-                                     val itemClick: (Any,Int) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class MyRecyclerViewAdapter(
+    val activity: BaseSimpleActivity, val recyclerView: MyRecyclerView, val fastScroller: FastScroller? = null,
+    val itemClick: (Any, Int) -> Unit,
+    val isAddEnabled: ((Boolean) -> Unit)?
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected val baseConfig = activity.baseConfig
     protected val resources = activity.resources!!
     protected var shortcut:Boolean=false
@@ -354,15 +357,28 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
 //                itemClick.invoke(any,position)
 //               // bottomNavigation?.visibility=View.GONE
 //            }
+           // var fromShortcut = fromItemClicked && actModeCallback.isSelectable
             if(actModeCallback.isSelectable && (!shortcut || !fromItemClicked ))
             {
                 val isSelected = selectedKeys.contains(getItemSelectionKey(position))
                 toggleItemSelection(!isSelected, position, true, null)
+                if(selectedKeys.size>0){
+
+                    isAddEnabled?.invoke(true)
+
+                    if(bottomNavigation!=null && bottomNavigation?.visibility==View.GONE && !shortcut) {
+                        bottomNavigation?.visibility=View.VISIBLE
+                    }
+                }
+                else
+                {
+                    isAddEnabled?.invoke(false)
+                }
+               // activity.startSupportActionMode(actModeCallback)
             }
             else {
                 itemClick.invoke(any,position)
             }
-            var fromShortcut = fromItemClicked && actModeCallback.isSelectable
 
             /*if (actModeCallback.isSelectable) {
                 val isSelected = selectedKeys.contains(getItemSelectionKey(position))
@@ -370,11 +386,6 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
             } else {
                 itemClick.invoke(any,position)
             }*/
-            if(selectedKeys.size>0){
-                if(bottomNavigation!=null && bottomNavigation?.visibility==View.GONE && fromShortcut) {
-                    bottomNavigation?.visibility=View.VISIBLE
-                }
-            }
             lastLongPressedItem = -1
         }
 

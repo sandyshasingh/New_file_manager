@@ -43,6 +43,11 @@ fun TextView?.setTypeFaceOpenSensSmBold(){
     this?.typeface = typeface
 }
 
+//fun TextView?.setTypeFaceJostBold(){
+//    val typeface= Typeface.createFromAsset(this?.context?.assets, this?.context?.resources?.getString(R.string.text_2_path))
+//    this?.typeface = typeface
+//}
+
 fun setTypeFaceOpenSensSmBold( vararg editText: EditText){
     editText.forEach {
         val typeface=Typeface.createFromAsset(it?.context?.assets, it?.context?.resources?.getString(R.string.text_2_path))

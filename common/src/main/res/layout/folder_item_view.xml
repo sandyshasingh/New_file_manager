@@ -19,6 +19,9 @@
             android:id="@+id/fdr"
             android:layout_width="59dp"
             app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="4dp"
             android:layout_centerHorizontal="true"
             android:layout_height="59dp">
             <ImageView
