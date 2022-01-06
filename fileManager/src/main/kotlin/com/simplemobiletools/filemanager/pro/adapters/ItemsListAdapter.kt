@@ -28,6 +28,7 @@ import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.commons.setTypeFaceOpenSensSmBold
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.commons.BottomNavigationVisible
 import com.simplemobiletools.filemanager.pro.ListItemDiffCallback
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
@@ -50,10 +51,12 @@ import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 import kotlin.collections.ArrayList
 
-class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayList<FolderItem>, val bottomnavigation: View?, var listItems: MutableList<ListItem>,
-                        var listener: ItemOperationsListener?, fastScroller: FastScroller?, recyclerView: MyRecyclerView,var shortcutClicked:Boolean,
-                        itemClick: (Any,Int) -> Unit,isAddEnabled: (Boolean) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick,isAddEnabled) {
+class ItemsListAdapter (activity: BaseSimpleActivity, var folderItems: ArrayList<FolderItem>,
+                        var bottomListener: BottomNavigationVisible?, var listItems: MutableList<ListItem>, var listener: ItemOperationsListener?,
+                        fastScroller: FastScroller?,
+                        recyclerView: MyRecyclerView, var shortcutClicked:Boolean,
+                        itemClick: (Any,Int) -> Unit, isAddEnabled: (Boolean) -> Unit) :
+    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick,isAddEnabled,bottomListener) {
 
     private var fontSize = 0f
     private var textToHighlight = ""
@@ -73,7 +76,8 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         actModeCallback.isSelectable = shortcutClicked
         shortcut = shortcutClicked
         if (shortcutClicked){
-            bottomnavigation?.visibility = View.GONE
+//            bottomnavigation?.visibility = View.GONE
+            bottomListener?.btmVisible(false)
         }
 
 //        updateFontSizes()
@@ -103,72 +107,75 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
     override fun mLongClick() {
         isLongPressClick = true
 
-        if(bottomnavigation == null){
-            return
-        }
+//        if(bottomnavigation == null){
+//            return
+//        }
 
         if(selectedKeys.isNotEmpty()) {
-            bottomnavigation?.visibility = View.VISIBLE
+           // bottomnavigation?.visibility = View.VISIBLE
+            bottomListener?.btmVisible(true)
+
+
 
 
         }
 
-        val mSend: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_send)!!
-        val mDelete: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_delete)!!
-        val mMove: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_move)!!
-        val mRename: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_rename)!!
-        val mProperties: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_details)!!
-        val mCopyTo: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_copyto)!!
-        val mCopyPath: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_copy_path)!!
-        val mHide: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_hide)!!
-        val mUnHide: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_unhide)!!
-        val mCompress: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_compress)!!
-        val mDecompress: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_decompress)!!
-        val mOpenWith: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_openwith)!!
+//        val mSend: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_send)!!
+//        val mDelete: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_delete)!!
+//        val mMove: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_move)!!
+//        val mRename: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_rename)!!
+//        val mProperties: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_details)!!
+//        val mCopyTo: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_copyto)!!
+//        val mCopyPath: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_copy_path)!!
+//        val mHide: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_hide)!!
+//        val mUnHide: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_unhide)!!
+//        val mCompress: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_compress)!!
+//        val mDecompress: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_decompress)!!
+//        val mOpenWith: LinearLayout = bottomnavigation?.findViewById(R.id.bottom_openwith)!!
 
-        mOpenWith.beVisibleIf(isOneFileSelected())
-        mDecompress.beVisibleIf(getSelectedFileDirItems().map { it.path }.any { it.isZipFile() })
-        mCompress.beVisibleIf(!mDecompress.isVisible())
-        mCopyPath.beVisibleIf(isOneItemSelected())
-        checkHideBtnVisibility(mHide, mUnHide, null)
-
-        mSend.setOnClickListener {
-            shareFiles(null)
-        }
-        mDelete.setOnClickListener {
-            askConfirmDelete()
-        }
-        mMove.setOnClickListener {
-            copyMoveTo(false, null)
-        }
-        mRename.setOnClickListener {
-            displayRenameDialog(null)
-        }
-        mProperties.setOnClickListener {
-            showProperties(null)
-        }
-
-        mCopyTo.setOnClickListener {
-            copyMoveTo(true, null)
-        }
-        mCopyPath.setOnClickListener {
-            copyPath(null)
-        }
-        mOpenWith.setOnClickListener {
-            openWith(null)
-        }
-        mHide.setOnClickListener {
-            toggleFileVisibility(true, null)
-        }
-        mUnHide.setOnClickListener {
-            toggleFileVisibility(false, null)
-        }
-        mCompress.setOnClickListener {
-            compressSelection(null)
-        }
-        mDecompress.setOnClickListener {
-            decompressSelection(null)
-        }
+//        mOpenWith.beVisibleIf(isOneFileSelected())
+//        mDecompress.beVisibleIf(getSelectedFileDirItems().map { it.path }.any { it.isZipFile() })
+//        mCompress.beVisibleIf(!mDecompress.isVisible())
+//        mCopyPath.beVisibleIf(isOneItemSelected())
+//        checkHideBtnVisibility(mHide, mUnHide, null)
+//
+//        mSend.setOnClickListener {
+//            shareFiles(null)
+//        }
+//        mDelete.setOnClickListener {
+//            askConfirmDelete()
+//        }
+//        mMove.setOnClickListener {
+//            copyMoveTo(false, null)
+//        }
+//        mRename.setOnClickListener {
+//            displayRenameDialog(null)
+//        }
+//        mProperties.setOnClickListener {
+//            showProperties(null)
+//        }
+//
+//        mCopyTo.setOnClickListener {
+//            copyMoveTo(true, null)
+//        }
+//        mCopyPath.setOnClickListener {
+//            copyPath(null)
+//        }
+//        mOpenWith.setOnClickListener {
+//            openWith(null)
+//        }
+//        mHide.setOnClickListener {
+//            toggleFileVisibility(true, null)
+//        }
+//        mUnHide.setOnClickListener {
+//            toggleFileVisibility(false, null)
+//        }
+//        mCompress.setOnClickListener {
+//            compressSelection(null)
+//        }
+//        mDecompress.setOnClickListener {
+//            decompressSelection(null)
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -189,7 +196,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
                 !fileDirItem.isSectionTitle,
                 !fileDirItem.isSectionTitle,
 
-                bottomnavigation
+//                bottomnavigation
             ) { itemView, layoutPosition ->
                 setupView(itemView, fileDirItem, holder, position)
             }
@@ -221,7 +228,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
             textToHighlight = highlightText
 //            listItems = newItems.clone() as ArrayList<ListItem>
             notifyDataSetChanged()
-            (bottomnavigation)
+//            (bottomnavigation)
         } else if (textToHighlight != highlightText) {
             textToHighlight = highlightText
             notifyDataSetChanged()
@@ -256,7 +263,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
     override fun onActionModeDestroyed() {}
 
 
-    private fun copyPath(listItem: ListItem?) {
+     fun copyPath(listItem: ListItem?) {
 
         val clip = if(listItem!=null){
             ClipData.newPlainText(activity.getString(R.string.app_name), listItem.mPath)
@@ -485,7 +492,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         }
     }
 
-    private fun toggleFileVisibility(hide: Boolean, listItem: ListItem?) {
+     fun toggleFileVisibility(hide: Boolean, listItem: ListItem?) {
         ensureBackgroundThread {
             if(listItem!=null){
                 activity.toggleItemVisibility(listItem.mPath, hide)
@@ -501,7 +508,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         }
     }
 
-    private fun compressSelection(listItem: ListItem?) {
+     fun compressSelection(listItem: ListItem?) {
         val firstPath = listItem?.mPath ?: getFirstSelectedItemPath()
         if (activity.isPathOnOTG(firstPath)) {
             activity.toast(R.string.unknown_error_occurred)
@@ -588,7 +595,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         return true
     }
 
-    private fun decompressSelection(listItem: ListItem?) {
+     fun decompressSelection(listItem: ListItem?) {
         val firstPath: String = listItem?.mPath ?: getFirstSelectedItemPath()
 
         if (activity.isPathOnOTG(firstPath)) {
@@ -759,7 +766,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
          pathss.clear()
     }
 
-    private fun shareFiles(listItem: ListItem?) {
+     fun shareFiles(listItem: ListItem?) {
         var selectedItems = getSelectedFileDirItems()
         if(listItem!=null) {
             selectedItems = arrayListOf(listItem)
@@ -771,7 +778,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         activity.sharePaths(paths)
     }
 
-    private fun askConfirmDelete() {
+     fun askConfirmDelete() {
         val selectionSize = selectedKeys.size
         val items = resources.getQuantityString(R.plurals.delete_items, selectionSize, selectionSize)
         val question = String.format(resources.getString(R.string.deletion_confirmation), items)
@@ -843,7 +850,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         }
     }
 
-    private fun copyMoveTo(isCopyOperation: Boolean, listItem: ListItem?) {
+     fun copyMoveTo(isCopyOperation: Boolean, listItem: ListItem?) {
         var files = getSelectedFileDirItems()
         if(listItem!=null) {
             files = arrayListOf(listItem)
@@ -882,7 +889,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         }
     }
 
-    private fun displayRenameDialog(listItem: ListItem?) {
+     fun displayRenameDialog(listItem: ListItem?) {
         var fileDirItems = getSelectedFileDirItems()
 
         if(listItem!=null) {
@@ -916,7 +923,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
     }
 
 
-    private fun openWith(listItem: ListItem?) {
+     fun openWith(listItem: ListItem?) {
         if(listItem!=null){
             activity.openWith(listItem.mPath)
         }else {
@@ -924,7 +931,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity,  var folderItems: ArrayLis
         }
     }
 
-    private fun showProperties(listItem: ListItem?) {
+     fun showProperties(listItem: ListItem?) {
 
         when {
             listItem!=null -> {

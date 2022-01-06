@@ -6,62 +6,75 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/half_up_backgrounndcolor"
-            android:title="/rocks_player"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:elevation="0dp"
 
-            app:titleTextAppearance="@style/Toolbar.TitleText">
+            >
 
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/rounded_toolbar"
-                android:gravity="right">
+                android:layout_height="wrap_content"
+                android:background="?attr/half_up_backgrounndcolor"
+                android:title="/rocks_player"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:titleTextAppearance="@style/Toolbar.TitleText">
 
-                <!--<ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_file_manager_video" />-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_toolbar"
+                    android:gravity="right">
 
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/search_df"
-                    app:searchIcon="@drawable/ic_file_manager_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing16"
+                    <!--<ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_file_manager_video" />-->
+
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/search_df"
+                        app:searchIcon="@drawable/ic_file_manager_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing16"
+                        android:textSize="15dp"
+                        app:queryHint="sfjsnfjisadnf"
+                        />
 
 
-                    android:textSize="15dp"
+                </LinearLayout>
+
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- Your scrolling content -->
 
 
 
-                    app:queryHint="sfjsnfjisadnf"
-                    />
 
-
-            </LinearLayout>
-
-
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+         />
+    <include
+        android:layout_gravity="bottom"
+        android:layout_height="wrap_content"
+        layout="@layout/layout"
+        android:id="@+id/bottomnavigation"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:visibility="gone"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

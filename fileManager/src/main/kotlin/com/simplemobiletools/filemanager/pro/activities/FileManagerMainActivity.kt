@@ -7,25 +7,21 @@ import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.media.RingtoneManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
-import androidx.core.view.MenuItemCompat.OnActionExpandListener
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.simplemobiletools.commons.AppProgressDialog
+import com.simplemobiletools.commons.BottomNavigationVisible
 import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
@@ -45,14 +41,14 @@ import com.simplemobiletools.filemanager.pro.models.ListItem
 import com.stericson.RootTools.RootTools
 import kotlinx.android.synthetic.main.file_manager_activity.*
 import kotlinx.android.synthetic.main.items_fragment.view.*
+import kotlinx.android.synthetic.main.layout.*
 import java.io.File
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 
 const val REQUEST_CODE_FOR_STORAGE_PERMISSION =  101
 const val FRAGMENT_STACK = "fragment_stack"
-class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
+class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNavigationVisible {
     private val PICKED_PATH = "picked_path"
     var pathList = ArrayList<String>()
     var itemsListFragtment:ItemsListFragment?=null
@@ -98,6 +94,8 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
 //        if(supportActionBar!=null)
 //            supportActionBar?.title = "File Manager"
+
+        bottomSheetClickListener()
 
         sharedPrefrences = getSharedPrefs()
        val fragmentManager: FragmentManager = supportFragmentManager
@@ -150,6 +148,8 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
 
 
         })
+
+
 
 
 
@@ -438,6 +438,47 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         }
     }
 
+    fun bottomSheetClickListener(){
+
+        bottom_send.setOnClickListener {
+            itemsListFragtment?.send()
+        }
+
+        bottom_move.setOnClickListener {
+            itemsListFragtment?.move()
+        }
+        bottom_rename.setOnClickListener {
+            itemsListFragtment?.rename()
+        }
+        bottom_copyto.setOnClickListener {
+            itemsListFragtment?.copy_to()
+        }
+        bottom_copy_path.setOnClickListener {
+            itemsListFragtment?.copy_path()
+        }
+        bottom_hide.setOnClickListener {
+            itemsListFragtment?.hide()
+        }
+        bottom_unhide.setOnClickListener {
+            itemsListFragtment?.unhide()
+        }
+        bottom_compress.setOnClickListener {
+            itemsListFragtment?.compress()
+        }
+        bottom_decompress.setOnClickListener {
+            itemsListFragtment?.decompress()
+        }
+        bottom_openwith.setOnClickListener {
+            itemsListFragtment?.openWith()
+        }
+        bottom_delete.setOnClickListener {
+            itemsListFragtment?.delete()
+        }
+        bottom_details.setOnClickListener {
+            itemsListFragtment?.details()
+        }
+    }
+
     private fun openPath(path: String, forceRefresh: Boolean = false) {
         var newPath = path
         val file = File(path)
@@ -571,6 +612,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         val fragmentManager: FragmentManager = supportFragmentManager
 
         itemsListFragtment = ItemsListFragment.newInstance(id,path)
+        itemsListFragtment?.listener = this
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragment_holder, itemsListFragtment!!).addToBackStack("")
         fragmentTransaction.commit()
@@ -609,6 +651,13 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList {
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragment_holder,myFragment).addToBackStack("")
         fragmentTransaction.commit()
+    }
+
+    override fun btmVisible(yes: Boolean) {
+        if(yes)
+            bottomnavigation?.visibility = View.VISIBLE
+        else
+            bottomnavigation?.visibility = View.GONE
     }
 
 }

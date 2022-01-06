@@ -13,6 +13,7 @@
         android:focusable="true"
         android:foreground="@drawable/selector"
         android:paddingTop="10dp"
+
         android:paddingBottom="6dp"
 
 
@@ -56,15 +57,16 @@
             android:layout_height="match_parent"
             app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager"
             />
-        <include
+        <!--<include
             android:layout_gravity="bottom"
             android:layout_height="wrap_content"
             layout="@layout/layout"
 
+
             android:id="@+id/bottomnavigation"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone"/>-->
 
 
 

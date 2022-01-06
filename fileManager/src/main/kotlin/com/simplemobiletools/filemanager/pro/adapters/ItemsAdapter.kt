@@ -56,7 +56,7 @@ import kotlin.collections.ArrayList
 class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var folderItems: ArrayList<FolderItem>, val bottomnavigation: View?, var listItems: MutableList<ListItem>,
                    var listener: ItemOperationsListener?,fastScroller: FastScroller?,  recyclerView: MyRecyclerView,
                    itemClick: (Any,Int) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, fastScroller,itemClick,null) {
+    MyRecyclerViewAdapter(activity, recyclerView, fastScroller,itemClick,null,null) {
 
     private lateinit var fileDrawable: Drawable
     private var folderDrawable: Drawable? = null
@@ -344,7 +344,7 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
         } else if(holder is ViewHolder) {
             val positionForList = if(isHeaderShow) position - 1 else position
             val fileDirItem = listItems[positionForList]
-            holder.bindView(fileDirItem, positionForList, listener, !fileDirItem.isSectionTitle, !fileDirItem.isSectionTitle, bottomnavigation) { itemView, layoutPosition ->
+            holder.bindView(fileDirItem, positionForList, listener, !fileDirItem.isSectionTitle, !fileDirItem.isSectionTitle) { itemView, layoutPosition ->
                 setupView(itemView, fileDirItem, holder, positionForList)
             }
         }

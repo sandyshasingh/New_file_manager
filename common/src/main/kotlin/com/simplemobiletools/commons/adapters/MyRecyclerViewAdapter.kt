@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.RecyclerView
+import com.simplemobiletools.commons.BottomNavigationVisible
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.baseConfig
@@ -21,9 +22,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 abstract class MyRecyclerViewAdapter(
-    val activity: BaseSimpleActivity, val recyclerView: MyRecyclerView, val fastScroller: FastScroller? = null,
+    val activity: BaseSimpleActivity,val recyclerView: MyRecyclerView, val fastScroller: FastScroller? = null,
     val itemClick: (Any, Int) -> Unit,
-    val isAddEnabled: ((Boolean) -> Unit)?
+    val isAddEnabled: ((Boolean) -> Unit)?,
+    var btmListener: BottomNavigationVisible?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected val baseConfig = activity.baseConfig
     protected val resources = activity.resources!!
@@ -99,7 +101,10 @@ abstract class MyRecyclerViewAdapter(
             override fun onDestroyActionMode(actionMode: ActionMode) {
                 isSelectable = false
                 if(selectedKeys.size == 0){
-                    finishActMode()
+                    if (!shortcut){
+                        finishActMode()
+
+                    }
                 }else {
                     (selectedKeys.clone() as HashSet<Int>).forEach {
                         val position = getItemKeyPosition(it)
@@ -115,8 +120,12 @@ abstract class MyRecyclerViewAdapter(
                 lastLongPressedItem = -1
                 isLongPressClick = false
 //                isActionModeEnabled = false
-                listener?.refreshItems(false)
-                notifyDataSetChanged()
+                if(!shortcut){
+                    listener?.refreshItems(false)
+                    notifyDataSetChanged()
+
+                }
+
                 onActionModeDestroyed()
             }
         }
@@ -145,7 +154,10 @@ abstract class MyRecyclerViewAdapter(
         }
         if(i == null) {
             if (selectedKeys.isEmpty()) {
-                finishActMode()
+                if (!shortcut){
+                    finishActMode()
+                }
+
             }
         }
     }
@@ -206,9 +218,11 @@ abstract class MyRecyclerViewAdapter(
     }
 
     protected fun deSelectAll() {
-        if(bottomNavigation!=null && bottomNavigation?.visibility==View.VISIBLE) {
-            bottomNavigation?.visibility=View.GONE
-        }
+//        if(bottomNavigation!=null && bottomNavigation?.visibility==View.VISIBLE) {
+//            bottomNavigation?.visibility=View.GONE
+//
+//        }
+        btmListener?.btmVisible(false)
         for (i in 0 until itemCount) {
             toggleItemSelection(false, i, false,5)
         }
@@ -284,12 +298,17 @@ abstract class MyRecyclerViewAdapter(
 //        isActionModeEnabled = false
         //isHeaderShow = true
 
-        notifyDataSetChanged()
-        listener?.refreshItems(false)
-        if(bottomNavigation!=null && bottomNavigation?.visibility==View.VISIBLE) {
-            bottomNavigation?.visibility=View.GONE
+
+
+        if(!shortcut){
+            listener?.refreshItems(false)
+            notifyDataSetChanged()
 
         }
+      /*  if(bottomNavigation!=null && bottomNavigation?.visibility==View.VISIBLE) {
+            bottomNavigation?.visibility=View.GONE
+        }*/
+        btmListener?.btmVisible(false)
     }
 
     protected fun createViewHolder(layoutType: Int, parent: ViewGroup?): ViewHolder {
@@ -321,8 +340,8 @@ abstract class MyRecyclerViewAdapter(
     open inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bindView(any: Any,position: Int, lis: ItemOperationsListener?,
-                     allowSingleClick: Boolean, allowLongClick: Boolean,bottomnavigation:View?, callback: (itemView: View, adapterPosition: Int) -> Unit): View {
-            bottomNavigation=bottomnavigation
+                     allowSingleClick: Boolean, allowLongClick: Boolean, callback: (itemView: View, adapterPosition: Int) -> Unit): View {
+//            bottomNavigation=bottomnavigation
             listener=lis
 
             return itemView.apply {
@@ -366,9 +385,9 @@ abstract class MyRecyclerViewAdapter(
 
                     isAddEnabled?.invoke(true)
 
-                    if(bottomNavigation!=null && bottomNavigation?.visibility==View.GONE && !shortcut) {
-                        bottomNavigation?.visibility=View.VISIBLE
-                    }
+//                    if(bottomNavigation!=null && bottomNavigation?.visibility==View.GONE && !shortcut) {
+//                        bottomNavigation?.visibility=View.VISIBLE
+//                    }
                 }
                 else
                 {

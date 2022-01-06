@@ -1,12 +1,9 @@
 package com.simplemobiletools.filemanager.pro
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
-import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,9 +12,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.commons.AppProgressDialog
+import com.simplemobiletools.commons.BottomNavigationVisible
 import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.adapters.AdapterForFolders
 import com.simplemobiletools.commons.adapters.AdapterForPath
 import com.simplemobiletools.commons.dialogs.StoragePickerDialog
 import com.simplemobiletools.commons.extensions.*
@@ -26,7 +23,6 @@ import com.simplemobiletools.commons.interfaces.ItemOperationsListener
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.commons.models.StorageItem
-import com.simplemobiletools.commons.views.pathList
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 import com.simplemobiletools.filemanager.pro.adapters.ItemsListAdapter
 import com.simplemobiletools.filemanager.pro.extensions.*
@@ -65,6 +61,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
     var currentFolderHeader = ""
     var model : DataViewModel? = null
     private var baseSimpleActivity : BaseSimpleActivity? = null
+     var listener : BottomNavigationVisible? = null
 //    var mainAdapter : AdapterForFolders? = null
 
     var add_shortcut_path = ""
@@ -137,7 +134,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             mView.item_list_rv.adapter = ItemsListAdapter(
                 activity as BaseSimpleActivity,
                 folderItems,
-                bottomnavigation,
+
+                listener,
                 storedItems,
                 this@ItemsListFragment,
                 null,
@@ -243,6 +241,43 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         }
 
 
+    }
+
+    fun send(){
+        mainAdapter?.shareFiles(null)
+    }
+    fun move(){
+        mainAdapter?.copyMoveTo(false, null)
+    }
+    fun rename(){
+        mainAdapter?.displayRenameDialog(null)
+    }
+    fun copy_to(){
+        mainAdapter?.copyMoveTo(true, null)
+    }
+    fun copy_path(){
+        mainAdapter?.copyPath(null)
+    }
+    fun hide(){
+        mainAdapter?.toggleFileVisibility(true, null)
+    }
+    fun unhide(){
+        mainAdapter?.toggleFileVisibility(false, null)
+    }
+    fun compress(){
+        mainAdapter?. compressSelection(null)
+    }
+    fun decompress(){
+        mainAdapter?.decompressSelection(null)
+    }
+    fun openWith(){
+        mainAdapter?.openWith(null)
+    }
+    fun delete(){
+        mainAdapter?.askConfirmDelete()
+    }
+    fun details(){
+        mainAdapter?.showProperties(null)
     }
 
     fun openPath(path: String, forceRefresh: Boolean = false) {
@@ -451,6 +486,12 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 Color.parseColor("#000000")
             )
         }
+        else{
+            text_add_the_shortcut.setTextColor(
+                Color.YELLOW
+            )
+
+        }
 
     }
 
@@ -463,6 +504,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                     return@runOnUiThread
                 }
                 dismissDialog()
+               // mProgressDialog!!.dismiss()
                 storedItems = items
                 if(firstTime) {
                     (activity as FileManagerMainActivity).pathList.add(currentPath)
@@ -483,7 +525,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                      mainAdapter = ItemsListAdapter(
                         activity as BaseSimpleActivity,
                          folderItems,
-                        bottomnavigation,
+
+                         listener,
                         storedItems,
                         this@ItemsListFragment,
                         null,
