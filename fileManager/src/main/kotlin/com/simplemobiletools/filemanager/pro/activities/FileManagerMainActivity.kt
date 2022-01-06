@@ -111,6 +111,14 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             intent.extras
         }
 
+        setting.setOnClickListener {
+            val intent = Intent(this, SettingsBurger::class.java).apply {
+
+            }
+            startActivity(intent)
+
+        }
+
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         search_df.setOnSearchClickListener {
 //            itemsListFragtment = ItemsListFragment()

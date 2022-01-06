@@ -291,7 +291,9 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             listItems.sort()
             activity?.runOnUiThread {
                 activity?.invalidateOptionsMenu()
+
                 addItems(listItems)
+
                 if (context != null && currentViewType != requireContext().config.viewType) {
                     setupLayoutManager()
                 }
@@ -602,6 +604,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 openPath(currentPath)
             }*/
             showDialog()
+            mProgressDialog?.dismiss()
             if(currentPath != "$internalStoragePath/$currentFolderHeader")
                 openPath(currentPath)
         }

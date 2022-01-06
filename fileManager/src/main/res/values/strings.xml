@@ -34,5 +34,6 @@
     <string name="enable_root_access">Enable root access</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="legal_text">We have used following open source libraries in app.The terms of the Apache License can be viewed at \n<a href="https://www.apache.org/licenses/LICENSE-2.0\">https://www.apache.org/licenses/LICENSE-2.0</a>\n\n1.Glide com.github.bumptech.glide:glide:4.12.0(Licensed under the Apache License, Version 2.0 )\n<a href="https://github.com/bumptech/glide">https://github.com/bumptech/glide</a>\n\n2. Circle Progress com.github.lzyzsd:circleprogress:1.1.0@aar (Licensed under the Apache License, Version 2.0 )\n<a href="https://github.com/lzyzsd/CircleProgress">https://github.com/lzyzsd/CircleProgress</a>\n\n3. Calligraphy io.github.inflationx:calligraphy3:3.1.1(Licensed under the Apache License, Version 2.0 )\n<a href="https://github.com/chrisjenx/Calligraphy/issues/482">https://github.com/chrisjenx/Calligraphy/issues/482</a>\n\n4. Google gson com.google.code.gson:gson:2.8.6(Licensed under the Apache License, Version 2.0 )\n<a href="https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.6">https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.6</a>\n\n</string>
 
 </resources>

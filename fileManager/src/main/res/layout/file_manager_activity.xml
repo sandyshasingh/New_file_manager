@@ -33,13 +33,27 @@
                     android:layout_marginEnd="15dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/rounded_toolbar"
-                    android:gravity="right">
+
+                    android:orientation="horizontal">
 
                     <!--<ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_file_manager_video" />-->
 
+                    <ImageView
+                        android:id="@+id/setting"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_file_manager_external_storage"
+                        />
+                    <LinearLayout
+                        android:gravity="end"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
                     <androidx.appcompat.widget.SearchView
                         android:id="@+id/search_df"
                         app:searchIcon="@drawable/ic_file_manager_search"
@@ -49,6 +63,7 @@
                         android:textSize="15dp"
                         app:queryHint="sfjsnfjisadnf"
                         />
+                </LinearLayout>
 
 
                 </LinearLayout>
