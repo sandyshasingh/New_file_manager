@@ -36,6 +36,7 @@ object ThemeUtils {
     {
         var nightMode:Boolean = AppThemePrefrences.GetBooleanSharedPreference(activity, NIGHT_MODE);
         if (nightMode){
+
             activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             activity.setTheme(R.style.DarkMode)
             return;

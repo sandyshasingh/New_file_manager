@@ -17,7 +17,7 @@ class Legal : AppCompatActivity() {
 
 
         textHolder?.movementMethod = LinkMovementMethod.getInstance()
-        textHolder?.setLinkTextColor(ResourcesCompat.getColor(resources,R.color.grey500,null))
+       // textHolder?.setLinkTextColor(ResourcesCompat.getColor(resources,R.color.grey500,null))
         btn_back?.setOnClickListener()
         {
             onBackPressed()
@@ -25,12 +25,12 @@ class Legal : AppCompatActivity() {
 
         tv_privacy_policy?.setOnClickListener()
         {
-            startActivity(Intent(this,PrivacyPolicyActivity::class.java))
+          //  startActivity(Intent(this,PrivacyPolicyActivity::class.java))
         }
 
         tv_feedback?.setOnClickListener()
         {
-            RateUs.feedbackDialog(this)
+         //   RateUs.feedbackDialog(this)
         }
     }
 

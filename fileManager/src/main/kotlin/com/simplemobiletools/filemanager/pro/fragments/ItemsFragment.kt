@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.commons.AppProgressDialog
+import com.simplemobiletools.commons.DeleteShortcut
 import com.simplemobiletools.commons.MemorySizeUtils
 import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
@@ -50,7 +51,7 @@ import kotlin.collections.ArrayList
 class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.BreadcrumbsListenerNew{
 
     private var mProgressDialog: AppProgressDialog? = null
-
+    var deleteShortcut:DeleteShortcut?=null
     private var firstTime = true
     var currentPath = ""
     var currentFolderHeader = ""
@@ -131,7 +132,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         storageAdapter = AdapterForStorage(storageItems,{ storage -> storageFolderClick(storage) },requireActivity() )
         rv_storage?.adapter = storageAdapter
 
-        mainAdapter = AdapterForFolders(folderItems, { folder -> headerFolderClick(folder) }, requireActivity())
+        mainAdapter = AdapterForFolders(folderItems, { folder -> headerFolderClick(folder) }, requireActivity(),deleteShortcut)
         //recyclerView?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         recyclerView?.adapter = mainAdapter
 
@@ -195,7 +196,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             mainAdapter = AdapterForFolders(
                 folderItems,
                 { folder -> headerFolderClick(folder) },
-                requireActivity()
+                requireActivity(),
+                deleteShortcut
             )
             recyclerView?.layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)

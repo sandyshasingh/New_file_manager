@@ -30,6 +30,13 @@
                 android:layout_width="56dp"
                 android:layout_gravity="center"
                 android:layout_height="56dp" />
+            <ImageView
+                android:id="@+id/delete_shortcut"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="right"
+                android:visibility="gone"
+                android:src="@drawable/ic_file_pdf"/>
 
         </androidx.cardview.widget.CardView>
 

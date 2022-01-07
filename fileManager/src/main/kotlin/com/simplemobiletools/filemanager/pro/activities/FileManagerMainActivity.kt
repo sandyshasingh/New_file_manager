@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.simplemobiletools.commons.AppProgressDialog
 import com.simplemobiletools.commons.BottomNavigationVisible
+import com.simplemobiletools.commons.DeleteShortcut
 import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
@@ -48,7 +49,7 @@ import kotlin.collections.HashSet
 
 const val REQUEST_CODE_FOR_STORAGE_PERMISSION =  101
 const val FRAGMENT_STACK = "fragment_stack"
-class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNavigationVisible {
+class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNavigationVisible,DeleteShortcut {
     private val PICKED_PATH = "picked_path"
     var pathList = ArrayList<String>()
     var itemsListFragtment:ItemsListFragment?=null
@@ -100,7 +101,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         sharedPrefrences = getSharedPrefs()
        val fragmentManager: FragmentManager = supportFragmentManager
         fragment = ItemsFragment()
-
+        fragment.deleteShortcut = this
        fragmentManager.beginTransaction().replace(R.id.fragment_holder,fragment).commit()
        fragment.apply {
             isGetRingtonePicker = intent.action == RingtoneManager.ACTION_RINGTONE_PICKER
@@ -627,23 +628,30 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     }
 
 
-    fun onAddShortcutClicked(item:ArrayList<String>){
+    fun onAddShortcutClicked(item:ArrayList<String>?, delete:String?){
         val sharedPreferences: SharedPreferences? = getSharedPreferences(sharedPrefFile,
             Context.MODE_PRIVATE)
         var set:Set<String>?=sharedPreferences?.getStringSet("SHORTCUT_FOLDERS",null)
         if(set == null)
             set = HashSet()
-        for (value in item){
-            set=set?.plus(value)
+        if (item != null) {
+            for (value in item){
+                set=set?.plus(value)
+            }
         }
+
 
        sharedPreferences?.edit().apply(){
             this?.putStringSet("SHORTCUT_FOLDERS",set)
            this?.apply()
         }
         if (set != null) {
-            fragment.add_the_shortcutfolder(item)
+            fragment.add_the_shortcutfolder(item!!)
         }
+//        if(delete!=null){
+//            set = (set?.minus(delete) as Set<String>?)!!
+//        }
+
     }
 
 // fun getDrawable(id: Int): Drawable {
@@ -666,6 +674,34 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             bottomnavigation?.visibility = View.VISIBLE
         else
             bottomnavigation?.visibility = View.GONE
+    }
+
+    override fun deleteFolder(item: String?) {
+//        onAddShortcutClicked(null,item)
+        val sharedPreferences: SharedPreferences? = getSharedPreferences(sharedPrefFile,
+            Context.MODE_PRIVATE)
+        var set:Set<String>?=sharedPreferences?.getStringSet("SHORTCUT_FOLDERS",null)
+        var arrayList :ArrayList<String>?= ArrayList()
+
+
+        set= (set?.minus(item) as Set<String>?)!!
+//        for(value in set){
+//            arrayList?.add(value)
+//        }
+        sharedPreferences?.edit()?.clear()?.commit()
+
+        sharedPreferences?.edit().apply(){
+            this?.putStringSet("SHORTCUT_FOLDERS",set)
+            this?.apply()
+        }
+
+//        if (set!=null){
+//            arrayList?.let { fragment.add_the_shortcutfolder(it) }
+//        }
+
+
+
+
     }
 
 }

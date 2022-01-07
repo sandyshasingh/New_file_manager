@@ -2,22 +2,22 @@ package com.simplemobiletools.commons.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.FolderDiffCallBack
-import com.simplemobiletools.commons.MemorySizeUtils
+import com.simplemobiletools.commons.*
 import com.simplemobiletools.commons.extensions.isDarkTheme
+import com.simplemobiletools.commons.helpers.SHORTCUT_FOLDER_ID
 import com.simplemobiletools.commons.models.FolderItem
-import com.simplemobiletools.commons.setTypeFaceOpenSensSmBold
 import kotlinx.android.synthetic.main.folder_item_view.view.*
 
-class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val clickListener: (FolderItem) -> Unit, var mContext: Context) : RecyclerView.Adapter<AdapterForFolders.HeaderViewHolder>()
+class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val clickListener: (FolderItem) -> Unit, var mContext: Context, var deleteShortcut: DeleteShortcut?) : RecyclerView.Adapter<AdapterForFolders.HeaderViewHolder>()
 {
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
@@ -27,6 +27,12 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
 
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         holder.bindItems(folderList[position], clickListener)
+
+        holder.deleteShortcut.setOnClickListener {
+                //folderList.removeAt(position)
+            deleteShortcut?.deleteFolder(folderList[position].sizeString)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -38,6 +44,7 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
         val totalSize = MemorySizeUtils.getTotalInternalMemorySizeInLong()
         var darkThemeBackground : Drawable? = null
         var isDarkTheme = false
+        var deleteShortcut = itemView.delete_shortcut
 
         init {
             isDarkTheme = mContext.isDarkTheme()
@@ -71,6 +78,18 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
 
             folderIcon.setImageResource(folder.folderIcon)
             itemView.setOnClickListener{ c1(folder) }
+
+            if(folder.id == SHORTCUT_FOLDER_ID){
+               itemView.setOnLongClickListener {
+                    deleteShortcut.visibility = View.VISIBLE
+                   true
+                }
+
+            }
+
+
+
+
 
 
         }

@@ -762,7 +762,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var folderItems: ArrayList
 //        selectedItems.forEach {
 //            addFileUris(it.path, paths)
 //        }
-        (activity as FileManagerMainActivity).onAddShortcutClicked(pathss!!)
+        (activity as FileManagerMainActivity).onAddShortcutClicked(pathss!!,null)
          pathss.clear()
     }
 

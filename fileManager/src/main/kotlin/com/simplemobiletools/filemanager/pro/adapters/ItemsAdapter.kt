@@ -1041,7 +1041,7 @@ class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var 
     }
 
     open inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val adapterForFolders = AdapterForFolders(folderItems, { folder -> headFolderClick(folder) }, activity)
+        private val adapterForFolders = AdapterForFolders(folderItems, { folder -> headFolderClick(folder) }, activity,null)
 
         fun headerBindView( callback: (adapter: AdapterForFolders) -> Unit): View {
             return itemView.apply {
