@@ -6,21 +6,17 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-
-
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:elevation="0dp"
-
-            >
+            app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/half_up_backgrounndcolor"
-                android:title="/rocks_player"
+                android:title="/file_manager"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:titleTextAppearance="@style/Toolbar.TitleText">
@@ -47,7 +43,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/ic_file_manager_external_storage"
+                        android:src="@drawable/ic_file_manager_stng"
                         />
                     <LinearLayout
                         android:gravity="end"
@@ -73,10 +69,6 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Your scrolling content -->
-
-
-
-
 
     <FrameLayout
         android:id="@+id/fragment_holder"

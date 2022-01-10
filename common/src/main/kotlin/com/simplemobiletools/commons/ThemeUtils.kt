@@ -39,7 +39,7 @@ object ThemeUtils {
 
             activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             activity.setTheme(R.style.DarkMode)
-            return;
+            return
 
         }
 

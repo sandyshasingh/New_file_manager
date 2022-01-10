@@ -3,6 +3,7 @@
     <string name="text_2_path" translatable="false">fonts/OpenSans-SemiBold.ttf</string>
 
     <string name="cancel">Cancel</string>
+    <string name="app_ver">Version 1.0.0.0</string>
     <string name="save_as">Save as</string>
     <string name="file_saved">File saved successfully</string>
     <string name="invalid_file_format">Invalid file format</string>

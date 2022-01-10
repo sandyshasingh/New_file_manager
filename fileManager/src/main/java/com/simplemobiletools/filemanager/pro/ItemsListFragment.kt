@@ -170,10 +170,10 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 })
             }
             SHORTCUT_ID -> {
+
+                (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "Internal"
-
                 add_the_shortcut.visibility = View.VISIBLE
-
                 refreshItems(true)
 
             }
@@ -228,6 +228,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             INTERNAL_STORAGE -> {
 
                // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
+                (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "Internal"
                 refreshItems(true)
             }
@@ -432,9 +433,12 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         } catch (e: Exception) {
         }
     }
-    private fun itemClicked(item: FileDirItem) {
+    private fun itemClicked(item: ListItem) {
         if (item.isDirectory) {
-            (activity as FileManagerMainActivity).pathList.add(item.path)
+                if (item.mChildren>0){
+                    (activity as FileManagerMainActivity).pathList.add(item.path)
+                }
+
             (activity as? FileManagerMainActivity)?.apply {
                 skipItemUpdating = isSearchOpen
                 openedDirectory()
@@ -465,7 +469,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         {
            mList =  list as ArrayList<ListItem>
         }*/
-        itemClicked(list as FileDirItem)
+        itemClicked(list)
 //            Log.d("@openPath","called")
 //            val openFolder= list.mPath!!
 //            openPath(openFolder)
@@ -508,6 +512,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 dismissDialog()
                // mProgressDialog!!.dismiss()
                 storedItems = items
+                //(activity as FileManagerMainActivity).pathList.add(currentPath)
                 if(firstTime) {
                     (activity as FileManagerMainActivity).pathList.add(currentPath)
                     firstTime = false
@@ -515,7 +520,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
                 if(adapterForPath == null) {
                     adapterForPath = AdapterForPath((activity as FileManagerMainActivity).pathList, this@ItemsListFragment, requireActivity())
-//                    my_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//                    m/y_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                     breadcrumb_rv?.adapter = adapterForPath
                 }else{
                     adapterForPath?.updateDataAndNotify((activity as FileManagerMainActivity).pathList)
@@ -598,15 +603,16 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 addItems(storedItems, true)
             }
         }else {
-            /*if(currentPath == "$internalStoragePath/$currentFolderHeader"){
+            if(currentPath == "$internalStoragePath/$currentFolderHeader"){
                 addItems(storedItems, true)
-            }else {
-                openPath(currentPath)
-            }*/
-            showDialog()
-            mProgressDialog?.dismiss()
-            if(currentPath != "$internalStoragePath/$currentFolderHeader")
-                openPath(currentPath)
+            }
+            else {
+               // openPath(currentPath)
+            }
+//            showDialog()
+//            mProgressDialog?.dismiss()
+//            if(currentPath != "$internalStoragePath/$currentFolderHeader")
+//                openPath(currentPath)
         }
     }
 

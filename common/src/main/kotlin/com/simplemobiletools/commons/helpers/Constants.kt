@@ -266,6 +266,13 @@ const val ZIP_FILES_NAME = "Zip files"
 const val DOCUMENTS_NAME = "Documents"
 const val DOWNLOAD_NAME = "Download"
 
+val MORE_APPS_LINK = "https://play.google.com/store/apps/developer?id=ASD+Dev+Video+Player+for+All+Format"
+val GMAIL_ID = "feedback.rocksplayer@gmail.com"
+val FB_LINK2 = "https://www.facebook.com/rareprobsolution.sul.7"
+val INSTA_LINK = "https://www.instagram.com/rareprob_/?utm_medium=copy_link"
+val TWITTER_LINK = "https://mobile.twitter.com/rare_prob"
+val WEB_SITE_LINK = "https://www.rocksplayer.com/"
+
 // For Folder Click Count
 var PHOTOS_CLICK = 0L
 var WHATSAPP_CLICK = 0L

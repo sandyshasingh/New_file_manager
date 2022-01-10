@@ -81,6 +81,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
        super.onCreate(savedInstanceState)
         setContentView(R.layout.file_manager_activity)
         viewModel = ViewModelProvider(this).get(DataViewModel::class.java)
+
 //        setSupportActionBar(toolbar)
 
       // var userWallet = intent?.getIntExtra("USER_WALLET_PRICE")
@@ -96,7 +97,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
 //        if(supportActionBar!=null)
 //            supportActionBar?.title = "File Manager"
 
-        bottomSheetClickListener()
+
 
         sharedPrefrences = getSharedPrefs()
        val fragmentManager: FragmentManager = supportFragmentManager
@@ -119,6 +120,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             startActivity(intent)
 
         }
+        bottomSheetClickListener()
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         search_df.setOnSearchClickListener {
@@ -139,6 +141,8 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             itemsListFragtment?.searchOpened()
              true
         }
+
+
         search_df.setOnCloseListener (SearchView.OnCloseListener { //your code here
             isSearchOpen = false
             // fragment.searchClosed()
@@ -447,6 +451,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         }
     }
 
+
     fun bottomSheetClickListener(){
 
         bottom_send.setOnClickListener {
@@ -681,7 +686,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         val sharedPreferences: SharedPreferences? = getSharedPreferences(sharedPrefFile,
             Context.MODE_PRIVATE)
         var set:Set<String>?=sharedPreferences?.getStringSet("SHORTCUT_FOLDERS",null)
-        var arrayList :ArrayList<String>?= ArrayList()
+       // var arrayList :ArrayList<String>?= ArrayList()
 
 
         set= (set?.minus(item) as Set<String>?)!!

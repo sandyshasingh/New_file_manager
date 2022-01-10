@@ -29,8 +29,10 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
         holder.bindItems(folderList[position], clickListener)
 
         holder.deleteShortcut.setOnClickListener {
-                //folderList.removeAt(position)
+//                folderList.removeAt(position)
             deleteShortcut?.deleteFolder(folderList[position].sizeString)
+            folderList.removeAt(position)
+            notifyDataSetChanged()
         }
 
     }

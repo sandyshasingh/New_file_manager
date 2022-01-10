@@ -407,13 +407,13 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                 }else{
                     recyclerView?.beVisible()
                 }
-                if(adapterForPath == null) {
-                    adapterForPath = AdapterForPath((activity as FileManagerMainActivity).pathList, this@ItemsFragment, requireActivity())
-//                    my_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//                    my_recyclerView?.adapter = adapterForPath
-                }else{
-                    adapterForPath?.updateDataAndNotify((activity as FileManagerMainActivity).pathList)
-                }
+//                if(adapterForPath == null) {
+//                    adapterForPath = AdapterForPath((activity as FileManagerMainActivity).pathList, this@ItemsFragment, requireActivity())
+////                    my_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+////                    my_recyclerView?.adapter = adapterForPath
+//                }else{
+//                    adapterForPath?.updateDataAndNotify((activity as FileManagerMainActivity).pathList)
+//                }
                 if(storedItems.isNotEmpty()) {
                     zrpImage?.beGone()
                     adapterForPath

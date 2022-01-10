@@ -28,6 +28,9 @@
     <color name="btm_background">#282361</color>
     <color name="halfup_color">#f3f6f9</color>
 
+    <color name="startcolor">#DC0A49</color>
+    <color name="endcolor">#E76C1F</color>
+
 
     <color name="material_gray_200">#EEEEEE</color>
     <color name="material_gray_600">#757575</color>

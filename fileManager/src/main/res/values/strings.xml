@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">File Manager</string>
+    <string name="contactus_query">Write your feedback/suggestion</string>
+    <string name="contactus_email">Email</string>
+    <string name="user_name">Name</string>
+    <string name="help_improve_app">Please help us to improve this app.</string>
+    <string name="please_enter_valid_email">Please enter valid email id</string>
+    <string name="please_enter_email_id">Please enter email id</string>
+    <string name="feedback_submit_success">Feedback has been submitted successfully. Thank you!</string>
+    <string name="feedback_suggestions">Feedback/Suggestions</string>
     <string name="app_launcher_name">File Manager</string>
     <string name="press_back_again">Press back again to exit</string>
     <string name="go_to_home_folder">Go to home folder</string>
