@@ -70,6 +70,8 @@
     <color name="setting_text_color_dark">#000000</color>
     <color name="path_dark">#000000</color>
     <color name="path_light">#f3f6f9</color>
+    <color name="add_btn_light">#282361</color>
+    <color name="add_btn_dark">#f1f2f2</color>
 
 
 

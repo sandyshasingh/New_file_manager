@@ -20,6 +20,7 @@
     <attr name="icon_setting" format="reference"/>
     <attr name="icon_color" format="reference"/>
     <attr name="ic_three_dot" format="reference"/>
+    <attr name="shortcut_btn_color" format="reference"/>
 
 
     <attr name="dark_theme_icon" format="reference"/>
@@ -144,6 +145,7 @@
         <item name="icon_color">@color/iconcolor_dark</item>
         <item name="rv_path">@color/path_dark</item>
         <item name="ic_folder_icon">@drawable/ic_file_manager_fldr</item>
+        <item name="shortcut_btn_color">@color/add_btn_dark</item>
     </style>
 
     <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
@@ -179,6 +181,7 @@
         <item name="textcolor_setting">@color/setting_text_color_dark</item>
         <item name="icon_color">@color/iconcolor_light</item>
         <item name="rv_path">@color/path_light</item>
+        <item name="shortcut_btn_color">@color/add_btn_light</item>
         <!--        <item name="bottom_sheet_tint">@color/bottom_sheet_color</item>-->
     </style>
 
