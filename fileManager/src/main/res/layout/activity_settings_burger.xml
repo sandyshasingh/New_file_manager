@@ -13,6 +13,7 @@
 
         <LinearLayout
             android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -27,6 +28,8 @@
                 android:text="Settings"
                 android:textStyle="bold"
                 android:textSize="18dp"
+                android:textColor="?attr/textcolor_setting"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"/>
@@ -34,7 +37,7 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/night_mode"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -42,7 +45,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="15dp"
                 android:src="@drawable/ic_file_manager_privacy_policy"
                 android:layout_gravity="center_vertical"/>
 
@@ -50,7 +53,7 @@
                 android:text="Night Mode"
                 android:textSize="18dp"
                 android:layout_marginLeft="8dp"
-
+                android:textColor="?attr/textcolor_setting"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -73,13 +76,13 @@
             android:id="@+id/privacy_policy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="24dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="15dp"
                 android:src="@drawable/ic_file_manager_privacy_policy"
                 android:layout_gravity="center_vertical"/>
 
@@ -87,6 +90,8 @@
                 android:text="Privacy Policy"
                 android:textSize="18dp"
                 android:layout_marginLeft="8dp"
+                android:textColor="?attr/textcolor_setting"
+
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +101,7 @@
 
         <LinearLayout
             android:id="@+id/legal"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="24dp"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,7 +110,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="15dp"
 
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_file_manager_legal"/>
@@ -114,6 +119,7 @@
                 android:textSize="18dp"
                 android:layout_marginLeft="8dp"
 
+                android:textColor="?attr/textcolor_setting"
                 android:layout_width="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"/>
@@ -121,7 +127,7 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/rate_us"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="24dp"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,7 +136,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="15dp"
 
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_file_manager_rate"/>
@@ -139,6 +145,7 @@
                 android:textSize="18dp"
                 android:layout_marginLeft="8dp"
 
+                android:textColor="?attr/textcolor_setting"
                 android:layout_width="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_height="30dp"/>
@@ -147,7 +154,7 @@
         <LinearLayout
             android:id="@+id/feedback"
             android:layout_width="match_parent"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="24dp"
 
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -155,7 +162,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="15dp"
 
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_file_manager_feedback"/>
@@ -164,6 +171,7 @@
                 android:textSize="18dp"
                 android:layout_marginLeft="8dp"
 
+                android:textColor="?attr/textcolor_setting"
                 android:layout_width="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_height="30dp"/>
@@ -172,7 +180,7 @@
         <LinearLayout
             android:id="@+id/faq"
             android:layout_width="match_parent"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="24dp"
 
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -180,7 +188,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="15dp"
 
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_file_manager_faq"/>
@@ -189,6 +197,7 @@
                 android:textSize="18dp"
                 android:layout_marginLeft="8dp"
 
+                android:textColor="?attr/textcolor_setting"
                 android:layout_width="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_height="30dp"/>
@@ -197,7 +206,7 @@
         <LinearLayout
             android:id="@+id/more_apps"
             android:layout_width="match_parent"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="24dp"
 
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -205,7 +214,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="15dp"
 
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_file_manager_more_apps"/>
@@ -215,6 +224,7 @@
                 android:textSize="18dp"
                 android:layout_marginLeft="8dp"
 
+                android:textColor="?attr/textcolor_setting"
                 android:layout_gravity="center_vertical"
                 android:layout_height="30dp"/>
 
@@ -223,14 +233,14 @@
             android:id="@+id/about_us"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="24dp"
 
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="15dp"
 
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_file_manager_aboutus"/>
@@ -240,6 +250,7 @@
                 android:textSize="18dp"
                 android:layout_marginLeft="8dp"
 
+                android:textColor="?attr/textcolor_setting"
                 android:layout_gravity="center_vertical"
                 android:layout_height="30dp"/>
 
@@ -249,19 +260,20 @@
             android:layout_marginTop="20dp"
             android:text="Follow us on"
             android:textSize="18dp"
-android:layout_marginLeft="8dp"
+            android:textColor="?attr/textcolor_setting"
+            android:layout_marginLeft="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/twitter"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="10dp"
                 android:src="@drawable/ic_file_manager_twitter"/>
 
             <ImageView

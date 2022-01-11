@@ -122,6 +122,10 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         }
         bottomSheetClickListener()
 
+        back_main.setOnClickListener {
+            super.onBackPressed()
+        }
+
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         search_df.setOnSearchClickListener {
 //            itemsListFragtment = ItemsListFragment()
@@ -545,6 +549,12 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     }
     override fun onBackPressed() {
         if (pathList.size <= 1) {
+            val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
+            if(fragment is ItemsListFragment)
+            {
+                setting.visibility = View.VISIBLE
+                back_main.visibility = View.GONE
+            }
             super.onBackPressed()
         }
         else {
@@ -625,11 +635,16 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     fun onCategoryClick(id: Int,path: String) {
         val fragmentManager: FragmentManager = supportFragmentManager
 
+
         itemsListFragtment = ItemsListFragment.newInstance(id,path)
         itemsListFragtment?.listener = this
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragment_holder, itemsListFragtment!!).addToBackStack("")
         fragmentTransaction.commit()
+
+        setting.visibility = View.GONE
+        back_main.visibility = View.VISIBLE
+
     }
 
 

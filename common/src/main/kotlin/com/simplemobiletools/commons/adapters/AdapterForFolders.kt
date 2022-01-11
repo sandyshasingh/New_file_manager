@@ -65,9 +65,9 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
 //            usedMemoryProgress.max = (totalSize / 1024).toInt()
 //            usedMemoryProgress.progress= folder.size.toInt()
             if(isDarkTheme) {
-                folderLayout.setBackgroundDrawable(darkThemeBackground)
+                //folderLayout.setBackgroundDrawable(darkThemeBackground)
             }else{
-                folderLayout.setBackgroundDrawable(folder.backgroundColor)
+                //folderLayout.setBackgroundDrawable(folder.backgroundColor)
             }
             folderNameTextView.text = folder.folderName
 //            folderSize.text = folder.sizeString

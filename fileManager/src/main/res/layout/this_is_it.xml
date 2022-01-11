@@ -2,7 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/halfup_color"
+    android:background="?attr/half_up_backgrounndcolor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -160,8 +160,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_recent_file"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerView"
-            >
+            app:layout_constraintTop_toBottomOf="@id/recyclerView">
             <TextView
                 android:id="@+id/heyBaby"
                 android:layout_width="wrap_content"

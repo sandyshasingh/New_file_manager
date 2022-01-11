@@ -115,6 +115,7 @@ class CopyMoveTask(val activity: BaseSimpleActivity, val copyOnly: Boolean, val 
         if(success) {
             mNotificationBuilder.apply {
                 setContentTitle(title)
+                setSmallIcon(R.drawable.ic_launcher)
                 setContentText("")
                 setProgress(0, 0, false)
                 activity?.notificationManager.notify(mNotifId, build())

@@ -15,7 +15,7 @@
         <activity
             android:name=".PermissionActivity"
             android:exported="false"
-            android:theme="@style/LightMode" />
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".activities.FileManagerMainActivity"
             android:exported="true"

@@ -10,10 +10,13 @@ import com.simplemobiletools.commons.AppThemePrefrences
 import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 import kotlinx.android.synthetic.main.activity_settings_burger.*
 
 class SettingsBurger : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeUtils.onActivityCreateSetTheme(this)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_burger)
 
@@ -93,15 +96,19 @@ class SettingsBurger : AppCompatActivity() {
             }
 
         }
-
+       var asa= AppThemePrefrences.GetBooleanSharedPreference(this, ThemeUtils.NIGHT_MODE)
+        dark_mode?.isChecked = asa
         dark_mode.setOnCheckedChangeListener{ compoundButton: CompoundButton, isDarkMode: Boolean ->
-            if (isDarkMode){
-
-            }
-            AppCompatDelegate
-                .setDefaultNightMode(
-                    AppCompatDelegate
-                        .MODE_NIGHT_YES)
+                AppThemePrefrences.SetBooleanSharedPreference(this, ThemeUtils.NIGHT_MODE,isDarkMode)
+                val intent = Intent(this, FileManagerMainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                }
+                startActivity(intent)
+                finish()
+//            AppCompatDelegate
+//                .setDefaultNightMode(
+//                    AppCompatDelegate
+//                        .MODE_NIGHT_YES)
 //            var nightMode:Boolean = AppThemePrefrences.SetBooleanSharedPreference(activity,
 //                ThemeUtils.NIGHT_MODE
 //            );

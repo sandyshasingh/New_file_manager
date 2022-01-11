@@ -85,7 +85,7 @@ class FilepickerItemsAdapter(activity: BaseSimpleActivity, val fileDirItems: Lis
                 if(folderDrawable!=null)
                     list_item_icon.setImageDrawable(folderDrawable)
                 else
-                    list_item_icon.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_folder__light))
+                    list_item_icon.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_folder__light2))
                 list_item_details.text = getChildrenCnt(fileDirItem)
             } else {
                 list_item_details.text = fileDirItem.size.formatSize()

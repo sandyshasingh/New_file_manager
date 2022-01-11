@@ -36,7 +36,7 @@
                 android:layout_height="18dp"
                 android:layout_gravity="right"
                 android:visibility="gone"
-                android:src="@drawable/ic_file_pdf"/>
+                android:src="@drawable/ic_folder_delete"/>
 
         </androidx.cardview.widget.CardView>
 

@@ -93,7 +93,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var folderItems: ArrayList
     }
     private fun getFolderDrawable() : Drawable?{
         return if (isDarkTheme) {
-            resources.getDrawable(R.drawable.ic_icon_folder__light2)
+            resources.getDrawable(R.drawable.ic_file_manager_fldr)
         } else {
             resources.getDrawable(R.drawable.ic_icon_folder__light2)
         }

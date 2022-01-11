@@ -14,8 +14,17 @@
     <attr name="ic_delete_vector" format="reference"/>
     <attr name="ic_properties_vector" format="reference"/>
     <attr name="half_up_backgrounndcolor" format="reference"/>
+    <attr name="recyclerbackgrounndcolor" format="reference"/>
+    <attr name="toolbarcolor" format="reference"/>
     <attr name="card_bg" format="reference"/>
+    <attr name="icon_setting" format="reference"/>
+    <attr name="icon_color" format="reference"/>
+    <attr name="ic_three_dot" format="reference"/>
+
+
     <attr name="dark_theme_icon" format="reference"/>
+    <attr name="rv_itemslist" format="reference"/>
+    <attr name="rv_path" format="reference"/>
 
     <style name="appProgressDialog" parent="android:Theme.Translucent.NoTitleBar">
         <item name="android:windowFrame">@null</item>
@@ -49,7 +58,9 @@
     <attr name="ic_search_vector" format="reference" />
     <attr name="ic_home_vector" format="reference" />
     <attr name="ic_sort_vector" format="reference" />
+    <attr name="textcolor_setting" format="reference" />
 
+    <attr name="filemanageritembackgroud" format="reference" />
 
 
 
@@ -100,6 +111,7 @@
 
 
 
+        <item name="rv_itemslist">@color/rv_itemlist_light</item>
         <item name="android:itemBackground">?attr/bottom_sheet_bg</item>
         <item name="android:textColor">?attr/textcolorprimarycustom</item>
         <item name="ic_share_vector">@drawable/ic_share_vector_black</item>
@@ -124,13 +136,58 @@
         <item name="card_bg">@color/blue_grey_100</item>
         <item name="filemanagertextcolor">@color/file_manager_textcolor_dark</item>
         <item name="dark_theme_icon">@drawable/ic_file_doc</item>
+        <item name="half_up_backgrounndcolor">@color/halfup_colordark</item>
+        <item name="toolbarcolor">@color/toolbar_dark</item>
+        <item name="icon_setting">@drawable/ic_file_manager_stng</item>
+        <item name="rv_itemslist">@color/rv_itemlist_dark</item>
+        <item name="textcolor_setting">@color/setting_text_color_light</item>
+        <item name="icon_color">@color/iconcolor_dark</item>
+        <item name="rv_path">@color/path_dark</item>
+        <item name="ic_folder_icon">@drawable/ic_file_manager_fldr</item>
+    </style>
 
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="cab_rename">@drawable/ic_file_manager_rename</item>
+        <item name="ic_home_vector">@drawable/ic_home_vector_black</item>
+        <item name="filemanageritembackgroud">@drawable/rectangle_semitranparent_light_theme</item>
+        <item name="ic_folder_icon">@drawable/ic_icon_folder__light2</item>
+        <item name="ic_icon_decompress">@drawable/ic_icon_decompress_black</item>
+        <item name="ic_icon_compress">@drawable/ic_icon_compress_black</item>
+        <item name="ic_icon_hide">@drawable/ic_icon_hide_black</item>
+        <item name="ic_select_all_vector">@drawable/ic_file_manager_slct_all</item>
+        <item name="ic_search_vector">@drawable/ic_file_manager_search</item>
+        <item name="ic_three_dot">@drawable/ic_icon_dot_light</item>
+        <item name="ic_icon_copy_to">@drawable/ic_file_manager_copy</item>
+        <item name="ic_sort_vector">@drawable/ic_sort_vector_black</item>
+        <item name="ic_icon_copy_path">@drawable/ic_icon_copy_path_to_clipboard_black</item>
+        <item name="ic_properties_vector">@drawable/ic_properties_vector_black</item>
+        <item name="ic_icon_next">@drawable/ic_icon_next_light</item>
+        <item name="textcolorsecondrycustom">@color/material_gray_600</item>
+        <item name="android:textColorPrimary">@color/material_gray_900</item>
+        <item name="android:textColor">@color/text_color2</item>
+        <item name="bottom_sheet_bg" >@color/btm_background</item>
+        <item name="ic_unhide_vector" >@drawable/ic_unhide_vector_black</item>
+        <item name="ic_plus_vector" >@drawable/ic_plus_vector_black</item>
+        <item name="ic_share_vector" >@drawable/ic_share_vector_black</item>
+        <item name="ic_icon_move">@drawable/ic_file_manager_move</item>
+        <item name="ic_delete_vector">@drawable/ic_file_manager_delete</item>
+        <item name="filemanagertextcolor">@color/text_color2</item>
+        <item name="half_up_backgrounndcolor">@color/halfup_color</item>
+        <item name="toolbarcolor">@color/toolbar_light</item>
+        <item name="icon_setting">@drawable/ic_file_manager_stng_dark</item>
+        <item name="rv_itemslist">@color/rv_itemlist_light</item>
+        <item name="textcolor_setting">@color/setting_text_color_dark</item>
+        <item name="icon_color">@color/iconcolor_light</item>
+        <item name="rv_path">@color/path_light</item>
+        <!--        <item name="bottom_sheet_tint">@color/bottom_sheet_color</item>-->
     </style>
 
 
 
     <style name="AppTheme0" parent="LightMode">
         <item name="colorPrimary">#ffffff</item>
+
+
         <item name="colorPrimaryDark">#cccccc</item>
         <item name="colorAccent">#ff7200</item>
     </style>

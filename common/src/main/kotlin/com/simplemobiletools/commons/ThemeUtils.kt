@@ -32,30 +32,22 @@ object ThemeUtils {
         } else true
     }
 
-    fun onActivityCreateSetTheme(activity: AppCompatActivity)
+    fun onActivityCreateSetTheme(activity: AppCompatActivity?)
     {
-        var nightMode:Boolean = AppThemePrefrences.GetBooleanSharedPreference(activity, NIGHT_MODE);
+        val nightMode = AppThemePrefrences.GetBooleanSharedPreference(activity!!, NIGHT_MODE,false)
+
         if (nightMode){
 
-            activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            activity.setTheme(R.style.DarkMode)
+            activity?.delegate?.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+            activity?.setTheme(R.style.DarkMode)
             return
 
         }
 
         else{
-            activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-            var sTheme = AppThemePrefrences.GetIntSharedPreference(activity, THEME,0);
-           // activity.setTheme(R.style.LightMode);
-
-            when (sTheme) {
-
-                THEME_DEFAULT->{
-                 activity.setTheme(R.style.LightMode)
-                    return;
-                }
-            }
+            activity?.delegate?.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+            activity?.setTheme(R.style.AppTheme2)
+            return
 
         }
 
