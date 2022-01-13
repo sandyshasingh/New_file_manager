@@ -40,6 +40,7 @@ class AppsFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fet
                         0L,
                         false,
                         null,
+                        "",
                         ""
                     )
                     fileDataClassList.add(hoho)

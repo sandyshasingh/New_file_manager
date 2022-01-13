@@ -40,6 +40,7 @@ class ZipFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fetc
                         0L,
                         false,
                         null,
+                        "",
                         ""
                     )
                     fileDataClassList.add(hoho)

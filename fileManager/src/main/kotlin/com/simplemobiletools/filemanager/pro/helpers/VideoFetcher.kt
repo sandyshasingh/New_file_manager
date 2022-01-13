@@ -76,6 +76,7 @@ class VideoFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fe
                                         date,
                                         false,
                                         null,
+                                        "",
                                         ""
                                     )
                             )

@@ -200,7 +200,7 @@ public class CheckView extends View {
             TypedArray ta = getContext().getTheme()
                     .obtainStyledAttributes(new int[]{R.attr.item_checkCircle_backgroundColor});
             int defaultColor = ResourcesCompat.getColor(
-                    getResources(), R.color.nit_common_color,
+                    getResources(), R.color.btm_background,
                     getContext().getTheme());
             int color = ta.getColor(0, defaultColor);
             ta.recycle();

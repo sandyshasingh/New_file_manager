@@ -70,6 +70,7 @@ class PhotoFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fe
                                 dateTaken,
                                 false,
                                 null,
+                                "",
                                 ""
                             )
 

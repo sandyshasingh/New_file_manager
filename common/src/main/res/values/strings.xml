@@ -121,7 +121,7 @@
     <string name="copy_failed">Could not copy the files</string>
     <string name="copying">Copying…</string>
     <string name="copying_success">Files copied successfully</string>
-<!--    <string name="copy_failed">Files not copied due to some error</string>-->
+    <!--    <string name="copy_failed">Files not copied due to some error</string>-->
     <string name="move_failed">Files not moved due to some error</string>
 
     <string name="moving">Moving…</string>

@@ -17,13 +17,12 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/fdr"
-            android:layout_width="59dp"
+            android:layout_width="62dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="4dp"
+            app:cardElevation="0dp"
             android:layout_marginTop="2dp"
-            android:layout_marginRight="4dp"
             android:layout_centerHorizontal="true"
-            android:layout_height="59dp">
+            android:layout_height="62dp">
             <ImageView
                 android:id="@+id/folder_icon"
                 android:padding="4dp"

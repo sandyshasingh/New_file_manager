@@ -18,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/folder_path"
+        android:textSize="15dp"
         android:layout_marginLeft="10dp"
         android:textColor="?attr/filemanagertextcolor"
         android:layout_gravity="center"

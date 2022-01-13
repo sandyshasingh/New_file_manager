@@ -46,13 +46,13 @@ fun Activity.isAppInstalledOnSDCard(): Boolean = try {
 }
 
 fun Activity.isDarkTheme() : Boolean{
-    val nightMode = GetBooleanSharedPreference(this, NIGHT_MODE)
+    val nightMode = GetBooleanSharedPreference(this, NIGHT_MODE,false)
 //    val sTheme = AppThemePrefrences.GetIntSharedPreference(this, ThemeConfig.THEME)
 
     return nightMode
-//    if(nightMode){
-//        return true
-//    }
+    if(nightMode){
+        return true
+    }
 //    return !(sTheme==0 || sTheme==2 || sTheme==5 || sTheme==6 || sTheme==8 || sTheme==10 || sTheme==12 || sTheme==15 || sTheme==16 || sTheme==17 ||
 //            sTheme==19 || sTheme==20)
 }

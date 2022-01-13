@@ -32,6 +32,14 @@ object ThemeUtils {
         } else true
     }
 
+    fun GetBooleanSharedPreference(ctx: Context, Key: String?,defaultValue : Boolean): Boolean {
+        val pref: SharedPreferences =
+            ctx.getSharedPreferences("com.example.new_file_manager", Context.MODE_PRIVATE)
+        return if (pref.contains(Key)) {
+            pref.getBoolean(Key, defaultValue)
+        } else defaultValue
+    }
+
     fun onActivityCreateSetTheme(activity: AppCompatActivity?)
     {
         val nightMode = AppThemePrefrences.GetBooleanSharedPreference(activity!!, NIGHT_MODE,false)
@@ -52,6 +60,7 @@ object ThemeUtils {
         }
 
     }
+}
 /*
 
 
@@ -85,4 +94,3 @@ object ThemeUtils {
 //        }
 //    }
 
-}

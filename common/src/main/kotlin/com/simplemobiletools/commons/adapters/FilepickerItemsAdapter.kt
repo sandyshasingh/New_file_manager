@@ -137,9 +137,9 @@ class FilepickerItemsAdapter(activity: BaseSimpleActivity, val fileDirItems: Lis
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun getFolderDrawable() : Drawable?{
         return if (isDarkTheme) {
-            resources.getDrawable(R.drawable.ic_icon_folder__dark)
+            resources.getDrawable(R.drawable.ic_file_manager_fldr)
         } else {
-            resources.getDrawable(R.drawable.ic_icon_folder__light)
+            resources.getDrawable(R.drawable.ic_icon_folder__light2)
         }
     }
     private fun initDrawables() {

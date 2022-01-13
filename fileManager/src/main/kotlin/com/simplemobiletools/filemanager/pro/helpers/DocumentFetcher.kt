@@ -41,6 +41,7 @@ class DocumentFetcher(var context: Context, var fetchAudioAsyncCompleteListener:
                         0L,
                         false,
                         null,
+                        "",
                         ""
                     )
                     fileDataClassList.add(hoho)
@@ -56,6 +57,7 @@ class DocumentFetcher(var context: Context, var fetchAudioAsyncCompleteListener:
                         0L,
                         false,
                         null,
+                        "",
                         ""
                     )
                     fileDataClassList.add(hoho)

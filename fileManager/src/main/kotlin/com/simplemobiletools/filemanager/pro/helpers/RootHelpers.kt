@@ -53,6 +53,7 @@ class RootHelpers(val activity: Activity) {
                         0,
                         false,
                         null,
+                        "",
                         ""
                     )
                     files.add(fileDirItem)

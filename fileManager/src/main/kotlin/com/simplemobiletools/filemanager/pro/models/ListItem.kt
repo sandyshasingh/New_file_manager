@@ -12,5 +12,6 @@ data class ListItem(
     val mModified: Long = 0L,
     val isSectionTitle: Boolean,
     val audioImageUri: Uri?,
-    var dateModifiedInFormat: String
+    var dateModifiedInFormat: String,
+    var mimeType: String?
 ) : FileDirItem(mPath, mName, mIsDirectory, mChildren, mSize, mModified)

@@ -4,8 +4,8 @@
     android:id="@+id/breadcrumb_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textColor="@color/material_gray_900"
-    style="@style/textstyle"
+    android:textColor="?attr/filepicker_textcolor"
+
     android:paddingLeft="@dimen/small_margin"
     android:paddingTop="@dimen/medium_margin"
     android:paddingRight="@dimen/small_margin"

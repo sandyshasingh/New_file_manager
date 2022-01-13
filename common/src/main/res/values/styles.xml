@@ -21,6 +21,7 @@
     <attr name="icon_color" format="reference"/>
     <attr name="ic_three_dot" format="reference"/>
     <attr name="shortcut_btn_color" format="reference"/>
+    <attr name="filepicker_textcolor" format="reference"/>
 
 
     <attr name="dark_theme_icon" format="reference"/>
@@ -66,7 +67,7 @@
 
 
     <attr name="filemanagertextcolor" format="reference"/>
-    <attr name="ic_select_all_vector" format="reference"/>
+    <attr name="slct_icon_color" format="reference"/>
     <attr name="ic_folder_icon" format="reference"/>
     <attr name="ic_unhide_vector_dialog" format="reference"/>
     <attr name="ic_plus_vector" format="reference"/>
@@ -106,8 +107,6 @@
         <item name="android:windowBackground">@color/theme_light_background_color</item>
         <item name="android:textColorPrimary">@color/hint_white</item>
         <item name="filemanagertextcolor">@color/file_manager_textcolor_light</item>
-        <item name="ic_unhide_vector_dialog">@drawable/ic_unhide_for_dialog</item>
-        <item name="ic_plus_vector">@drawable/ic_plus_vector</item>
 
 
 
@@ -144,19 +143,29 @@
         <item name="textcolor_setting">@color/setting_text_color_light</item>
         <item name="icon_color">@color/iconcolor_dark</item>
         <item name="rv_path">@color/path_dark</item>
+        <item name="slct_icon_color">@color/iconcolor_dark</item>
+        <item name="bottom_sheet_bg" >@color/toolbar_dark</item>
+        <item name="windowActionModeOverlay">true</item>
         <item name="ic_folder_icon">@drawable/ic_file_manager_fldr</item>
         <item name="shortcut_btn_color">@color/add_btn_dark</item>
+        <item name="actionModeBackground">@color/toolbar_dark</item>
+        <item name="ic_unhide_vector_dialog">@color/unhide_vector_dark</item>
+        <item name="ic_plus_vector">@color/ic_plus_vector_dark</item>
+        <item name="filepicker_textcolor">@color/ic_plus_vector_dark</item>
     </style>
 
     <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="cab_rename">@drawable/ic_file_manager_rename</item>
+        <item name="actionModeBackground">@color/white</item>
+        <item name="filepicker_textcolor">@color/ic_plus_vector_light</item>
+
         <item name="ic_home_vector">@drawable/ic_home_vector_black</item>
         <item name="filemanageritembackgroud">@drawable/rectangle_semitranparent_light_theme</item>
         <item name="ic_folder_icon">@drawable/ic_icon_folder__light2</item>
         <item name="ic_icon_decompress">@drawable/ic_icon_decompress_black</item>
         <item name="ic_icon_compress">@drawable/ic_icon_compress_black</item>
         <item name="ic_icon_hide">@drawable/ic_icon_hide_black</item>
-        <item name="ic_select_all_vector">@drawable/ic_file_manager_slct_all</item>
+        <item name="windowActionModeOverlay">true</item>
         <item name="ic_search_vector">@drawable/ic_file_manager_search</item>
         <item name="ic_three_dot">@drawable/ic_icon_dot_light</item>
         <item name="ic_icon_copy_to">@drawable/ic_file_manager_copy</item>
@@ -169,7 +178,8 @@
         <item name="android:textColor">@color/text_color2</item>
         <item name="bottom_sheet_bg" >@color/btm_background</item>
         <item name="ic_unhide_vector" >@drawable/ic_unhide_vector_black</item>
-        <item name="ic_plus_vector" >@drawable/ic_plus_vector_black</item>
+        <item name="ic_plus_vector" >@color/ic_plus_vector_light</item>
+        <item name="ic_unhide_vector_dialog">@color/unhide_vector_light</item>
         <item name="ic_share_vector" >@drawable/ic_share_vector_black</item>
         <item name="ic_icon_move">@drawable/ic_file_manager_move</item>
         <item name="ic_delete_vector">@drawable/ic_file_manager_delete</item>
@@ -181,6 +191,7 @@
         <item name="textcolor_setting">@color/setting_text_color_dark</item>
         <item name="icon_color">@color/iconcolor_light</item>
         <item name="rv_path">@color/path_light</item>
+        <item name="slct_icon_color">@color/iconcolor_light</item>
         <item name="shortcut_btn_color">@color/add_btn_light</item>
         <!--        <item name="bottom_sheet_tint">@color/bottom_sheet_color</item>-->
     </style>

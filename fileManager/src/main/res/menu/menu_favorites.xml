@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/select_all"
-        android:icon="?attr/ic_select_all_vector"
+        android:icon="@drawable/ic_file_manager_slct_all"
         android:title="@string/select_all"
         app:showAsAction="always"/>
 </menu>

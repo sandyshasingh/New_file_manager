@@ -6,8 +6,6 @@ import android.database.Cursor
 import android.os.AsyncTask
 import android.provider.MediaStore
 import android.util.Log
-import com.simplemobiletools.commons.AppProgressDialog
-import com.simplemobiletools.commons.ThemeUtils
 import com.simplemobiletools.commons.helpers.format
 import com.simplemobiletools.commons.helpers.timeConversionInMinSec
 import com.simplemobiletools.filemanager.pro.models.ListItem
@@ -141,7 +139,7 @@ class GroupVideoPhotoAsyncTask(
                             fileSizeValue,
                             dateTaken,
                             false,
-                            null, dateModifiedInFormat
+                            null, dateModifiedInFormat, "image/*"
                         )
 
                         data.add(photo)
@@ -222,7 +220,7 @@ class GroupVideoPhotoAsyncTask(
                                 date,
                                 false,
                                 null,
-                                dateModifiedInFormat
+                                dateModifiedInFormat,"video/*"
                             )
                         )
                     }

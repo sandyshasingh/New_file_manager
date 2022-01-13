@@ -346,6 +346,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 it.modified,
                 false,
                 null,
+                "",
                 ""
             )
             listItems.add(listItem)
@@ -415,6 +416,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             lastModified,
             false,
             null,
+            "",
             ""
         )
     }
@@ -489,13 +491,16 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
         if (isEnabled){
             text_add_the_shortcut.setTextColor(
-                Color.parseColor("#000000")
+                Color.parseColor("#282361")
             )
+            add_icon.setImageResource(R.drawable.ic_file_manager__add_icon2)
+
         }
         else{
             text_add_the_shortcut.setTextColor(
-                Color.YELLOW
+                Color.parseColor("#bcbec0")
             )
+            add_icon.setImageResource(R.drawable.ic_file_add_shortcut)
 
         }
 

@@ -21,9 +21,18 @@ class ChildAdapterForRecentFiles(
     var key: String?
 ): RecyclerView.Adapter<ChildAdapterForRecentFiles.ViewHolder>() {
 
-    class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
         val recent_files_item = itemView.child_recent_item
+        init {
+            itemView.setOnClickListener {
+                if(mRecent?.size!! > 5 && adapterPosition == 4){
+                    listener.moreItemsList(mRecent!!)
+                }
+                else
+                    openWith(mRecent?.get(adapterPosition))
+            }
 
+        }
     }
 
     private fun openWith(listItem: ListItem?) {
@@ -42,9 +51,7 @@ class ChildAdapterForRecentFiles(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
      //   holder.recent_files.text = mRecent?.keys!!.elementAt(position).toString()
-        var filetype = mRecent?.get(position)?.mPath?.let { mContext.findType(it) }
-        filetype.toString()
-
+        val filetype = mRecent?.get(position)?.mimeType
         if (filetype != null) {
             if (filetype.startsWith("video")){
                 holder.itemView.play_pause.visibility = View.VISIBLE
@@ -67,14 +74,6 @@ class ChildAdapterForRecentFiles(
         Glide.with(mContext)
             .load(mRecent?.get(position)?.mPath)
             .into(holder.recent_files_item)
-
-        holder.itemView.setOnClickListener {
-            if(mRecent?.size!! > 5 && holder.adapterPosition == 4){
-                listener?.moreItemsList(mRecent!!)
-            }
-            else
-            openWith(mRecent?.get(position))
-        }
 
     }
 

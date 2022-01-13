@@ -123,7 +123,13 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         bottomSheetClickListener()
 
         back_main.setOnClickListener {
-            super.onBackPressed()
+            onBackPressed()
+           /* val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
+            if (fragment is ItemsListFragment){
+                setting.visibility = View.VISIBLE
+                back_main.visibility = View.GONE
+
+            }*/
         }
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -212,14 +218,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
 //            checkInvalidFavorites()
         }
         isDarkTheme = isDarkTheme()
-        viewModel?.fetchVideos(this)
-        viewModel?.fetchAudios(this)
-        viewModel?.fetchImages(this)
-        viewModel?.fetchApps(this)
-        viewModel?.fetchDocuments(this)
-        viewModel?.fetchZip(this)
-       viewModel?.fetchRecent(this)
-//        showDialog()
+    //        showDialog()
 
 
 //        fragment.setZRPImage(ZRP_image)
@@ -423,6 +422,14 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     }
 
     private fun initFileManager() {
+        viewModel?.fetchVideos(this)
+        viewModel?.fetchAudios(this)
+        viewModel?.fetchImages(this)
+        viewModel?.fetchApps(this)
+        viewModel?.fetchDocuments(this)
+        viewModel?.fetchZip(this)
+        if(AppDataHolder.finalDataList == null || AppDataHolder.finalDataList!!.isEmpty())
+        viewModel?.fetchRecent(this)
         if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
             val data = intent.data
             if (data?.scheme == "file") {
@@ -548,13 +555,14 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         }
     }
     override fun onBackPressed() {
-        if (pathList.size <= 1) {
+          if (pathList.size <= 1) {
             val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
             if(fragment is ItemsListFragment)
             {
                 setting.visibility = View.VISIBLE
                 back_main.visibility = View.GONE
             }
+              pathList.clear()
             super.onBackPressed()
         }
         else {

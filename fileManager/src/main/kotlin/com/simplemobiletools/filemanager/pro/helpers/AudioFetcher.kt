@@ -80,6 +80,7 @@ class AudioFetcher(var context: Context,var fetchAudioAsyncCompleteListener: Fet
                                 date,
                                 false,
                                 imageUri,
+                                "",
                                 ""
                             )
 //                            item.sizeCalculator = totalSize

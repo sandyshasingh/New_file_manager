@@ -24,10 +24,11 @@
     <color name="transparent_70">#70000000</color>
     <color name="material_gray_400">#bdbdbd</color>
     <color name="material_gray_100">#F5F5F5</color>
-    <color name="nit_common_color">#EE3313</color>
+    <color name="nit_common_color">#bcbec0</color>
     <color name="btm_background">#282361</color>
     <color name="halfup_color">#f3f6f9</color>
     <color name="halfup_colordark">#131313</color>
+    <color name="ic_plus_vector_light">#282361</color>
 
 
     <color name="startcolor">#DC0A49</color>
@@ -62,6 +63,8 @@
     <color name="file_manager_textcolor_dark">#ffffff</color>
     <color name="toolbar_light">#ffffff</color>
     <color name="toolbar_dark">#1d1e1e</color>
+    <color name="unhide_vector_dark">#ffffff</color>
+    <color name="unhide_vector_light">#282361</color>
     <color name="iconcolor_light">#282361</color>
     <color name="iconcolor_dark">#f3f6f9</color>
     <color name="rv_itemlist_light">#f3f6f9</color>
@@ -70,8 +73,9 @@
     <color name="setting_text_color_dark">#000000</color>
     <color name="path_dark">#000000</color>
     <color name="path_light">#f3f6f9</color>
-    <color name="add_btn_light">#282361</color>
+    <color name="add_btn_light">#bcbec0</color>
     <color name="add_btn_dark">#f1f2f2</color>
+    <color name="ic_plus_vector_dark">#ffffff</color>
 
 
 

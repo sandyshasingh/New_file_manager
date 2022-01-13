@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/black_20"
+    android:background="@color/file_manager_textcolor_dark"
     tools:context=".Legal">
 
 <!--    <ImageView-->
@@ -27,29 +27,30 @@
 
         <ImageView
             android:id="@+id/btn_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:paddingStart="12dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_file_manager_legal" />
 
-        <ImageView
-            android:id="@+id/tv_title"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/btn_back"
-            android:src="@drawable/ic_setting_legal"
-            app:tint="@color/white" />
+<!--        <ImageView-->
+<!--            android:id="@+id/tv_title"-->
+<!--            android:layout_width="36dp"-->
+<!--            android:layout_height="36dp"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_toEndOf="@+id/btn_back"-->
+<!--            android:src="@drawable/ic_file_manager_legal"-->
+<!--             />-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
-            android:layout_toEndOf="@id/tv_title"
+            android:layout_toEndOf="@id/btn_back"
             android:text="Legal policy"
-            android:textColor="@color/white"
+            android:textColor="#000000"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -70,10 +71,12 @@
                 android:id="@+id/textHolder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#000000"
                 android:layout_margin="30dp"
+                android:layout_marginLeft="20dp"
                 android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/spacing16"
+                android:textColorLink="#282361"
                 android:text="@string/legal_text"
                 />
 
@@ -85,7 +88,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_gravity="center_horizontal"
                 android:text="Privacy Policy"
-                android:textColor="@color/white"
+                android:textColor="#000000"
                 android:layout_marginTop="60dp"
                 />
 
@@ -94,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:textColor="@color/white"
+                android:textColor="#000000"
                 android:layout_gravity="center_horizontal"
                 android:text="Feedback/Suggestions"
                 android:layout_marginBottom="20dp"

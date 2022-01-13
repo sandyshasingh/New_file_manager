@@ -5,10 +5,10 @@
     android:viewportHeight="48">
   <path
       android:pathData="M22,26H10.42a2,2 0,0 1,-1.7 -0.73A1.95,1.95 0,0 1,10 22.07a4.87,4.87 0,0 1,0.66 0H22V10.51a2.31,2.31 0,0 1,0.38 -1.42,2 2,0 0,1 2.12,-0.75A2,2 0,0 1,26 10.05a5,5 0,0 1,0 0.55V22l0.52,0H37.55a2,2 0,0 1,2 1.07A2,2 0,0 1,37.93 26h-0.55c-3.65,0 -7.3,0 -10.94,0 -0.37,0 -0.49,0.09 -0.49,0.48 0,3.72 0,7.45 0,11.17a2,2 0,1 1,-3.94 0.16V26Z"
-      android:fillColor="?attr/shortcut_btn_color"/>
+      android:fillColor="#282361"/>
   <path
       android:pathData="M24,24m-21.56,0a21.56,21.56 0,1 1,43.12 0a21.56,21.56 0,1 1,-43.12 0"
       android:strokeWidth="4"
       android:fillColor="#00000000"
-      android:strokeColor="?attr/shortcut_btn_color"/>
+      android:strokeColor="#282361"/>
 </vector>

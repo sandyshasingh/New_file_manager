@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginLeft="20dp"
     android:layout_height="match_parent"
     tools:context=".PermissionActivity"
     >
@@ -41,10 +42,10 @@
         app:layout_constraintStart_toStartOf="@id/allow_tag"
         app:layout_constraintBottom_toTopOf="@+id/allow_tag"
         android:layout_marginBottom="10dp"
-        android:textSize="12dp"
+        android:textSize="14dp"
         android:fontFamily="@font/jost_medium"
         android:textColor="@color/md_blue_grey_900_dark"
-        android:text="To manage file, please allow File Manager to \naccess files on your device"/>
+        android:text="To manage file, please allow File Manager \nto access files on your device"/>
 
     <TextView
         android:layout_width="wrap_content"

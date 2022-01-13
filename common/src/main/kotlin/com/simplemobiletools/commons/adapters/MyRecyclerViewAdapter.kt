@@ -166,7 +166,7 @@ abstract class MyRecyclerViewAdapter(
         val selectableItemCount = getSelectableItemCount()
         val selectedCount = selectedKeys.size.coerceAtMost(selectableItemCount)
         val oldTitle = actBarTextView?.text
-        val newTitle = "$selectedCount / $selectableItemCount"
+        val newTitle = "$selectedCount / $selectableItemCount  Selected"
         if (oldTitle != newTitle) {
             actBarTextView?.text = newTitle
             actMode?.invalidate()

@@ -8,6 +8,7 @@
         <RelativeLayout
             android:id="@+id/filepicker_files_holder"
             android:layout_width="wrap_content"
+            android:background="?attr/toolbarcolor"
             android:layout_height="wrap_content">
 
             <com.simplemobiletools.commons.views.Breadcrumbs
@@ -15,6 +16,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/activity_margin"
+
                 android:paddingTop="@dimen/activity_margin"
                 android:paddingRight="@dimen/activity_margin"
                 android:paddingBottom="@dimen/medium_margin" />
@@ -53,7 +55,7 @@
             android:id="@+id/filepicker_fab_show_hidden"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="?attr/ic_unhide_vector_dialog"
+            android:src="@drawable/ic_unhide_for_dialog"
             />
     </LinearLayout>
 
@@ -63,7 +65,7 @@
         android:layout_height="36dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_margin"
-        android:src="?attr/ic_plus_vector"
+        android:src="@drawable/ic_plus_vector_black"
          />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
