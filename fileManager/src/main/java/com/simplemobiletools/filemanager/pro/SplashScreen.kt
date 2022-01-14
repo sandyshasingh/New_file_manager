@@ -39,8 +39,9 @@ class SplashScreen : BaseSimpleActivity(),GroupVideoPhotoAsyncTask.RecentFetchAs
 
     }
 
-    override fun recentFetchCompleted(audiosList: Map<String, List<ListItem>>?) {
-        AppDataHolder.finalDataList = audiosList
+    override fun recentFetchCompleted(audiosList: RecentUpdatedFiles) {
+     //   AppDataHolder.mfinalKeys = audiosList.mKeys
+        AppDataHolder.mfinalValues = audiosList
         startFileManager()
          }
 

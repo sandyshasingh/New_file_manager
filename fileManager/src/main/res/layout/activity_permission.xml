@@ -3,24 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginLeft="20dp"
     android:layout_height="match_parent"
     tools:context=".PermissionActivity"
+
     >
-    <TextView
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:paddingBottom="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/permission_activity"
+        app:layout_constraintBottom_toTopOf="@id/first_line"/>
+    <Button
         android:id="@+id/allow_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginBottom="120dp"
         android:lineSpacingExtra="-10dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:text="Allow"
+        android:background="@color/btm_background"
         android:fontFamily="@font/jost_semi_bold"
-        android:textColor="@color/btm_background"
+        android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="50dp"/>
+       />
 
 <!--    <TextView-->
 <!--        android:id="@+id/tv_open_settings"-->
@@ -39,15 +47,18 @@
         android:id="@+id/faltu_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/allow_tag"
         app:layout_constraintBottom_toTopOf="@+id/allow_tag"
         android:layout_marginBottom="10dp"
         android:textSize="14dp"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:fontFamily="@font/jost_medium"
         android:textColor="@color/md_blue_grey_900_dark"
-        android:text="To manage file, please allow File Manager \nto access files on your device"/>
+        android:text="To manage file, please allow File Manager to access \nfiles on your device"/>
 
     <TextView
+        android:id="@+id/first_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome to \nFile Manager"
@@ -55,8 +66,10 @@
         android:textStyle="bold"
         android:fontFamily="@font/jost_bold"
         android:textColor="@color/md_blue_grey_900_dark"
-        app:layout_constraintStart_toStartOf="@id/allow_tag"
         app:layout_constraintBottom_toTopOf="@id/faltu_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
         android:layout_marginBottom="10dp"/>
 
 

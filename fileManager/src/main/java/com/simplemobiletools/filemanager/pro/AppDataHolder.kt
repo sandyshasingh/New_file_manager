@@ -6,9 +6,12 @@ enum class AppDataHolder {
 
 
 
+
     INSTANCE;
 
-    private var mFinalList: Map<String,List<ListItem>>? = null
+
+
+    lateinit var mfinalValues:RecentUpdatedFiles
 
 
     companion object {
@@ -16,17 +19,18 @@ enum class AppDataHolder {
 
 
         fun hasFinalData(): Boolean {
-            return INSTANCE.mFinalList != null
+            return INSTANCE.mfinalValues != null
         }
 
 
-        var finalDataList:  Map<String,List<ListItem>>?
-            get() = INSTANCE.mFinalList
-            set(objectList) { INSTANCE.mFinalList = objectList
+
+
+        var mfinalValues: RecentUpdatedFiles
+            get() = INSTANCE.mfinalValues
+            set(objectList) { INSTANCE.mfinalValues = objectList
             }
     }
 
 
 
 }
-

@@ -15,8 +15,7 @@ import java.text.SimpleDateFormat
 class GroupVideoPhotoAsyncTask(
     var context: Activity,
     var recentFetchAsyncCompleteListener: RecentFetchAsyncCompleteListener
-
-) : AsyncTask<Void, Void, Map<String, List<ListItem>>>() {
+) : AsyncTask<Void, Void, RecentUpdatedFiles>() {
 
     var recentfileDataClassList: ArrayList<GroupedDataClass> = ArrayList()
    // private var mProgressDialog: AppProgressDialog? = null
@@ -26,7 +25,7 @@ class GroupVideoPhotoAsyncTask(
 //        //showDialog()
 //    }
 
-    override fun doInBackground(vararg p0: Void?): Map<String, List<ListItem>>? {
+    override fun doInBackground(vararg p0: Void?):RecentUpdatedFiles {
         val images = getImages()
         //var imagesList =  images?.groupBy {  it.mModified}
         val videos = getVideos(context)
@@ -42,14 +41,17 @@ class GroupVideoPhotoAsyncTask(
         Log.d("videos", "$videos  ")
         Log.d("joinedNewList", "$joinedNewList  ")
         Log.d("dates", "${recentList?.keys}")
+        val valuess = (recentList?.values)!!.toList()
+        val keyss =  (recentList?.keys)!!.toList()
 
         /* for(i in recentList?.keys!!)
          {
              val hoho = GroupedDataClass(recentList?.get(i)!!,i,)
          }*/
 //      val dd=  getVideos()
+
         // return
-        return recentList
+        return RecentUpdatedFiles(keyss,valuess)
     }
 //    private fun showDialog() {
 //        try {
@@ -232,7 +234,7 @@ class GroupVideoPhotoAsyncTask(
         return songsDataClassList
     }
 
-    override fun onPostExecute(result: Map<String, List<ListItem>>?) {
+    override fun onPostExecute(result: RecentUpdatedFiles) {
         super.onPostExecute(result)
         recentFetchAsyncCompleteListener.recentFetchCompleted(result)
         //mProgressDialog?.dismiss()
@@ -240,7 +242,7 @@ class GroupVideoPhotoAsyncTask(
     }
 
     interface RecentFetchAsyncCompleteListener {
-        fun recentFetchCompleted(audiosList: Map<String, List<ListItem>>?)
+        fun recentFetchCompleted(audiosList: RecentUpdatedFiles)
     }
 
 

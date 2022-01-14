@@ -6,8 +6,10 @@ import android.content.Context
 import android.os.AsyncTask
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.simplemobiletools.filemanager.pro.AppDataHolder
 import com.simplemobiletools.filemanager.pro.GroupVideoPhotoAsyncTask
 import com.simplemobiletools.filemanager.pro.GroupedDataClass
+import com.simplemobiletools.filemanager.pro.RecentUpdatedFiles
 import com.simplemobiletools.filemanager.pro.models.ListItem
 
 class DataViewModel(application: Application):  AndroidViewModel(application),ZipFetcher.FetchZipAsyncCompleteListener,PhotoFetcher.FetchPhotosAsyncCompleteListener,AppsFetcher.FetchAppsAsyncCompleteListener,DocumentFetcher.FetchDocumentsAsyncCompleteListener,
@@ -22,7 +24,7 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
     var audioSize = MutableLiveData<Long>()
     var videoSize = MutableLiveData<Long>()
     var photoSize = MutableLiveData<Long>()
-    var recent_files : MutableLiveData<Map<String,List<ListItem>>> = MutableLiveData()
+    var recent_files : MutableLiveData<RecentUpdatedFiles> = MutableLiveData()
 
     fun fetchRecent(context: Activity){
         GroupVideoPhotoAsyncTask(context,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -78,7 +80,7 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
     override fun fetchZipCompleted(zipList: ArrayList<ListItem>?) {
         zip_files.value = zipList    }
 
-    override fun recentFetchCompleted(recentList: Map<String,List<ListItem>>?) {
+    override fun recentFetchCompleted(recentList: RecentUpdatedFiles) {
         recent_files.value = recentList
     }
 

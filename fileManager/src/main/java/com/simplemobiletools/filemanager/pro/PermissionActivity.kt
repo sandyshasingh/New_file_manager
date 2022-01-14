@@ -91,7 +91,7 @@ class PermissionActivity : AppCompatActivity() {
             {
                 deniedOnce = true
                // tv_open_settings?.visibility = View.VISIBLE
-                allow_tag?.text = "OPEN SETTINGS"
+                allow_tag?.setText("OPEN SETTINGS")
             }
         }
     }

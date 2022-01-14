@@ -120,17 +120,17 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         super.onViewCreated(view, savedInstanceState)
 
 
-        val dataList = AppDataHolder.finalDataList
-        Log.d("dataList",dataList?.toString()?:"null")
+        val dataList = AppDataHolder.mfinalValues.mKeys
+       // Log.d("dataList",dataList?.toString()?:"null")
         if (dataList.isNullOrEmpty())
             showDialog()
-        recent_file_line_adapter?.mRecent = dataList
+        recent_file_line_adapter?.mRecent = AppDataHolder.mfinalValues
         recent_file_line_adapter?.notifyDataSetChanged()
 
         model?.recent_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
             // (activity as FileManagerMainActivity)?.mProgressDialog?.dismiss()
 
-            if(it.isNotEmpty() && mProgressDialog?.isShowing == true)
+            if(it.mKeys.isNotEmpty() &&  mProgressDialog?.isShowing == true)
                 mProgressDialog?.dismiss()
             recent_file_line_adapter?.mRecent = it
             recent_file_line_adapter?.notifyDataSetChanged()
@@ -142,14 +142,14 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
         createFolderList()
 
-        rv_storage?.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        storageAdapter = AdapterForStorage(
-            storageItems,
-            { storage -> storageFolderClick(storage) },
-            requireActivity()
-        )
-        rv_storage?.adapter = storageAdapter
+//        rv_storage?.layoutManager =
+//            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//        storageAdapter = AdapterForStorage(
+//            storageItems,
+//            { storage -> storageFolderClick(storage) },
+//            requireActivity()
+//        )
+//        rv_storage?.adapter = storageAdapter
 
         mainAdapter = AdapterForFolders(
             folderItems,
@@ -158,13 +158,13 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             deleteShortcut
         )
         //recyclerView?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-        recyclerView?.adapter = mainAdapter
+      //  recyclerView?.adapter = mainAdapter
 
-        only_internal.setOnClickListener {
-            (activity as FileManagerMainActivity)?.onCategoryClick(
-                INTERNAL_STORAGE, "abc"
-            )
-        }
+//        only_internal.setOnClickListener {
+//            (activity as FileManagerMainActivity)?.onCategoryClick(
+//                INTERNAL_STORAGE, "abc"
+//            )
+//        }
 
 
 
@@ -172,8 +172,13 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         recent_file_line_adapter = AdapterForRecentFiles(
             requireActivity(),
-            AppDataHolder.finalDataList,
-            activity as FileManagerMainActivity
+            AppDataHolder.mfinalValues,
+            activity as FileManagerMainActivity,
+            storageItems,
+            folderItems,
+            { folder -> headerFolderClick(folder) },
+            deleteShortcut,
+            { storage -> storageFolderClick(storage) },
         )
         recent_file_line?.adapter = recent_file_line_adapter
 
@@ -233,9 +238,9 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             requireActivity(),
             deleteShortcut
         )
-        recyclerView?.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView?.adapter = mainAdapter
+//        recyclerView?.layoutManager =
+//            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//        recyclerView?.adapter = mainAdapter
     }
 
     private fun createFolderList() {
@@ -388,12 +393,12 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         var available = availableSizeInternal?.getAmount()?.toDouble()
         var arcPercent = (available!! / total!!) * 100
 
-        text_internal.text = "Internal storage"
-        icon_internalstorage.setImageResource(R.drawable.ic_file_manager_storage)
-        storage_size.text = "$availableSizeInternal/$totalSizeInternal"
-        arc_progress.max = 100
-        arc_progress.progress = arcPercent.toInt()
-        arc_progress.suffixText = "%"
+//        text_internal.text = "Internal storage"
+//        icon_internalstorage.setImageResource(R.drawable.ic_file_manager_storage)
+//        storage_size.text = "$availableSizeInternal/$totalSizeInternal"
+//        arc_progress.max = 100
+//        arc_progress.progress = arcPercent.toInt()
+//        arc_progress.suffixText = "%"
         //arc_progress.text.ap
 
 
@@ -402,8 +407,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             available = availableSizeExternal?.getAmount()?.toDouble()
             arcPercent = (available!! / total!!) * 100
 
-            rv_storage.visibility = View.VISIBLE
-            only_internal.visibility = View.GONE
+//            rv_storage.visibility = View.VISIBLE
+//            only_internal.visibility = View.GONE
 
             storageItems.add(
                 StorageItem(
@@ -508,11 +513,11 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                     (activity as FileManagerMainActivity).pathList.add(currentPath)
                     firstTime = false
                 }
-                if ((activity as FileManagerMainActivity).pathList.size <= 1) {
-                    recyclerView?.beGone()
-                } else {
-                    recyclerView?.beVisible()
-                }
+//                if ((activity as FileManagerMainActivity).pathList.size <= 1) {
+//                    recyclerView?.beGone()
+//                } else {
+//                    recyclerView?.beVisible()
+//                }
 //                if(adapterForPath == null) {
 //                    adapterForPath = AdapterForPath((activity as FileManagerMainActivity).pathList, this@ItemsFragment, requireActivity())
 ////                    my_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
