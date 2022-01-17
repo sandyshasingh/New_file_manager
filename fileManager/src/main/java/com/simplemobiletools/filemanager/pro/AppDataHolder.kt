@@ -11,7 +11,7 @@ enum class AppDataHolder {
 
 
 
-    lateinit var mfinalValues:RecentUpdatedFiles
+     var mfinalValues:RecentUpdatedFiles? = null
 
 
     companion object {
@@ -26,7 +26,7 @@ enum class AppDataHolder {
 
 
         var mfinalValues: RecentUpdatedFiles
-            get() = INSTANCE.mfinalValues
+            get() = INSTANCE.mfinalValues!!
             set(objectList) { INSTANCE.mfinalValues = objectList
             }
     }

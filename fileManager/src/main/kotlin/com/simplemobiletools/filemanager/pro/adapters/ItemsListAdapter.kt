@@ -249,6 +249,15 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var folderItems: ArrayList
         }
     }
 
+    fun selectAllFolders(){
+        if (getSelectableItemCount() == selectedKeys.size) {
+            deSelectAll()
+        } else {
+            selectAll()
+        }
+
+    }
+
     override fun getSelectableItemCount() = listItems.filter { !it.isSectionTitle }.size
 
     override fun getIsItemSelectable(position: Int) = !listItems[position].isSectionTitle

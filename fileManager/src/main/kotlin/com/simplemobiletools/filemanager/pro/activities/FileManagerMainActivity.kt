@@ -41,6 +41,7 @@ import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
 import com.simplemobiletools.filemanager.pro.models.ListItem
 import com.stericson.RootTools.RootTools
 import kotlinx.android.synthetic.main.file_manager_activity.*
+import kotlinx.android.synthetic.main.fragment_items_list.*
 import kotlinx.android.synthetic.main.items_fragment.view.*
 import kotlinx.android.synthetic.main.layout.*
 import java.io.File
@@ -122,6 +123,12 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         }
         bottomSheetClickListener()
 
+        add_the_folder.setOnClickListener {
+            itemsListFragtment?.addShortcut()
+            add_the_folder.visibility = View.GONE
+            onBackPressed()
+        }
+
         back_main.setOnClickListener {
             onBackPressed()
            /* val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
@@ -151,6 +158,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             itemsListFragtment?.searchOpened()
              true
         }
+
 
 
         search_df.setOnCloseListener (SearchView.OnCloseListener { //your code here
@@ -226,6 +234,10 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
 
 //        loadAds()
     }
+
+//    private fun shortcut() {
+//        itemsListFragtment?.addShortcut()
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -562,14 +574,23 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                 setting.visibility = View.VISIBLE
                 back_main.visibility = View.GONE
             }
+              add_the_folder.visibility = View.GONE
               pathList.clear()
-            super.onBackPressed()
+              itemsListFragtment?.showZrp()
+
+              super.onBackPressed()
+
         }
         else {
             val i =pathList.size
             pathList.removeAt(i - 1)
              val path = pathList[pathList.size - 1]
-            openPath(path, false)
+              itemsListFragtment?.showZrp()
+
+              openPath(path, false)
+        }
+        if (!search_df.isIconified()) {
+            search_df.onActionViewCollapsed()
         }
 //        if(search_df.isIconified)
 //            search_df.isIconified = false

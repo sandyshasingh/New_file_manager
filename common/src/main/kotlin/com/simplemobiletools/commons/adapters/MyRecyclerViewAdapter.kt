@@ -205,7 +205,7 @@ abstract class MyRecyclerViewAdapter(
          return positions
      }*/
 
-    protected fun selectAll() {
+     fun selectAll() {
         if(bottomNavigation!=null && bottomNavigation?.visibility==View.GONE) {
             bottomNavigation?.visibility=View.VISIBLE
         }

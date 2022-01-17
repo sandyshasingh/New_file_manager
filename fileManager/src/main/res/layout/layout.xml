@@ -8,7 +8,9 @@
     android:background="@drawable/bottom_round_corner"
     >
 
+
     <RelativeLayout
+        android:id="@+id/btm_sheet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp" >

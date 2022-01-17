@@ -88,7 +88,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
          />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/btm_background"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        android:id="@+id/add_the_folder"/>
     <include
         android:layout_gravity="bottom"
         android:layout_height="wrap_content"

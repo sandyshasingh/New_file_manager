@@ -137,15 +137,22 @@ class AdapterForRecentFiles(
             return 0
         else if (position==1)
             return 1
-        else (position==2)
+        else if(position==2)
             return 2
+        else (position==3)
+            return 3
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType==2) {
+        if (viewType==3) {
             val v =
                 LayoutInflater.from(parent.context).inflate(R.layout.recent_files, parent, false)
             return MainViewHolder(v, mContext)
+        }
+        else if(viewType==2){
+            val v =
+                LayoutInflater.from(parent.context).inflate(R.layout.text_recent, parent, false)
+            return FolderViewHolder(v, mContext)
         }
         else if(viewType==1){
             val v =
@@ -165,11 +172,11 @@ class AdapterForRecentFiles(
         //mRecentwva = mRecent?.entries?.elementAt(position)?.value
         if(holder is MainViewHolder)
         {
-            var jj = AppDataHolder.mfinalValues.mKeys[position-2]
-            holder.itemView.recent_file_text.text = jj
+            var keys = AppDataHolder.mfinalValues.mKeys[position-2]
+            holder.itemView.recent_file_text.text = keys
             holder.itemView.recent_file_item.adapter = ChildAdapterForRecentFiles(mContext,
                 AppDataHolder.mfinalValues.mValues[position-2],listener,
-                jj)
+                keys)
         }
         else if(holder is StorageCardViewHolder)
         {

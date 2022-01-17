@@ -11,7 +11,7 @@ import com.simplemobiletools.commons.models.FileDirItem
 import kotlinx.android.synthetic.main.item_path.view.*
 
 
-class AdapterForPath(var pathList: ArrayList<String>, var listener: BreadcrumbsListenerNew?, var mContext: Context) : RecyclerView.Adapter<AdapterForPath.ViewHolder>(){
+class AdapterForPath(var pathList: ArrayList<String>, var listener: BreadcrumbsListenerNew?, var mContext: Context,var mpathtext:String?) : RecyclerView.Adapter<AdapterForPath.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_path, parent, false)
@@ -20,7 +20,19 @@ class AdapterForPath(var pathList: ArrayList<String>, var listener: BreadcrumbsL
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(pathList[position],mContext,pathList)
+        if (position==0){
+//          //  pathList.clear()
+//            pathList.add(mpathtext!!)
+//            holder.bindItems(pathList[position],mContext,pathList)
+            holder.itemView.folder_path.text = mpathtext
+            holder.itemView.arrow.visibility = View.GONE
+        }
+       else{
+            holder.bindItems(pathList[position],mContext,pathList)
+
+        }
+
+
     }
 
     override fun getItemCount(): Int {

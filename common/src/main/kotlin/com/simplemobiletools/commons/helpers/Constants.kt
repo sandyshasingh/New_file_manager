@@ -265,6 +265,9 @@ const val APPLICATION_NAME = "Apps"
 const val ZIP_FILES_NAME = "Zip files"
 const val DOCUMENTS_NAME = "Documents"
 const val DOWNLOAD_NAME = "Download"
+const val INTERNAL_STORAGE_NAME = "Internal Storage"
+const val SD_CARD_NAME = "Sd card"
+
 
 val MORE_APPS_LINK = "https://play.google.com/store/apps/developer?id=ASD+Dev+Video+Player+for+All+Format"
 val GMAIL_ID = "feedback.rocksplayer@gmail.com"
