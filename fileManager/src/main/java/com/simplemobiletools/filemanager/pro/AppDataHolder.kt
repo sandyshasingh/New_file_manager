@@ -25,8 +25,8 @@ enum class AppDataHolder {
 
 
 
-        var mfinalValues: RecentUpdatedFiles
-            get() = INSTANCE.mfinalValues!!
+        var mfinalValues: RecentUpdatedFiles?
+            get() = INSTANCE.mfinalValues
             set(objectList) { INSTANCE.mfinalValues = objectList
             }
     }

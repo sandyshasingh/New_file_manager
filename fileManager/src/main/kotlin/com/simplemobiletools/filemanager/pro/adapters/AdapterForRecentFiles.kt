@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.recent_files.view.*
 
 class AdapterForRecentFiles(
     var mContext: Activity,
-    var mRecent: RecentUpdatedFiles,
+    var mRecent: RecentUpdatedFiles?,
     var listener: MoreItemsList,
     var storageList:ArrayList<StorageItem>,
     var folderList: ArrayList<FolderItem>,
@@ -170,25 +170,24 @@ class AdapterForRecentFiles(
 //        var aa = mRecent?.keys
 //        var bb = mRecent?.values
         //mRecentwva = mRecent?.entries?.elementAt(position)?.value
-        if(holder is MainViewHolder)
-        {
-            var keys = AppDataHolder.mfinalValues.mKeys[position-2]
-            holder.itemView.recent_file_text.text = keys
-            holder.itemView.recent_file_item.adapter = ChildAdapterForRecentFiles(mContext,
-                AppDataHolder.mfinalValues.mValues[position-2],listener,
-                keys)
-        }
-        else if(holder is StorageCardViewHolder)
-        {
-            holder.bindItems()
-        }
-        else if(holder is FolderViewHolder)
-        {
-            holder.bindItemsFolders()
+        when (holder) {
+            is MainViewHolder -> {
+                val keys = mRecent?.mKeys?.get(position-2)
+                holder.itemView.recent_file_text.text = keys
+                holder.itemView.recent_file_item.adapter = ChildAdapterForRecentFiles(mContext,
+                    mRecent?.mValues?.get(position-2),listener,
+                    keys)
+            }
+            is StorageCardViewHolder -> {
+                holder.bindItems()
+            }
+            is FolderViewHolder -> {
+                holder.bindItemsFolders()
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return AppDataHolder.mfinalValues.mKeys.size + 2
+        return mRecent?.mKeys?.size?.plus(2)?:0
     }
 }

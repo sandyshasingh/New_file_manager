@@ -440,7 +440,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         viewModel?.fetchApps(this)
         viewModel?.fetchDocuments(this)
         viewModel?.fetchZip(this)
-        if(AppDataHolder.mfinalValues.mKeys == null || AppDataHolder.mfinalValues.mKeys!!.isEmpty())
+        if(AppDataHolder.mfinalValues?.mKeys == null || AppDataHolder.mfinalValues?.mKeys?.isEmpty() == true)
             viewModel?.fetchRecent(this)
         if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
             val data = intent.data

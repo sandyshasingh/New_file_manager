@@ -120,11 +120,12 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         super.onViewCreated(view, savedInstanceState)
 
 
-        val dataList = AppDataHolder.mfinalValues.mKeys
+        var dataList:List<String>? = null
+        dataList = AppDataHolder.mfinalValues?.mKeys
        // Log.d("dataList",dataList?.toString()?:"null")
         if (dataList.isNullOrEmpty())
             showDialog()
-        recent_file_line_adapter?.mRecent = AppDataHolder.mfinalValues
+        recent_file_line_adapter?.mRecent = AppDataHolder.mfinalValues!!
         recent_file_line_adapter?.notifyDataSetChanged()
 
         model?.recent_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
@@ -151,12 +152,12 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //        )
 //        rv_storage?.adapter = storageAdapter
 
-        mainAdapter = AdapterForFolders(
-            folderItems,
-            { folder -> headerFolderClick(folder) },
-            requireActivity(),
-            deleteShortcut
-        )
+//        mainAdapter = AdapterForFolders(
+//            folderItems,
+//            { folder -> headerFolderClick(folder) },
+//            requireActivity(),
+//            deleteShortcut
+//        )
         //recyclerView?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
       //  recyclerView?.adapter = mainAdapter
 

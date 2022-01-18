@@ -484,8 +484,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         }
     }
     fun showZrp(){
-        zrp_file.visibility=View.GONE
-        item_list_rv.visibility = View.VISIBLE
+        zrp_file?.visibility=View.GONE
+        item_list_rv?.visibility = View.VISIBLE
     }
     fun itemClick(list : ListItem ,position: Int, forceRefresh: Boolean)
     {
