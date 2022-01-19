@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.filemanager.pro.MoreItemsList
 import com.simplemobiletools.filemanager.pro.R
-import com.simplemobiletools.filemanager.pro.extensions.findType
 import com.simplemobiletools.filemanager.pro.extensions.openWith
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.recent_file_item.view.*
 
 class ChildAdapterForRecentFiles(

@@ -3,7 +3,7 @@ package com.simplemobiletools.filemanager.pro.helpers
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Environment
-import com.simplemobiletools.filemanager.pro.models.ListItem
+import com.simplemobiletools.commons.ListItem
 import java.io.File
 import java.util.*
 import kotlin.Comparator

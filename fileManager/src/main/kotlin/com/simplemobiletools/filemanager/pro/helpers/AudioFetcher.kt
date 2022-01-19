@@ -7,9 +7,9 @@ import android.os.AsyncTask
 import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.commons.helpers.format
 import com.simplemobiletools.commons.helpers.timeConversionInMinSec
-import com.simplemobiletools.filemanager.pro.models.ListItem
 
 class AudioFetcher(var context: Context,var fetchAudioAsyncCompleteListener: FetchAudioAsyncCompleteListener) : AsyncTask<Void, Void, MutableLiveData<List<ListItem>>>() {
 

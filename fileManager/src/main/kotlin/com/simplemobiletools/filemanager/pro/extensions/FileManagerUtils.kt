@@ -107,7 +107,7 @@ fun getAudioIdFromPath(activity: Activity, path: String): Long? {
     }
     return songId
 }
- fun getAudioImageFromPath(activity: Activity, path: String): Uri? {
+ fun getAudioImageFromPath(activity: Context, path: String): Uri? {
 
      val albumArtUri = Uri.parse("content://media/external/audio/albumart")
      var imageUri: Uri? = null

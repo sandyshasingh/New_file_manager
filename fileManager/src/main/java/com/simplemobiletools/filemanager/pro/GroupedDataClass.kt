@@ -1,7 +1,6 @@
 package com.simplemobiletools.filemanager.pro
 
-import com.simplemobiletools.filemanager.pro.models.ListItem
-import java.text.DateFormat
+import com.simplemobiletools.commons.ListItem
 
 data class GroupedDataClass(val list:List<ListItem>, val date:Long, val folder:String ) {
 

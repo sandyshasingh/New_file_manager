@@ -15,6 +15,11 @@
     <string name="set_as">Set as</string>
     <string name="refresh">Refresh</string>
 
+    <string name="File_name">File Name</string>
+    <string name="File_size">File Size</string>
+    <string name="location">Location</string>
+    <string name="Date">Date</string>
+
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="copy_number_to_clipboard">Copy number to clipboard</string>
     <string name="value_copied_to_clipboard">Value copied to clipboard</string>

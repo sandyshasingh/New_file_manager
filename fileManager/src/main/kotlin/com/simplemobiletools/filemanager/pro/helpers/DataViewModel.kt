@@ -6,11 +6,9 @@ import android.content.Context
 import android.os.AsyncTask
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.simplemobiletools.filemanager.pro.AppDataHolder
+import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.filemanager.pro.GroupVideoPhotoAsyncTask
-import com.simplemobiletools.filemanager.pro.GroupedDataClass
 import com.simplemobiletools.filemanager.pro.RecentUpdatedFiles
-import com.simplemobiletools.filemanager.pro.models.ListItem
 
 class DataViewModel(application: Application):  AndroidViewModel(application),ZipFetcher.FetchZipAsyncCompleteListener,PhotoFetcher.FetchPhotosAsyncCompleteListener,AppsFetcher.FetchAppsAsyncCompleteListener,DocumentFetcher.FetchDocumentsAsyncCompleteListener,
     AudioFetcher.FetchAudioAsyncCompleteListener,VideoFetcher.FetchVideoAsyncCompleteListener,GroupVideoPhotoAsyncTask.RecentFetchAsyncCompleteListener {

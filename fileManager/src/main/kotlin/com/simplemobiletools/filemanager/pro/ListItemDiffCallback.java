@@ -2,7 +2,8 @@ package com.simplemobiletools.filemanager.pro;
 
 
 import androidx.recyclerview.widget.DiffUtil;
-import com.simplemobiletools.filemanager.pro.models.*;
+
+import com.simplemobiletools.commons.ListItem;
 
 import java.util.List;
 

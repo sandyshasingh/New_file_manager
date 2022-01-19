@@ -1,6 +1,6 @@
 package com.simplemobiletools.filemanager.pro
 
-import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
@@ -11,9 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.simplemobiletools.commons.AppProgressDialog
-import com.simplemobiletools.commons.BottomNavigationVisible
-import com.simplemobiletools.commons.ThemeUtils
+import com.simplemobiletools.commons.*
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.AdapterForPath
 import com.simplemobiletools.commons.dialogs.StoragePickerDialog
@@ -23,12 +21,12 @@ import com.simplemobiletools.commons.interfaces.ItemOperationsListener
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.commons.models.StorageItem
+import com.simplemobiletools.commons.views.pathList
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 import com.simplemobiletools.filemanager.pro.adapters.ItemsListAdapter
 import com.simplemobiletools.filemanager.pro.extensions.*
 import com.simplemobiletools.filemanager.pro.helpers.DataViewModel
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.file_manager_activity.*
 import kotlinx.android.synthetic.main.fragment_items_list.*
 import kotlinx.android.synthetic.main.fragment_items_list.view.*
@@ -243,8 +241,9 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 refreshItems(true)
             }
             EXTERNAL_STORAGE -> {
-               // pathText = SD_CARD_NAME
+                pathText = SD_CARD_NAME
                 // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
+                (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "External"
                 refreshItems(true)
             }
@@ -445,7 +444,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         } catch (e: Exception) {
         }
     }
-    private fun itemClicked(item: ListItem) {
+    private fun itemClicked(item: ListItem,position: Int) {
         if (item.isDirectory) {
                 if (item.mChildren>0){
                     (activity as FileManagerMainActivity).pathList.add(item.path)
@@ -477,7 +476,17 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                     activity?.toast(R.string.select_audio_file)
                 }
             } else {
-
+               var mime =  context?.getMimeTypeFromUri(Uri.parse(path))
+                var imageslist:ArrayList<ListItem> = ArrayList()
+                if(mime?.contains("image") == true){
+                        for (value in storedItems){
+                            if(context?.getMimeTypeFromUri(Uri.parse(value.mPath))?.contains("image") == true)
+                                imageslist.add(value)
+                        }
+                    DataHolderforImageViewer.mfinalValues = imageslist
+                    (activity as? FileManagerMainActivity)?.loadPhotoViewerFragment(imageslist,position )
+                }
+                else
                     requireActivity().tryOpenPathIntent(path, false)
                 }
 
@@ -494,7 +503,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         {
            mList =  list as ArrayList<ListItem>
         }*/
-        itemClicked(list)
+        itemClicked(list,position)
 //            Log.d("@openPath","called")
 //            val openFolder= list.mPath!!
 //            openPath(openFolder)
@@ -544,6 +553,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 storedItems = items
                 //(activity as FileManagerMainActivity).pathList.add(currentPath)
                 if(firstTime) {
+
                     (activity as FileManagerMainActivity).pathList.add(currentPath)
                     firstTime = false
                 }
@@ -791,11 +801,29 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
     }
 
+    fun searchDataChanged(text: String) {
+        var listItem:ArrayList<ListItem> = ArrayList()
+        var data = context?.let { DatabaseforSearch.getInstance(it)?.searchDatabaseDao()?.getSearchResult("%$text%") }
+        if (data != null) {
+            for(i in data){
+                listItem.add(ListItem(i.mPath, i.mName!!,i.mIsDirectory,i.mChildren,i.mSize,i.mModified,i.isSectionTitle,
+                    Uri.parse(i.audioImageUri?:""),
+                    i.dateModifiedInFormat,
+                    i.mimeType))
+            }
+        }
+        item_list_rv?.doVisible()
+        zrp_file?.beGone()
+        (activity as FileManagerMainActivity).pathList.clear()
+
+        getRecyclerAdapter()?.updateItems(listItem)
+    }
+
     fun searchQueryChanged(text: String) {
-//        showDialog()
+
         val searchText = text.trim()
         lastSearchedText = searchText
-       // supportLoaderManager.initLoader(0, null, this)
+
         ensureBackgroundThread {
             if (context == null) {
                 return@ensureBackgroundThread

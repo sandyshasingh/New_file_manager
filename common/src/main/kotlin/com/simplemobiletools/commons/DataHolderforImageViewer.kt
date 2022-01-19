@@ -1,15 +1,12 @@
-package com.simplemobiletools.filemanager.pro
+package com.simplemobiletools.commons
 
-enum class AppDataHolder {
-
-
-
+enum class DataHolderforImageViewer {
 
     INSTANCE;
 
 
 
-     var mfinalValues:RecentUpdatedFiles? = null
+    var mfinalValues:ArrayList<ListItem>? = null
 
 
     companion object {
@@ -23,11 +20,12 @@ enum class AppDataHolder {
 
 
 
-        var mfinalValues: RecentUpdatedFiles?
+        var mfinalValues: ArrayList<ListItem>?
             get() = INSTANCE.mfinalValues
             set(objectList) { INSTANCE.mfinalValues = objectList
             }
     }
+
 
 
 

@@ -1,4 +1,4 @@
-package com.simplemobiletools.filemanager.pro.models
+package com.simplemobiletools.commons
 
 import android.net.Uri
 import com.simplemobiletools.commons.models.FileDirItem

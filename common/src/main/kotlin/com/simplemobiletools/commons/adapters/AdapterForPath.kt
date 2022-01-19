@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.INTERNAL_STORAGE_NAME
+import com.simplemobiletools.commons.helpers.SD_CARD_NAME
 import com.simplemobiletools.commons.models.FileDirItem
 import kotlinx.android.synthetic.main.item_path.view.*
 
@@ -20,7 +22,7 @@ class AdapterForPath(var pathList: ArrayList<String>, var listener: BreadcrumbsL
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (position==0){
+        if (position==0 && !(mpathtext== INTERNAL_STORAGE_NAME||mpathtext== SD_CARD_NAME)){
 //          //  pathList.clear()
 //            pathList.add(mpathtext!!)
 //            holder.bindItems(pathList[position],mContext,pathList)

@@ -29,13 +29,13 @@ import com.simplemobiletools.commons.setTypeFaceOpenSensSmBold
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.BottomNavigationVisible
+import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.filemanager.pro.ListItemDiffCallback
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 import com.simplemobiletools.filemanager.pro.dialogs.CompressAsDialog
 import com.simplemobiletools.filemanager.pro.extensions.*
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import com.stericson.RootTools.RootTools
 import kotlinx.android.synthetic.main.item_file_dir_list.view.*
 import kotlinx.android.synthetic.main.item_grid_dir.view.*

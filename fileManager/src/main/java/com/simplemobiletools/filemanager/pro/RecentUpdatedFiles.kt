@@ -1,6 +1,6 @@
 package com.simplemobiletools.filemanager.pro
 
-import com.simplemobiletools.filemanager.pro.models.ListItem
+import com.simplemobiletools.commons.ListItem
 
 data class RecentUpdatedFiles(
     val mKeys: List<String>,

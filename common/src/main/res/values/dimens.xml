@@ -9,7 +9,7 @@
     <dimen name="bigger_margin">20dp</dimen>
     <dimen name="big_margin">24dp</dimen>
     <dimen name="section_margin">32dp</dimen>
-
+    <dimen name="spacing8">8dp</dimen>
     <dimen name="text_xx_big">20dp</dimen>
 
     <dimen name="social_logo">40dp</dimen>

@@ -16,12 +16,10 @@ import com.simplemobiletools.commons.helpers.EXTERNAL_STORAGE
 import com.simplemobiletools.commons.helpers.INTERNAL_STORAGE
 import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.commons.models.StorageItem
-import com.simplemobiletools.filemanager.pro.AppDataHolder
 import com.simplemobiletools.filemanager.pro.MoreItemsList
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.RecentUpdatedFiles
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.card_storage.view.*
 import kotlinx.android.synthetic.main.folder_items.view.*
 import kotlinx.android.synthetic.main.recent_files.view.*

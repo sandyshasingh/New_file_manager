@@ -19,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.AdapterForFolders
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
@@ -36,7 +37,6 @@ import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.dialogs.CompressAsDialog
 import com.simplemobiletools.filemanager.pro.extensions.*
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import com.stericson.RootTools.RootTools
 import kotlinx.android.synthetic.main.header_recylerview.view.*
 import kotlinx.android.synthetic.main.item_file_dir_list.view.*
@@ -53,8 +53,8 @@ import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 import kotlin.collections.ArrayList
 
-class ItemsAdapter(activity: BaseSimpleActivity,var isHeaderShow : Boolean, var folderItems: ArrayList<FolderItem>, val bottomnavigation: View?, var listItems: MutableList<ListItem>,
-                   var listener: ItemOperationsListener?,fastScroller: FastScroller?,  recyclerView: MyRecyclerView,
+class ItemsAdapter(activity: BaseSimpleActivity, var isHeaderShow : Boolean, var folderItems: ArrayList<FolderItem>, val bottomnavigation: View?, var listItems: MutableList<ListItem>,
+                   var listener: ItemOperationsListener?, fastScroller: FastScroller?, recyclerView: MyRecyclerView,
                    itemClick: (Any,Int) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, fastScroller,itemClick,null,null) {
 

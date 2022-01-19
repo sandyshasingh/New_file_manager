@@ -20,15 +20,13 @@ import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import com.simplemobiletools.commons.AppProgressDialog
-import com.simplemobiletools.commons.BottomNavigationVisible
-import com.simplemobiletools.commons.DeleteShortcut
-import com.simplemobiletools.commons.ThemeUtils
+import com.simplemobiletools.commons.*
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.filemanager.pro.*
+import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.dialogs.ChangeSortingDialog
 import com.simplemobiletools.filemanager.pro.dialogs.CreateNewItemDialog
 import com.simplemobiletools.filemanager.pro.extensions.config
@@ -38,10 +36,8 @@ import com.simplemobiletools.filemanager.pro.helpers.DataViewModel
 import com.simplemobiletools.filemanager.pro.helpers.MAX_COLUMN_COUNT
 import com.simplemobiletools.filemanager.pro.helpers.MIN_COLUMN_COUNT
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import com.stericson.RootTools.RootTools
 import kotlinx.android.synthetic.main.file_manager_activity.*
-import kotlinx.android.synthetic.main.fragment_items_list.*
 import kotlinx.android.synthetic.main.items_fragment.view.*
 import kotlinx.android.synthetic.main.layout.*
 import java.io.File
@@ -203,7 +199,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                            }
                         else
                            {
-                               itemsListFragtment?.searchQueryChanged(newText)
+                               itemsListFragtment?.searchDataChanged(newText)!!
                            }
                     }
 
@@ -431,6 +427,13 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             }
         }
 
+    }
+    fun loadPhotoViewerFragment(hiddenFiles: List<ListItem>, position: Int) {
+        supportFragmentManager.beginTransaction().add(
+            R.id.fragment_holder, PhotoViewer.newInstance(
+                position
+            )
+        ).addToBackStack(null).commit()
     }
 
     private fun initFileManager() {

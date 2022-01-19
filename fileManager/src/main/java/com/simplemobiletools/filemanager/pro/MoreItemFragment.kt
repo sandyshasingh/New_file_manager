@@ -5,9 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.simplemobiletools.filemanager.pro.adapters.AdapterForRecentFiles
+import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.filemanager.pro.adapters.MoreItemAdapter
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.fragment_more_item.*
 import kotlinx.android.synthetic.main.this_is_it.*
 

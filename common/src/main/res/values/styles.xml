@@ -208,4 +208,9 @@
 
     <dimen name="text_medium">14dp</dimen>
     <color name="white">#FFFFFF</color>
+    <color name="translucent_black">#80000000</color>
+    <color name="btn_blue">#AADFFF</color>
+    <color name="grey400">#bdbdbd</color>
+    <color name="grey800">#424242</color>
+    <color name="black">#000000</color>
 </resources>

@@ -1,14 +1,13 @@
 package com.simplemobiletools.filemanager.pro.adapters
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.filemanager.pro.R
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.more_items.view.*
 import kotlinx.android.synthetic.main.recent_file_item.view.*
 

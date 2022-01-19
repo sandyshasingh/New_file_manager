@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.simplemobiletools.commons.AppProgressDialog
-import com.simplemobiletools.commons.DeleteShortcut
-import com.simplemobiletools.commons.MemorySizeUtils
-import com.simplemobiletools.commons.ThemeUtils
+import com.simplemobiletools.commons.*
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.AdapterForFolders
 import com.simplemobiletools.commons.dialogs.StoragePickerDialog
@@ -43,7 +39,6 @@ import com.simplemobiletools.filemanager.pro.extensions.*
 import com.simplemobiletools.filemanager.pro.extensions.getPositionOfImage
 import com.simplemobiletools.filemanager.pro.helpers.DataViewModel
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import kotlinx.android.synthetic.main.this_is_it.*
 
 import kotlinx.android.synthetic.main.this_is_it.view.*

@@ -6,9 +6,9 @@ import android.database.Cursor
 import android.os.AsyncTask
 import android.provider.MediaStore
 import android.util.Log
+import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.commons.helpers.format
 import com.simplemobiletools.commons.helpers.timeConversionInMinSec
-import com.simplemobiletools.filemanager.pro.models.ListItem
 import java.io.File
 import java.text.SimpleDateFormat
 
