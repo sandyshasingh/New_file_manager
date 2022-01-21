@@ -30,6 +30,8 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.BottomNavigationVisible
 import com.simplemobiletools.commons.ListItem
+import com.simplemobiletools.filemanager.pro.ActionMenuClick
+import com.simplemobiletools.filemanager.pro.ItemsListFragment
 import com.simplemobiletools.filemanager.pro.ListItemDiffCallback
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
@@ -37,6 +39,7 @@ import com.simplemobiletools.filemanager.pro.dialogs.CompressAsDialog
 import com.simplemobiletools.filemanager.pro.extensions.*
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
 import com.stericson.RootTools.RootTools
+import kotlinx.android.synthetic.main.file_manager_activity.*
 import kotlinx.android.synthetic.main.item_file_dir_list.view.*
 import kotlinx.android.synthetic.main.item_grid_dir.view.*
 import kotlinx.android.synthetic.main.item_grid_dir.view.item_icon
@@ -51,7 +54,7 @@ import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 import kotlin.collections.ArrayList
 
-class ItemsListAdapter (activity: BaseSimpleActivity, var folderItems: ArrayList<FolderItem>,
+class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenuClick?,var folderItems: ArrayList<FolderItem>,
                         var bottomListener: BottomNavigationVisible?, var listItems: MutableList<ListItem>, var listener: ItemOperationsListener?,
                         fastScroller: FastScroller?,
                         recyclerView: MyRecyclerView, var shortcutClicked:Boolean,
@@ -186,6 +189,8 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var folderItems: ArrayList
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+
+
         val fileDirItem = listItems[position]
         if(holder is ViewHolder)
         {
@@ -267,9 +272,13 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var folderItems: ArrayList
 
     override fun getItemKeyPosition(key: Int) = listItems.indexOfFirst { it.path.hashCode() == key }
 
-    override fun onActionModeCreated() {}
+    override fun onActionModeCreated() {
+        isClickable?.isClickable(false)
+    }
 
-    override fun onActionModeDestroyed() {}
+    override fun onActionModeDestroyed() {
+        isClickable?.isClickable(true)
+    }
 
 
      fun copyPath(listItem: ListItem?) {
@@ -311,7 +320,11 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var folderItems: ArrayList
                     item_check_view_grid?.beVisible()
                     //threedot?.beGone()
                     threedot_grid?.beGone()
-                }else{
+                }
+//                if(!isLongPressClick){
+//                    (activity as FileManagerMainActivity).add_the_folder.visibility=View.GONE
+//                }
+                else{
                     item_check_view?.beGone()
                     item_check_view_grid?.beGone()
                    // threedot?.beVisible()
@@ -902,6 +915,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var folderItems: ArrayList
         var fileDirItems = getSelectedFileDirItems()
 
         if(listItem!=null) {
+
             fileDirItems = arrayListOf(listItem)
         }
         val paths = fileDirItems.asSequence().map { it.path }.toMutableList() as ArrayList<String>

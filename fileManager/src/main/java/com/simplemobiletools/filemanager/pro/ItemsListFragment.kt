@@ -1,5 +1,6 @@
 package com.simplemobiletools.filemanager.pro
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.commons.*
@@ -38,7 +40,7 @@ import java.util.HashMap
 
 const val PARAM_ID = "idExtra"
 
-class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.BreadcrumbsListenerNew {
+class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,AdapterForPath.BreadcrumbsListenerNew {
 
     var currentPath = ""
     private var lastSearchedText = ""
@@ -131,6 +133,15 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //        itemsAdapter = ItemsListAdapter(storageItems,requireActivity() )
 //        item_list_rv?.adapter = itemsAdapter
 
+        zrp_file.setOnClickListener {
+                            val imm =
+                    context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm!!.hideSoftInputFromWindow(
+                    (activity as FileManagerMainActivity).search_df?.getWindowToken(),
+                    InputMethodManager.RESULT_UNCHANGED_SHOWN
+                )
+        }
+
         select_all_folders.setOnClickListener {
             mainAdapter?.selectAllFolders()
 
@@ -139,6 +150,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         if(searchClicked){
             mView.item_list_rv.adapter = ItemsListAdapter(
                 activity as BaseSimpleActivity,
+                this@ItemsListFragment,
                 folderItems,
 
                 listener,
@@ -150,10 +162,18 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
         }
 
+        itemClicked(folderClicked)
 
+
+
+    }
+
+    fun itemClicked(folderClicked:Int?){
         when (folderClicked) {
             AUDIO_ID -> {
                 pathText = AUDIO_NAME
+                (activity as FileManagerMainActivity).showAdd=false
+
                 AUDIO_CLICK++
                 model?.audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
@@ -165,6 +185,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             VIDEOS_ID -> {
                 pathText = VIDEOS_NAME
                 VIDEOS_CLICK++
+                (activity as FileManagerMainActivity).showAdd=false
+
                 model?.videos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
@@ -174,6 +196,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             }
             SHORTCUT_ID -> {
                 pathText = INTERNAL_STORAGE_NAME
+                (activity as FileManagerMainActivity).showAdd=true
                 (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "Internal"
                 //add_the_shortcut.visibility = View.VISIBLE
@@ -181,7 +204,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
             }
             SHORTCUT_FOLDER_ID ->{
-
+                (activity as FileManagerMainActivity).showAdd=false
                 (activity as FileManagerMainActivity).pathList.add(folderPath!!)
                 openPath(folderPath!!)
 
@@ -190,6 +213,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             PHOTOS_ID -> {
                 PHOTOS_CLICK++
                 pathText = PHOTOS_NAME
+                (activity as FileManagerMainActivity).showAdd=false
+
                 model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
@@ -199,6 +224,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             }
             DOWNLOAD_ID -> {
                 DOWNLOAD_CLICK++
+                (activity as FileManagerMainActivity).showAdd=false
+
                 pathText = DOWNLOAD_NAME
                 currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 refreshItems(true)
@@ -206,6 +233,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             APPLICATIONS_ID ->{
                 APPLICATION_CLICK++
                 pathText = APPLICATION_NAME
+                (activity as FileManagerMainActivity).showAdd=false
+
                 model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
@@ -216,6 +245,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             DOCUMENTS_ID ->{
                 DOCUMENTS_CLICK++
                 pathText = DOCUMENTS_NAME
+                (activity as FileManagerMainActivity).showAdd=false
+
                 model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
@@ -225,6 +256,8 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             }
             ZIP_FILES_ID ->{
                 ZIP_FILES_CLICK++
+                (activity as FileManagerMainActivity).showAdd=false
+
                 pathText = ZIP_FILES_NAME
                 model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
@@ -235,13 +268,17 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             }
             INTERNAL_STORAGE -> {
                 pathText = INTERNAL_STORAGE_NAME
-               // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
+                (activity as FileManagerMainActivity).showAdd=false
+
+                // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "Internal"
                 refreshItems(true)
             }
             EXTERNAL_STORAGE -> {
                 pathText = SD_CARD_NAME
+                (activity as FileManagerMainActivity).showAdd=false
+
                 // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "External"
@@ -249,8 +286,6 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             }
 
         }
-
-
     }
 
     fun send(){
@@ -525,8 +560,11 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //            text_add_the_shortcut.setTextColor(
 //                Color.parseColor("#282361")
 //            )
+        if((activity as FileManagerMainActivity).showAdd){
             (activity as FileManagerMainActivity).add_the_folder.visibility = View.VISIBLE
             select_all_folders.visibility = View.VISIBLE
+        }
+
           //  add_icon.setImageResource(R.drawable.ic_file_manager__add_icon2)
 
         }
@@ -534,7 +572,9 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 //            text_add_the_shortcut.setTextColor(
 //                Color.parseColor("#bcbec0")
 //            )
-           // add_icon.setImageResource(R.drawable.ic_file_add_shortcut)
+            (activity as FileManagerMainActivity).add_the_folder.visibility = View.GONE
+
+            // add_icon.setImageResource(R.drawable.ic_file_add_shortcut)
 
         }
 
@@ -553,7 +593,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                 storedItems = items
                 //(activity as FileManagerMainActivity).pathList.add(currentPath)
                 if(firstTime) {
-
+                    (activity as FileManagerMainActivity).pathList.clear()
                     (activity as FileManagerMainActivity).pathList.add(currentPath)
                     firstTime = false
                 }
@@ -571,6 +611,7 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                     getRecyclerAdapter()?.updateListItems(storedItems)
                      mainAdapter = ItemsListAdapter(
                         activity as BaseSimpleActivity,
+                         this@ItemsListFragment,
                          folderItems,
 
                          listener,
@@ -644,10 +685,19 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
             }
         }else {
             if(currentPath == "$internalStoragePath/$currentFolderHeader"){
-                addItems(storedItems, true)
+                itemClicked(folderClicked)
+//                addItems(storedItems, true)
             }
             else {
-               // openPath(currentPath)
+                if (pathText == VIDEOS_NAME){
+                    itemClicked(folderClicked)
+
+                }
+                else{
+                    var mPath=(activity as FileManagerMainActivity).pathList
+                    openPath(mPath[mPath.size-1])
+                }
+
             }
 //            showDialog()
 //            mProgressDialog?.dismiss()
@@ -775,22 +825,22 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
 
             //It is for whole phone searching directory and files both
 
-            if (it.isDirectory) {
-                if (it.name.contains(text, true)) {
-                    val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
-                    if (fileDirItem != null) {
-                        files.add(fileDirItem)
-                    }
-                }
-                files.addAll(searchFiles(text, it.absolutePath))
-            } else {
-                if (it.name.contains(text, true)) {
-                    val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
-                    if (fileDirItem != null) {
-                        files.add(fileDirItem)
-                    }
-                }
-            }
+//            if (it.isDirectory) {
+//                if (it.name.contains(text, true)) {
+//                    val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
+//                    if (fileDirItem != null) {
+//                        files.add(fileDirItem)
+//                    }
+//                }
+//                files.addAll(searchFiles(text, it.absolutePath))
+//            } else {
+//                if (it.name.contains(text, true)) {
+//                    val fileDirItem = getFileDirItemFromFile(it, isSortingBySize, HashMap())
+//                    if (fileDirItem != null) {
+//                        files.add(fileDirItem)
+//                    }
+//                }
+//            }
         }
         return files
     }
@@ -816,6 +866,18 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
         zrp_file?.beGone()
         (activity as FileManagerMainActivity).pathList.clear()
 
+        getRecyclerAdapter()?.updateItems(listItem)
+    }
+
+    fun searchInFolder(text: String){
+        var listItem:ArrayList<ListItem> = ArrayList()
+        for (value in storedItems)
+        {
+            if (value.mName.contains("%$text%"))
+                listItem.add(value)
+        }
+        item_list_rv?.doVisible()
+        zrp_file?.beGone()
         getRecyclerAdapter()?.updateItems(listItem)
     }
 
@@ -921,21 +983,32 @@ class ItemsListFragment : Fragment(), ItemOperationsListener,AdapterForPath.Brea
                     getRecyclerAdapter()?.finishActMode()
 //                    openPath(it)    //For SD Card And Otg
                     openPath(requireActivity().internalStoragePath)
+                    zrp_file.visibility=View.GONE
+                    item_list_rv.visibility = View.VISIBLE
+
                 }
             }else{
                 getRecyclerAdapter()?.finishActMode()
                 openPath(requireActivity().internalStoragePath)
+                zrp_file.visibility=View.GONE
+                item_list_rv.visibility = View.VISIBLE
             }
         } else {
             if(path!= "$internalStoragePath/$PHOTOS_NAME/"
                 && path!= "$internalStoragePath/$AUDIO_NAME/"
                 && path!= "$internalStoragePath/$VIDEOS_NAME/") {
                 openPath(path)
+                zrp_file.visibility=View.GONE
+                item_list_rv.visibility = View.VISIBLE
             }
         }
 
     }
 
+    override fun isClickable(bool: Boolean) {
+            (activity as FileManagerMainActivity)?.search_container.isClickable=bool
+            (activity as FileManagerMainActivity)?.search_container.isEnabled=bool
+    }
 
 
 }

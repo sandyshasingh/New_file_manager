@@ -12,10 +12,7 @@
         android:id="@+id/child_recent_item"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:scaleType="center"
-
-
-        />
+        android:scaleType="center" />
 
     <ImageView
         android:id="@+id/play_pause"
@@ -23,8 +20,7 @@
         android:layout_height="@dimen/spacing24"
         android:scaleType="fitXY"
         android:layout_gravity="center"
-        android:src="@drawable/ic_file_manager_video_play"
-        />
+        android:src="@drawable/ic_file_manager_video_play" />
 
     <TextView
         android:id="@+id/more_items"

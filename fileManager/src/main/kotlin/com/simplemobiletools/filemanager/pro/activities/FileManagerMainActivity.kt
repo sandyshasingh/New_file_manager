@@ -49,6 +49,7 @@ const val FRAGMENT_STACK = "fragment_stack"
 class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNavigationVisible,DeleteShortcut {
     private val PICKED_PATH = "picked_path"
     var pathList = ArrayList<String>()
+    var showAdd = false
     var itemsListFragtment:ItemsListFragment?=null
   //  var searchFragment= SearchFragment()
     private var isSearchOpen = true
@@ -110,6 +111,16 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             intent.extras
         }
 
+        search_container?.setOnClickListener {
+            search_df?.isIconified = false
+            if(myhint?.visibility == View.VISIBLE)
+                myhint?.visibility = View.GONE
+        }
+//        val container_main = supportFragmentManager.findFragmentById(R.id.fragment_holder)
+//        if (container_main !is ItemsFragment){
+//            setting.visibility = View.GONE
+//        }
+
         setting.setOnClickListener {
             val intent = Intent(this, SettingsBurger::class.java).apply {
 
@@ -138,12 +149,13 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         search_df.setOnSearchClickListener {
 //            itemsListFragtment = ItemsListFragment()
+            myhint?.visibility = View.GONE
             itemsListFragtment?.searchClicked=true
             val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
-            if (fragment !is ItemsListFragment){
+           // if (fragment !is ItemsListFragment){
 
                 onCategoryClick(INTERNAL_STORAGE,"abc")
-            }
+         //   }
 
 //            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
 //            fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment!!).addToBackStack("")
@@ -160,6 +172,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         search_df.setOnCloseListener (SearchView.OnCloseListener { //your code here
             isSearchOpen = false
             // fragment.searchClosed()
+            myhint?.visibility = View.VISIBLE
             itemsListFragtment?.searchClosed()
             val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
             if (fragment is ItemsListFragment){
@@ -199,7 +212,14 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                            }
                         else
                            {
-                               itemsListFragtment?.searchDataChanged(newText)!!
+//                               val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
+//                               if (fragment is ItemsListFragment){
+//                                   itemsListFragtment?.searchInFolder(newText)!!
+//                               }
+//                               else{
+                                   itemsListFragtment?.searchDataChanged(newText)!!
+
+//                               }
                            }
                     }
 
@@ -580,7 +600,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
               add_the_folder.visibility = View.GONE
               pathList.clear()
               itemsListFragtment?.showZrp()
-
+              myhint?.visibility = View.VISIBLE
               super.onBackPressed()
 
         }
@@ -589,7 +609,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             pathList.removeAt(i - 1)
              val path = pathList[pathList.size - 1]
               itemsListFragtment?.showZrp()
-
+              myhint?.visibility = View.VISIBLE
               openPath(path, false)
         }
         if (!search_df.isIconified()) {
@@ -716,6 +736,8 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         val fragmentManager: FragmentManager = supportFragmentManager
         val myFragment = MoreItemFragment()
         myFragment.arrayList = item
+        setting.visibility = View.GONE
+        back_main.visibility = View.VISIBLE
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragment_holder,myFragment).addToBackStack("")
         fragmentTransaction.commit()

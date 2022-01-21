@@ -58,21 +58,35 @@
                         android:layout_height="27dp"
 
                         />
-                    <LinearLayout
-                        android:gravity="end"
+                    <RelativeLayout
+                        android:id="@+id/search_container"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
+                        android:layout_height="wrap_content">
+
+
+
+                        <TextView
+                            android:id="@+id/myhint"
+                            android:layout_width="240dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:textSize="16dp"
+                            android:textColor="?attr/filemanagertextcolor"
+                            android:textStyle="normal"
+                            android:text="Search" />
+
                     <androidx.appcompat.widget.SearchView
                         android:id="@+id/search_df"
                         app:searchIcon="@drawable/ic_file_manager_search"
                         android:layout_width="wrap_content"
+                        android:layout_toEndOf="@id/myhint"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing16"
                         android:textSize="15dp"
-                        app:queryHint="sfjsnfjisadnf"
-                        />
-                </LinearLayout>
+                         />
+
+
+                </RelativeLayout>
 
 
                 </LinearLayout>
@@ -94,7 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ADD"
-        android:textSize="35dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:background="@color/btm_background"
