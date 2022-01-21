@@ -177,7 +177,7 @@ open class BaseSimpleActivity : AppCompatActivity() {
 
     // synchronous return value determines only if we are showing the SAF dialog, callback result tells if the SD or OTG permission has been granted
     fun handleSAFDialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
-        return if (!packageName.startsWith("com.simplemobiletools")) {
+        return if (packageName.startsWith("com.simplemobiletools")) {
             callback(true)
             false
         } else if (isShowingSAFDialog(path) || isShowingOTGDialog(path)) {

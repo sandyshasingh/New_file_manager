@@ -158,6 +158,7 @@ fun Context.getLatestMediaByDateId(uri: Uri = Files.getContentUri("external")): 
 }
 
 
+
 fun Context.getRealPathFromURI(uri: Uri): String? {
     if (uri.scheme == "file") {
         return uri.path

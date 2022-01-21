@@ -418,7 +418,9 @@ fun BaseSimpleActivity.renameFile(oldPath: String, newPath: String, callback: ((
             try {
                 ensureBackgroundThread {
                     try {
-                        DocumentsContract.renameDocument(applicationContext.contentResolver, document.uri, newPath.getFilenameFromPath())
+                        //File(oldPath).renameTo(File(newPath))
+                        //val  file=File(getRealPathFromURI(document.uri))
+                        DocumentsContract.renameDocument(applicationContext.contentResolver, document.uri, newPath.getFilenameFromPath().replace(" ","%20"))
                     } catch (ignored: FileNotFoundException) {
                         // FileNotFoundException is thrown in some weird cases, but renaming works just fine
                     } catch (e: Exception) {
