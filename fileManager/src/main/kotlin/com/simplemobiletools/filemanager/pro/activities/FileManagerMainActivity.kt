@@ -58,7 +58,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     private lateinit var fragment: ItemsFragment
     private var isDarkTheme = false
     var viewModel : DataViewModel? = null
-
+    var pathText:String?=""
     private val sharedPrefFile = "com.example.new_file_manager"
     private var folderItems = ArrayList<FolderItem>()
      var mProgressDialog: AppProgressDialog? = null
@@ -111,14 +111,16 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             intent.extras
         }
 
+
         search_container?.setOnClickListener {
             search_df?.isIconified = false
             if(myhint?.visibility == View.VISIBLE)
                 myhint?.visibility = View.GONE
         }
 //        val container_main = supportFragmentManager.findFragmentById(R.id.fragment_holder)
-//        if (container_main !is ItemsFragment){
-//            setting.visibility = View.GONE
+//        if (container_main is ItemsFragment){
+//            setting.visibility = View.VISIBLE
+//            back_main.visibility = View.GONE
 //        }
 
         setting.setOnClickListener {

@@ -65,7 +65,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
      var listener : BottomNavigationVisible? = null
 //    var mainAdapter : AdapterForFolders? = null
 
-    var pathText:String?=""
+
 
     var add_shortcut_path = ""
     private var internalStoragePath : String? = ""
@@ -171,19 +171,20 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
     fun itemClicked(folderClicked:Int?){
         when (folderClicked) {
             AUDIO_ID -> {
-                pathText = AUDIO_NAME
+                (activity as FileManagerMainActivity).pathText = AUDIO_NAME
                 (activity as FileManagerMainActivity).showAdd=false
 
                 AUDIO_CLICK++
                 model?.audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
+
                         refreshItems(true)
                     }
                 })
             }
             VIDEOS_ID -> {
-                pathText = VIDEOS_NAME
+                (activity as FileManagerMainActivity).pathText = VIDEOS_NAME
                 VIDEOS_CLICK++
                 (activity as FileManagerMainActivity).showAdd=false
 
@@ -195,7 +196,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 })
             }
             SHORTCUT_ID -> {
-                pathText = INTERNAL_STORAGE_NAME
+                (activity as FileManagerMainActivity).pathText = INTERNAL_STORAGE_NAME
                 (activity as FileManagerMainActivity).showAdd=true
                 (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "Internal"
@@ -212,7 +213,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 
             PHOTOS_ID -> {
                 PHOTOS_CLICK++
-                pathText = PHOTOS_NAME
+                (activity as FileManagerMainActivity).pathText = PHOTOS_NAME
                 (activity as FileManagerMainActivity).showAdd=false
 
                 model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
@@ -226,13 +227,13 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 DOWNLOAD_CLICK++
                 (activity as FileManagerMainActivity).showAdd=false
 
-                pathText = DOWNLOAD_NAME
+                (activity as FileManagerMainActivity).pathText = DOWNLOAD_NAME
                 currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 refreshItems(true)
             }
             APPLICATIONS_ID ->{
                 APPLICATION_CLICK++
-                pathText = APPLICATION_NAME
+                (activity as FileManagerMainActivity).pathText = APPLICATION_NAME
                 (activity as FileManagerMainActivity).showAdd=false
 
                 model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
@@ -244,7 +245,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             }
             DOCUMENTS_ID ->{
                 DOCUMENTS_CLICK++
-                pathText = DOCUMENTS_NAME
+                (activity as FileManagerMainActivity).pathText = DOCUMENTS_NAME
                 (activity as FileManagerMainActivity).showAdd=false
 
                 model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
@@ -258,7 +259,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 ZIP_FILES_CLICK++
                 (activity as FileManagerMainActivity).showAdd=false
 
-                pathText = ZIP_FILES_NAME
+                (activity as FileManagerMainActivity).pathText = ZIP_FILES_NAME
                 model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
@@ -267,7 +268,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 })
             }
             INTERNAL_STORAGE -> {
-                pathText = INTERNAL_STORAGE_NAME
+                (activity as FileManagerMainActivity).pathText = INTERNAL_STORAGE_NAME
                 (activity as FileManagerMainActivity).showAdd=false
 
                 // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
@@ -276,7 +277,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 refreshItems(true)
             }
             EXTERNAL_STORAGE -> {
-                pathText = SD_CARD_NAME
+                (activity as FileManagerMainActivity).pathText = SD_CARD_NAME
                 (activity as FileManagerMainActivity).showAdd=false
 
                 // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
@@ -599,7 +600,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 }
 
                 if(adapterForPath == null) {
-                    adapterForPath = AdapterForPath((activity as FileManagerMainActivity).pathList, this@ItemsListFragment, requireActivity(),pathText)
+                    adapterForPath = AdapterForPath((activity as FileManagerMainActivity).pathList, this@ItemsListFragment, requireActivity(),(activity as FileManagerMainActivity).pathText)
 //                    m/y_recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                     breadcrumb_rv?.adapter = adapterForPath
                 }else{
@@ -664,6 +665,10 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
     override fun refreshItems(isHeaderFolder: Boolean) {
         val internalStoragePath = context?.config?.internalStoragePath
         val externalStoragePath = context?.config?.sdCardPath
+
+
+
+
         if(isHeaderFolder){
             //currentFolderHeader= Environment.DIRECTORY_DOWNLOADS
             currentPath = "$internalStoragePath/$currentFolderHeader"
@@ -684,19 +689,30 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 addItems(storedItems, true)
             }
         }else {
+            context?.let{
+                model?.fetchVideos(it)
+                model?.fetchAudios(it)
+                model?.fetchImages(it)
+                model?.fetchApps(it)
+                model?.fetchDocuments(it)
+                model?.fetchZip(it)
+            }
             if(currentPath == "$internalStoragePath/$currentFolderHeader"){
                 itemClicked(folderClicked)
+
 //                addItems(storedItems, true)
             }
             else {
-                if (pathText == VIDEOS_NAME){
-                    itemClicked(folderClicked)
-
-                }
-                else{
+//                var aaja = (activity as FileManagerMainActivity).pathText
+//                if ( aaja == VIDEOS_NAME || aaja == PHOTOS_NAME || aaja == AUDIO_NAME  || aaja == DOCUMENTS_NAME || aaja == ZIP_FILES_NAME ||
+//                     aaja == APPLICATION_NAME||  aaja == DOWNLOAD_NAME){
+//                    itemClicked(folderClicked)
+//
+//                }
+//                else{
                     var mPath=(activity as FileManagerMainActivity).pathList
                     openPath(mPath[mPath.size-1])
-                }
+//                }
 
             }
 //            showDialog()

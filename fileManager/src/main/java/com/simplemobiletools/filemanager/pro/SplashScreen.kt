@@ -19,15 +19,19 @@ class SplashScreen : BaseSimpleActivity(),GroupVideoPhotoAsyncTask.RecentFetchAs
         setContentView(R.layout.activity_splash_screen)
 
 
-        val intent = Intent(this, ServiceIntent::class.java).apply {
 
-        }
-        startService(intent)
 
         //   viewModel = ViewModelProvider(this).get(DataViewModel::class.java)
         handlePermission(PERMISSION_WRITE_STORAGE) {
-            if(it)
-            GroupVideoPhotoAsyncTask(this,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+
+            if(it){
+                val intent = Intent(this, ServiceIntent::class.java).apply {}
+                startService(intent)
+
+                GroupVideoPhotoAsyncTask(this,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            }
             else
                 startFileManager()
         }

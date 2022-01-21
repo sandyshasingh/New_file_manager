@@ -867,7 +867,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
             listener?.deleteFiles(files)
             positions.forEach { i ->
                 listItems.removeAt(i)
+
             }
+
             listener?.refreshItems(false)
         }
     }
