@@ -461,6 +461,7 @@ fun BaseSimpleActivity.renameFile(oldPath: String, newPath: String, callback: ((
                 File(newPath).setLastModified(System.currentTimeMillis())
             }
             deleteFromMediaStore(oldPath)
+
             scanPathsRecursively(arrayListOf(newPath)) {
                 runOnUiThread {
                     callback?.invoke(true)

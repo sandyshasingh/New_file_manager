@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.PopupMenu
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.commons.*
@@ -63,6 +64,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
     var model : DataViewModel? = null
     private var baseSimpleActivity : BaseSimpleActivity? = null
      var listener : BottomNavigationVisible? = null
+    var itemsToSort : ArrayList<ListItem> = ArrayList()
 //    var mainAdapter : AdapterForFolders? = null
 
 
@@ -145,6 +147,58 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
         select_all_folders.setOnClickListener {
             mainAdapter?.selectAllFolders()
 
+        }
+
+        threedot.setOnClickListener {
+            val config = requireContext().config
+            val popupMenu: PopupMenu = PopupMenu(context,threedot)
+            popupMenu.menuInflater.inflate(R.menu.menu,popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when(item.itemId) {
+                    R.id.sort -> {
+                        itemsToSort = storedItems
+                        val sortMenu: PopupMenu = PopupMenu(context,threedot)
+                        sortMenu.menuInflater.inflate(R.menu.sort_menu,sortMenu.menu)
+                        sortMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                            when(item.itemId) {
+
+                                R.id.sort_by_size ->{
+                                    itemsToSort.sortBy { it.mSize }
+                                    addItems(itemsToSort,true)
+                                }
+
+                                R.id.sort_by_date ->{
+                                    itemsToSort.sortBy { it.mModified }
+                                    addItems(itemsToSort,true)
+
+                                }
+                                R.id.sort_by_name ->{
+                                    itemsToSort.sortBy { it.mName }
+                                    addItems(itemsToSort,true)
+
+                                }
+                            }
+                            true
+                        })
+                        sortMenu.show()
+                    }
+                     //   }
+
+                       // Toast.makeText(this@MainActivity, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
+                    R.id.create_new_folder ->
+                    (activity as FileManagerMainActivity).createNewItem()
+
+                    //Toast.makeText(this@MainActivity, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
+                    R.id.settings_show_hidden ->{
+                        //config.showHidden = !showHidden
+                        (activity as FileManagerMainActivity).setupShowHidden(item)
+                    }
+
+
+                }
+                true
+            })
+            popupMenu.show()
         }
 
         if(searchClicked){
@@ -328,6 +382,9 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 
     fun openPath(path: String, forceRefresh: Boolean = false) {
 
+
+        showHidden = requireContext().config.shouldShowHidden
+
         getItems(path) { originalPath, listItems ->
             if (path != originalPath || !isAdded) {
                 return@getItems
@@ -367,7 +424,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 val config = requireContext().config
                 if (requireContext().isPathOnOTG(path) && config.OTGTreeUri.isNotEmpty()) {
                     val getProperFileSize = requireContext().config.getFolderSorting(currentPath) and SORT_BY_SIZE != 0
-                    requireContext().getOTGItems(path, config.shouldShowHidden, getProperFileSize) {
+                    requireContext().getOTGItems(path,config.shouldShowHidden, getProperFileSize) {
                         callback(path, getListItemsFromFileDirItems(it))
                     }
                 } else if (!config.enableRootAccess || !requireContext().isPathOnRoot(path)) {
@@ -564,6 +621,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
         if((activity as FileManagerMainActivity).showAdd){
             (activity as FileManagerMainActivity).add_the_folder.visibility = View.VISIBLE
             select_all_folders.visibility = View.VISIBLE
+            threedot.visibility = View.GONE
         }
 
           //  add_icon.setImageResource(R.drawable.ic_file_manager__add_icon2)
@@ -574,6 +632,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 //                Color.parseColor("#bcbec0")
 //            )
             (activity as FileManagerMainActivity).add_the_folder.visibility = View.GONE
+            threedot.visibility = View.VISIBLE
 
             // add_icon.setImageResource(R.drawable.ic_file_add_shortcut)
 
@@ -666,9 +725,6 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
         val internalStoragePath = context?.config?.internalStoragePath
         val externalStoragePath = context?.config?.sdCardPath
 
-
-
-
         if(isHeaderFolder){
             //currentFolderHeader= Environment.DIRECTORY_DOWNLOADS
             currentPath = "$internalStoragePath/$currentFolderHeader"
@@ -689,30 +745,28 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 addItems(storedItems, true)
             }
         }else {
-            context?.let{
-                model?.fetchVideos(it)
-                model?.fetchAudios(it)
-                model?.fetchImages(it)
-                model?.fetchApps(it)
-                model?.fetchDocuments(it)
-                model?.fetchZip(it)
-            }
-            if(currentPath == "$internalStoragePath/$currentFolderHeader"){
-                itemClicked(folderClicked)
 
-//                addItems(storedItems, true)
+            if(currentPath == "$internalStoragePath/$currentFolderHeader"){
+                context?.let{
+
+                    when(folderClicked) {
+                        AUDIO_ID ->  model?.fetchAudios(it)
+                        PHOTOS_ID ->  model?.fetchImages(it)
+                        VIDEOS_ID -> model?.fetchVideos(it)
+                        APPLICATIONS_ID ->   model?.fetchApps(it)
+                        DOCUMENTS_ID ->    model?.fetchDocuments(it)
+                        ZIP_FILES_ID ->  model?.fetchZip(it)
+                        else -> {}
+                    }
+                    //itemClicked()
+
+                }
+
             }
             else {
-//                var aaja = (activity as FileManagerMainActivity).pathText
-//                if ( aaja == VIDEOS_NAME || aaja == PHOTOS_NAME || aaja == AUDIO_NAME  || aaja == DOCUMENTS_NAME || aaja == ZIP_FILES_NAME ||
-//                     aaja == APPLICATION_NAME||  aaja == DOWNLOAD_NAME){
-//                    itemClicked(folderClicked)
-//
-//                }
-//                else{
+
                     var mPath=(activity as FileManagerMainActivity).pathList
                     openPath(mPath[mPath.size-1])
-//                }
 
             }
 //            showDialog()

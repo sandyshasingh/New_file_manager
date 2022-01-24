@@ -57,9 +57,9 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
         this.audioSize.value = audiosSize
     }
 
-    override fun fetchVideoCompleted(videosList: MutableLiveData<List<ListItem>>?, videosSize: Long) {
-        videos = videosList
-        this.videoSize.value = videosSize
+    override fun fetchVideoCompleted(videosList:List<ListItem>?) {
+        videos?.postValue(videosList)
+        //this.videoSize.value = videosSize
     }
 
     override fun fetchPhotosCompleted(photosList: MutableLiveData<List<ListItem>>?, photosSize: Long) {

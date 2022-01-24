@@ -64,9 +64,9 @@
             android:layout_height="60dp"
             android:paddingTop="10dp"
             android:orientation="horizontal"
-            android:layout_toStartOf="@+id/select_all_folders"
             android:background="?attr/rv_path"
             android:paddingStart="8dp"
+            android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
 
@@ -83,11 +83,18 @@
                 android:id="@+id/select_all_folders"
                 android:layout_width="30dp"
                 android:visibility="gone"
-
                 android:layout_alignParentEnd="true"
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/ic_file_manager_slct_all"
-                android:layout_height="30dp"/>
+                android:layout_height="60dp"/>
+
+    <ImageView
+        android:id="@+id/threedot"
+        android:layout_width="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/ic_icon_dot_light"
+        android:layout_height="30dp"/>
 
 
 

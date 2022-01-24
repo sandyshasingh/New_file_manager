@@ -270,12 +270,12 @@ fun Context.rescanPaths(paths: List<String>, callback: (() -> Unit)? = null) {
         return
     }
 
-    for (path in paths) {
+   /* for (path in paths) {
         Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).apply {
             data = Uri.fromFile(File(path))
             sendBroadcast(this)
         }
-    }
+    }*/
 
     var cnt = paths.size
     MediaScannerConnection.scanFile(applicationContext, paths.toTypedArray(), null) { s, uri ->

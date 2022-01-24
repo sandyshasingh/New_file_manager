@@ -9,17 +9,14 @@ import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.commons.helpers.format
 import com.simplemobiletools.commons.helpers.timeConversionInMinSec
 
-class VideoFetcher(var context: Context, var fetchAudioAsyncCompleteListener: FetchVideoAsyncCompleteListener) : AsyncTask<Void, Void, MutableLiveData<List<ListItem>>>() {
+class VideoFetcher(var context: Context, var fetchAudioAsyncCompleteListener: FetchVideoAsyncCompleteListener) : AsyncTask<Void, Void, List<ListItem>>() {
 
-    var videos: MutableLiveData<List<ListItem>>? = MutableLiveData()
     var videosSize = 0L
 
-    override fun doInBackground(vararg p0: Void?):MutableLiveData<List<ListItem>>? {
+    override fun doInBackground(vararg p0: Void?):List<ListItem>? {
         return  getVideos(context)
     }
-    private fun getVideos(context: Context): MutableLiveData<List<ListItem>>? {
-        if(videos?.value == null)
-        {
+    private fun getVideos(context: Context): List<ListItem>? {
             val songsDataClassList: java.util.ArrayList<ListItem> = java.util.ArrayList()
             val projection = arrayOf(
                     MediaStore.Video.Media.DISPLAY_NAME,
@@ -84,17 +81,15 @@ class VideoFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fe
                     }
                 }
             }
-            videos?.postValue(songsDataClassList)
-        }
-        return videos
+        return songsDataClassList
     }
 
-    override fun onPostExecute(result: MutableLiveData<List<ListItem>>?) {
+    override fun onPostExecute(result: List<ListItem>) {
         super.onPostExecute(result)
-        fetchAudioAsyncCompleteListener.fetchVideoCompleted(result,videosSize)
+        fetchAudioAsyncCompleteListener.fetchVideoCompleted(result)
     }
     interface FetchVideoAsyncCompleteListener {
-        fun fetchVideoCompleted(videosList: MutableLiveData<List<ListItem>>?, videosSize: Long)
+        fun fetchVideoCompleted(videosList: List<ListItem>?)
     }
 
 }

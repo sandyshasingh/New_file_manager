@@ -271,9 +271,9 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu!!.apply {
             findItem(R.id.settings_show_hidden).isChecked = config.showHidden
-            findItem(R.id.go_home).isVisible = fragment.currentPath != config.homeFolder
-            findItem(R.id.increase_column_count).isVisible = config.viewType == VIEW_TYPE_GRID && config.fileColumnCnt < MAX_COLUMN_COUNT
-            findItem(R.id.reduce_column_count).isVisible = config.viewType == VIEW_TYPE_GRID && config.fileColumnCnt > MIN_COLUMN_COUNT
+//            findItem(R.id.go_home).isVisible = fragment.currentPath != config.homeFolder
+//            findItem(R.id.increase_column_count).isVisible = config.viewType == VIEW_TYPE_GRID && config.fileColumnCnt < MAX_COLUMN_COUNT
+//            findItem(R.id.reduce_column_count).isVisible = config.viewType == VIEW_TYPE_GRID && config.fileColumnCnt > MIN_COLUMN_COUNT
             findItem(R.id.sort).isVisible = isSortByVisible()
 
             //findItem(R.id.change_view_type).icon = drawable()
@@ -332,21 +332,24 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         }
         return true
     }
-    private fun setupShowHidden(item: MenuItem) {
+     fun setupShowHidden(item: MenuItem) {
         val checkOrNot = config.showHidden
         item.isChecked = !checkOrNot
         config.showHidden = !checkOrNot
-        fragment.refreshItems(false)
+        itemsListFragtment?.refreshItems(false)
     }
 
-    private fun createNewItem() {
-        CreateNewItemDialog(this, "Create", "Cancel", fragment.currentPath) {
-            if (it) {
-                fragment.refreshItems(false)
-            } else {
-                toast(R.string.unknown_error_occurred)
-            }
-        }
+     fun createNewItem() {
+         itemsListFragtment?.currentPath?.let {
+             CreateNewItemDialog(this, "Create", "Cancel", pathList[pathList.size-1]) {
+                 if (it) {
+                     itemsListFragtment?.refreshItems(false)
+                     toast("Folder created")
+                 } else {
+                     toast(R.string.unknown_error_occurred)
+                 }
+             }
+         }
     }
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun changeViewType(item: MenuItem) {
