@@ -227,13 +227,19 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             AUDIO_ID -> {
                 (activity as FileManagerMainActivity).pathText = AUDIO_NAME
                 (activity as FileManagerMainActivity).showAdd=false
-
+                threedot.visibility = View.GONE
                 AUDIO_CLICK++
                 model?.audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
+                        if(list == null || list.size == 0){
+                            zrp_file.visibility=View.VISIBLE
+                            item_list_rv.visibility = View.GONE
+                        }
+                        else{
+                            refreshItems(true)
 
-                        refreshItems(true)
+                        }
                     }
                 })
             }
@@ -241,16 +247,24 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 (activity as FileManagerMainActivity).pathText = VIDEOS_NAME
                 VIDEOS_CLICK++
                 (activity as FileManagerMainActivity).showAdd=false
-
+                threedot.visibility = View.GONE
                 model?.videos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
-                        refreshItems(true)
+                        if(list == null || list.size == 0){
+                            zrp_file.visibility=View.VISIBLE
+                            item_list_rv.visibility = View.GONE
+                        }
+                        else{
+                            refreshItems(true)
+
+                        }
                     }
                 })
             }
             SHORTCUT_ID -> {
                 (activity as FileManagerMainActivity).pathText = INTERNAL_STORAGE_NAME
+
                 (activity as FileManagerMainActivity).showAdd=true
                 (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "Internal"
@@ -269,11 +283,18 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 PHOTOS_CLICK++
                 (activity as FileManagerMainActivity).pathText = PHOTOS_NAME
                 (activity as FileManagerMainActivity).showAdd=false
-
+                threedot.visibility = View.GONE
                 model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
-                        refreshItems(true)
+                        if(list == null || list.size == 0){
+                            zrp_file.visibility=View.VISIBLE
+                            item_list_rv.visibility = View.GONE
+                        }
+                        else{
+                            refreshItems(true)
+
+                        }
                     }
                 })
             }
@@ -289,11 +310,18 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 APPLICATION_CLICK++
                 (activity as FileManagerMainActivity).pathText = APPLICATION_NAME
                 (activity as FileManagerMainActivity).showAdd=false
-
+                threedot.visibility = View.GONE
                 model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
-                        refreshItems(true)
+                        if(list == null || list.size == 0){
+                            zrp_file.visibility=View.VISIBLE
+                            item_list_rv.visibility = View.GONE
+                        }
+                        else{
+                            refreshItems(true)
+
+                        }
                     }
                 })
             }
@@ -301,23 +329,37 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 DOCUMENTS_CLICK++
                 (activity as FileManagerMainActivity).pathText = DOCUMENTS_NAME
                 (activity as FileManagerMainActivity).showAdd=false
-
+                threedot.visibility = View.GONE
                 model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
-                        refreshItems(true)
+                        if(list == null || list.size == 0){
+                            zrp_file.visibility=View.VISIBLE
+                            item_list_rv.visibility = View.GONE
+                        }
+                        else{
+                            refreshItems(true)
+
+                        }
                     }
                 })
             }
             ZIP_FILES_ID ->{
                 ZIP_FILES_CLICK++
                 (activity as FileManagerMainActivity).showAdd=false
-
+                threedot.visibility = View.GONE
                 (activity as FileManagerMainActivity).pathText = ZIP_FILES_NAME
                 model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
-                        refreshItems(true)
+                        if(list == null || list.size == 0){
+                            zrp_file.visibility=View.VISIBLE
+                            item_list_rv.visibility = View.GONE
+                        }
+                        else{
+                            refreshItems(true)
+
+                        }
                     }
                 })
             }

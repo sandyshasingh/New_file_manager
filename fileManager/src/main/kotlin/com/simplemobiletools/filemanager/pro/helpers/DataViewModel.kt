@@ -52,9 +52,9 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
         }
 
 
-    override fun fetchAudioCompleted(audiosList: MutableLiveData<List<ListItem>>?, audiosSize: Long) {
-        audios = audiosList
-        this.audioSize.value = audiosSize
+    override fun fetchAudioCompleted(audiosList: List<ListItem>?) {
+        audios?.postValue(audiosList)
+       // this.audioSize.value = audiosSize
     }
 
     override fun fetchVideoCompleted(videosList:List<ListItem>?) {
@@ -62,9 +62,10 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
         //this.videoSize.value = videosSize
     }
 
-    override fun fetchPhotosCompleted(photosList: MutableLiveData<List<ListItem>>?, photosSize: Long) {
-        photos = photosList
-        this.photoSize.value = photosSize
+    override fun fetchPhotosCompleted(photosList: List<ListItem>?) {
+
+        photos?.postValue(photosList)
+        //this.photoSize.value = photosSize
     }
 
     override fun fetchAppsCompleted(audiosList: ArrayList<ListItem>?) {
