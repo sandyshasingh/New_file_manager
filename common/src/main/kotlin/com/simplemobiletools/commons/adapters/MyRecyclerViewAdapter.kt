@@ -222,7 +222,7 @@ abstract class MyRecyclerViewAdapter(
 //            bottomNavigation?.visibility=View.GONE
 //
 //        }
-        btmListener?.btmVisible(false)
+       // btmListener?.btmVisible(false)
         for (i in 0 until itemCount) {
             toggleItemSelection(false, i, false,5)
         }
@@ -303,8 +303,7 @@ abstract class MyRecyclerViewAdapter(
         if(!shortcut){
             listener?.refreshItems(false)
             notifyDataSetChanged()
-
-        }
+          }
       /*  if(bottomNavigation!=null && bottomNavigation?.visibility==View.VISIBLE) {
             bottomNavigation?.visibility=View.GONE
         }*/

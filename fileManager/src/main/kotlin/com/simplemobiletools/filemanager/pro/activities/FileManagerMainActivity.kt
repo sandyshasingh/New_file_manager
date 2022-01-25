@@ -62,6 +62,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     private val sharedPrefFile = "com.example.new_file_manager"
     private var folderItems = ArrayList<FolderItem>()
      var mProgressDialog: AppProgressDialog? = null
+    var isSearchOnItemsFragment=false
 
 
     /* override fun attachBaseContext(newBase: Context) {
@@ -154,11 +155,12 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             myhint?.visibility = View.GONE
             itemsListFragtment?.searchClicked=true
             val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
-           // if (fragment !is ItemsListFragment){
-
+            if (fragment is ItemsFragment){
+                isSearchOnItemsFragment = true
                 onCategoryClick(INTERNAL_STORAGE,"abc")
-         //   }
-
+            }
+            else
+                isSearchOnItemsFragment = false
 //            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
 //            fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment!!).addToBackStack("")
 //            fragmentTransaction.commit()
@@ -176,8 +178,8 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             // fragment.searchClosed()
             myhint?.visibility = View.VISIBLE
             itemsListFragtment?.searchClosed()
-            val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
-            if (fragment is ItemsListFragment){
+            //val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
+            if (isSearchOnItemsFragment){
                 onBackPressed()
                 //onBackPressed()
 
@@ -214,14 +216,15 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                            }
                         else
                            {
-//                               val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
-//                               if (fragment is ItemsListFragment){
-//                                   itemsListFragtment?.searchInFolder(newText)!!
-//                               }
-//                               else{
+                               //val fragment = supportFragmentManager.findFragmentById(R.id.fragment_holder)
+                               if (isSearchOnItemsFragment){
+
                                    itemsListFragtment?.searchDataChanged(newText)!!
 
-//                               }
+                               }
+                               else{
+                                   itemsListFragtment?.searchInFolder(newText)!!
+                               }
                            }
                     }
 

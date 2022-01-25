@@ -12,6 +12,8 @@ class SplashScreen : BaseSimpleActivity(),GroupVideoPhotoAsyncTask.RecentFetchAs
 
     private val SPLASH_DISPLAY_LENGTH = 30L
   //  var viewModel : DataViewModel? = null
+
+
 //    var recent_files : MutableLiveData<Map<String, List<ListItem>>> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {

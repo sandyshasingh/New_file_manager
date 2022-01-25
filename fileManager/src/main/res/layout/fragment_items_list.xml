@@ -88,13 +88,13 @@
                 android:src="@drawable/ic_file_manager_slct_all"
                 android:layout_height="60dp"/>
 
-    <ImageView
-        android:id="@+id/threedot"
-        android:layout_width="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginLeft="5dp"
-        android:src="@drawable/ic_icon_dot_light"
-        android:layout_height="30dp"/>
+            <ImageView
+                android:id="@+id/threedot"
+                android:layout_width="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_icon_dot_light"
+                android:layout_height="30dp"/>
 
 
 

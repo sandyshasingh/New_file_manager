@@ -977,20 +977,37 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
         item_list_rv?.doVisible()
         zrp_file?.beGone()
         (activity as FileManagerMainActivity).pathList.clear()
+        if (listItem.isEmpty()){
+            zrp_file?.doVisible()
+            item_list_rv?.doGone()
+        }
 
-        getRecyclerAdapter()?.updateItems(listItem)
+        else
+        {
+            getRecyclerAdapter()?.updateItems(listItem)
+        }
     }
 
     fun searchInFolder(text: String){
         var listItem:ArrayList<ListItem> = ArrayList()
         for (value in storedItems)
         {
-            if (value.mName.contains("%$text%"))
+            if (value.mName.contains("$text"))
                 listItem.add(value)
         }
         item_list_rv?.doVisible()
         zrp_file?.beGone()
-        getRecyclerAdapter()?.updateItems(listItem)
+        if (listItem.isEmpty()){
+            zrp_file?.doVisible()
+            item_list_rv?.doGone()
+        }
+
+        else
+        {
+            getRecyclerAdapter()?.updateItems(listItem)
+        }
+
+
     }
 
     fun searchQueryChanged(text: String) {
