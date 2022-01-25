@@ -65,6 +65,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
     private var baseSimpleActivity : BaseSimpleActivity? = null
      var listener : BottomNavigationVisible? = null
     var itemsToSort : ArrayList<ListItem> = ArrayList()
+    var listenerUpdate: UpdateServiceIntent? = null
 //    var mainAdapter : AdapterForFolders? = null
 
 
@@ -214,9 +215,13 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 item_list_rv, folderClicked == SHORTCUT_ID
            ,{ list, position -> itemClick(list as ListItem, position, false) },{ isEnabled -> isAddEnabled(isEnabled) } )
 
+
+
         }
 
         itemClicked(folderClicked)
+
+
 
 
 
@@ -722,6 +727,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                         null,
                         item_list_rv, folderClicked == SHORTCUT_ID
                     ,{ list, position -> itemClick(list as ListItem, position, false) },{ isEnabled -> isAddEnabled(isEnabled) })
+                    mainAdapter?.listenerUpdate = listenerUpdate
                     mView.item_list_rv.adapter = mainAdapter
 
 
@@ -989,10 +995,11 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
     }
 
     fun searchInFolder(text: String){
+        var uptext = text.toUpperCase()
         var listItem:ArrayList<ListItem> = ArrayList()
         for (value in storedItems)
         {
-            if (value.mName.contains("$text"))
+            if (value.mName.toUpperCase().contains("$uptext"))
                 listItem.add(value)
         }
         item_list_rv?.doVisible()

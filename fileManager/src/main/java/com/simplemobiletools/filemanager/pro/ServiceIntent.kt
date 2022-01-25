@@ -17,8 +17,11 @@ class ServiceIntent:IntentService(TAG) {
    // var list = ArrayList()
     override fun onHandleIntent(p0: Intent?) {
         val internalStoragePath = this?.config?.internalStoragePath
+       DatabaseforSearch.getInstance(applicationContext)?.searchDatabaseDao()?.deleteAll()
         search("$internalStoragePath")
     }
+
+
 
     fun search(path:String){
         var file = File(path)

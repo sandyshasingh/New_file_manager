@@ -11,6 +11,7 @@ import com.simplemobiletools.commons.helpers.INTERNAL_STORAGE_NAME
 import com.simplemobiletools.commons.helpers.SD_CARD_NAME
 import com.simplemobiletools.commons.models.FileDirItem
 import kotlinx.android.synthetic.main.item_path.view.*
+import java.io.File
 
 
 class AdapterForPath(var pathList: ArrayList<String>, var listener: BreadcrumbsListenerNew?, var mContext: Context,var mpathtext:String?) : RecyclerView.Adapter<AdapterForPath.ViewHolder>(){
@@ -59,7 +60,9 @@ class AdapterForPath(var pathList: ArrayList<String>, var listener: BreadcrumbsL
                 folderNameTextView?.text = item.name
             }
             itemView.setOnClickListener{
+               if (File(pathList[adapterPosition]).listFiles().isNotEmpty())
                 listener?.breadcrumbClickedNew(pathList[adapterPosition],adapterPosition)
+
             }
         }
 

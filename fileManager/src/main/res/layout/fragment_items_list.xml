@@ -17,6 +17,7 @@
         android:id="@+id/zrp_file"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/breadcrumb_rv"
         android:visibility="gone">
 
         <ImageView
@@ -66,6 +67,7 @@
             android:orientation="horizontal"
             android:background="?attr/rv_path"
             android:paddingStart="8dp"
+            android:layout_marginEnd="40dp"
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />

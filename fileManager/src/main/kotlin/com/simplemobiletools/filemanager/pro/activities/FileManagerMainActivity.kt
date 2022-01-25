@@ -46,7 +46,7 @@ import kotlin.collections.HashSet
 
 const val REQUEST_CODE_FOR_STORAGE_PERMISSION =  101
 const val FRAGMENT_STACK = "fragment_stack"
-class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNavigationVisible,DeleteShortcut {
+class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNavigationVisible,DeleteShortcut,UpdateServiceIntent {
     private val PICKED_PATH = "picked_path"
     var pathList = ArrayList<String>()
     var showAdd = false
@@ -506,6 +506,8 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     }
 
 
+
+
     fun bottomSheetClickListener(){
 
         bottom_send.setOnClickListener {
@@ -698,6 +700,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
 
         itemsListFragtment = ItemsListFragment.newInstance(id,path)
         itemsListFragtment?.listener = this
+        itemsListFragtment?.listenerUpdate = this
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragment_holder, itemsListFragtment!!).addToBackStack("")
         fragmentTransaction.commit()
@@ -784,6 +787,14 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
 
 
 
+    }
+
+    override fun updateDatabase(isChanged: Boolean) {
+
+        if (isChanged){
+            val intent = Intent(this, ServiceIntent::class.java).apply {}
+            startService(intent)
+        }
     }
 
 }

@@ -15,6 +15,6 @@ interface SearchDatabaseDao {
     @Query("SELECT * FROM DatabaseforSearch where mName LIKE :parameter ")
     fun getSearchResult(parameter : String): List<SearchDatabase>?
 
-    @Query("DELETE FROM DatabaseforSearch ")
+    @Query("DELETE  FROM DatabaseforSearch ")
     fun deleteAll()
 }

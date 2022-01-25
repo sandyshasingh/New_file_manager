@@ -295,6 +295,7 @@ abstract class MyRecyclerViewAdapter(
     fun finishActMode() {
         actMode?.finish()
         isLongPressClick = false
+
 //        isActionModeEnabled = false
         //isHeaderShow = true
 

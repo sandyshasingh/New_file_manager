@@ -30,6 +30,7 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.BottomNavigationVisible
 import com.simplemobiletools.commons.ListItem
+import com.simplemobiletools.commons.UpdateServiceIntent
 import com.simplemobiletools.filemanager.pro.ActionMenuClick
 import com.simplemobiletools.filemanager.pro.ItemsListFragment
 import com.simplemobiletools.filemanager.pro.ListItemDiffCallback
@@ -69,8 +70,10 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
     private lateinit var fileDrawable: Drawable
     private var isDarkTheme = false
     private var currentItemsHash = listItems.hashCode()
+     var listenerUpdate: UpdateServiceIntent? = null
 
     init {
+
 //       setupDragListener(true)
         isDarkTheme = activity.isDarkTheme()
         initDrawables()
@@ -455,6 +458,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
             val items = resources.getQuantityString(R.plurals.delete_items, 1, 1)
             val question = String.format(resources.getString(R.string.deletion_confirmation), items)
             ConfirmationDialog(activity, question) {
+                listenerUpdate?.updateDatabase(true)
                 deleteFiles(listItem, position)
             }
             dialogDismiss()
@@ -864,12 +868,14 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
             }
             positions.sortDescending()
             removeSelectedItems(positions)
+
             listener?.deleteFiles(files)
             positions.forEach { i ->
                 listItems.removeAt(i)
 
             }
-
+//   (activity as FileManagerMainActivity).updateDatabase
+            listenerUpdate?.updateDatabase(true)
             listener?.refreshItems(false)
         }
     }
@@ -887,6 +893,8 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                 copyMoveRootItems(files, it, isCopyOperation)
             } else {
                 activity.copyMoveFilesTo(files, source, it, isCopyOperation, false, activity.config.shouldShowHidden) {
+                  //  updateDatabase
+                    listenerUpdate?.updateDatabase(true)
                     listener?.refreshItems(false)
                     finishActMode()
                 }
@@ -927,6 +935,8 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                 RenameItemDialog(activity, oldPath) {
 //                    activity.config.moveFavorite(oldPath, it)
                     activity.runOnUiThread {
+                       // updateDatabase
+                        listenerUpdate?.updateDatabase(true)
                         listener?.refreshItems(false)
                         finishActMode()
                     }
@@ -934,12 +944,16 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
             }
             fileDirItems.any { it.isDirectory } -> RenameItemsDialog(activity, paths) {
                 activity.runOnUiThread {
+                    // updateDatabase
+                    listenerUpdate?.updateDatabase(true)
                     listener?.refreshItems(false)
                     finishActMode()
                 }
             }
             else -> RenameDialog(activity, paths, false) {
                 activity.runOnUiThread {
+                    // updateDatabase
+                    listenerUpdate?.updateDatabase(true)
                     listener?.refreshItems(false)
                     finishActMode()
                 }

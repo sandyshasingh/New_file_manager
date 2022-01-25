@@ -11,32 +11,16 @@
             android:layout_height="wrap_content"
             app:elevation="0dp">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/half_up_backgrounndcolor"
-                android:title="/file_manager"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:titleTextAppearance="@style/Toolbar.TitleText">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="10dp"
+                <RelativeLayout
+                    android:id="@+id/relative"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/rounded_toolbar"
-
-                    android:orientation="horizontal">
-
-                    <!--<ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_file_manager_video" />-->
-
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/setting"
                         android:layout_marginRight="8dp"
@@ -59,41 +43,79 @@
                         android:layout_height="27dp"
 
                         />
-                    <RelativeLayout
-                        android:id="@+id/search_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
-
-                        <TextView
-                            android:id="@+id/myhint"
-                            android:layout_width="240dp"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:textSize="16dp"
-                            android:textColor="?attr/filemanagertextcolor"
-                            android:textStyle="normal"
-                            android:text="Search" />
-
-                    <androidx.appcompat.widget.SearchView
-                        android:id="@+id/search_df"
-                        app:searchIcon="@drawable/ic_file_manager_search"
-                        android:layout_width="wrap_content"
-                        android:layout_toEndOf="@id/myhint"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing16"
-                        android:textSize="15dp"
-                         />
-
-
                 </RelativeLayout>
 
 
-                </LinearLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/relative"
+                    android:background="?attr/half_up_backgrounndcolor"
+                    android:title="/file_manager"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:titleTextAppearance="@style/Toolbar.TitleText">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/rounded_toolbar"
+
+                        android:orientation="horizontal">
+
+                        <!--<ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_file_manager_video" />-->
 
 
-            </androidx.appcompat.widget.Toolbar>
+                        <RelativeLayout
+                            android:id="@+id/search_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical">
+
+
+
+                            <TextView
+                                android:id="@+id/myhint"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:textSize="16dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_toStartOf="@+id/search_df"
+                                android:textColor="?attr/filemanagertextcolor"
+                                android:textStyle="normal"
+                                android:text="Search" />
+
+                            <androidx.appcompat.widget.SearchView
+                                android:id="@+id/search_df"
+                                app:searchIcon="@drawable/ic_file_manager_search"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/spacing16"
+                                android:layout_alignParentEnd="true"
+                                android:textSize="15dp"
+                                />
+
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </RelativeLayout>
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Your scrolling content -->
