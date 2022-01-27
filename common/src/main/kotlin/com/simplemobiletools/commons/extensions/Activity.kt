@@ -10,6 +10,7 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.TransactionTooLargeException
 import android.provider.DocumentsContract
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -344,6 +345,7 @@ fun BaseSimpleActivity.deleteFileBg(fileDirItem: FileDirItem, allowDeleteFolder:
 
     var fileDeleted = !isPathOnOTG(path) && ((!file.exists() && file.length() == 0L) || file.delete())
     if (fileDeleted) {
+        Log.d("salsa","fileDeleted")
         deleteFromMediaStore(path)
         runOnUiThread {
             callback?.invoke(true)

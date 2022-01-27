@@ -347,6 +347,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
              CreateNewItemDialog(this, "Create", "Cancel", pathList[pathList.size-1]) {
                  if (it) {
                      itemsListFragtment?.refreshItems(false)
+                     updateDatabase(true)
                      toast("Folder created")
                  } else {
                      toast(R.string.unknown_error_occurred)

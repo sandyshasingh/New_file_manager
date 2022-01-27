@@ -15,6 +15,7 @@ class VideoFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fe
 
     override fun doInBackground(vararg p0: Void?):List<ListItem>? {
         return  getVideos(context)
+
     }
     private fun getVideos(context: Context): List<ListItem>? {
             val songsDataClassList: java.util.ArrayList<ListItem> = java.util.ArrayList()
@@ -81,7 +82,9 @@ class VideoFetcher(var context: Context, var fetchAudioAsyncCompleteListener: Fe
                     }
                 }
             }
+        Log.d("sandy","${songsDataClassList.size}")
         return songsDataClassList
+
     }
 
     override fun onPostExecute(result: List<ListItem>) {

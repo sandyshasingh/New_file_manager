@@ -61,7 +61,7 @@ class AdapterForPath(var pathList: ArrayList<String>, var listener: BreadcrumbsL
             }
             itemView.setOnClickListener{
                if (File(pathList[adapterPosition]).listFiles().isNotEmpty())
-                listener?.breadcrumbClickedNew(pathList[adapterPosition],adapterPosition)
+                 listener?.breadcrumbClickedNew(pathList[adapterPosition],adapterPosition)
 
             }
         }

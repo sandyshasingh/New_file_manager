@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.AsyncTask
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.simplemobiletools.commons.ListItem
@@ -19,9 +20,9 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
     var apps: MutableLiveData<ArrayList<ListItem>> = MutableLiveData()
     var zip_files: MutableLiveData<List<ListItem>> = MutableLiveData()
     var documents: MutableLiveData<List<ListItem>> = MutableLiveData()
-    var audioSize = MutableLiveData<Long>()
-    var videoSize = MutableLiveData<Long>()
-    var photoSize = MutableLiveData<Long>()
+//    var audioSize = MutableLiveData<Long>()
+//    var videoSize = MutableLiveData<Long>()
+//    var photoSize = MutableLiveData<Long>()
     var recent_files : MutableLiveData<RecentUpdatedFiles> = MutableLiveData()
 
     fun fetchRecent(context: Activity){
@@ -58,6 +59,7 @@ class DataViewModel(application: Application):  AndroidViewModel(application),Zi
     }
 
     override fun fetchVideoCompleted(videosList:List<ListItem>?) {
+        Log.d("salsa","fetchComplete"+videosList?.size)
         videos?.postValue(videosList)
         //this.videoSize.value = videosSize
     }

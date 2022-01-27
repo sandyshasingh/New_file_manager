@@ -261,6 +261,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                             item_list_rv.visibility = View.GONE
                         }
                         else{
+                            Log.d("salsa","refreshClicked")
                             refreshItems(true)
 
                         }
@@ -800,7 +801,11 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                     when(folderClicked) {
                         AUDIO_ID ->  model?.fetchAudios(it)
                         PHOTOS_ID ->  model?.fetchImages(it)
-                        VIDEOS_ID -> model?.fetchVideos(it)
+                        VIDEOS_ID ->
+                        {
+                            Log.d("salsa","fetch")
+                            model?.fetchVideos(it)
+                        }
                         APPLICATIONS_ID ->   model?.fetchApps(it)
                         DOCUMENTS_ID ->    model?.fetchDocuments(it)
                         ZIP_FILES_ID ->  model?.fetchZip(it)
@@ -840,6 +845,9 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                     requireActivity().runOnUiThread {
                         requireActivity().toast(R.string.unknown_error_occurred)
                     }
+                }
+                else{
+                    refreshItems(false)
                 }
             }
         }
@@ -999,6 +1007,12 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
         var listItem:ArrayList<ListItem> = ArrayList()
         for (value in storedItems)
         {
+            if (value.isDirectory){
+               val aa = searchFiles(text,value.mPath)
+                listItem.addAll(aa)
+//                value.
+//                        getfiledir
+            }
             if (value.mName.toUpperCase().contains("$uptext"))
                 listItem.add(value)
         }

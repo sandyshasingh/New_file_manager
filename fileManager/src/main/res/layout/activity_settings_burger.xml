@@ -65,7 +65,8 @@
                 android:gravity="end"
                 android:layout_weight="90"
                 android:paddingEnd="10dp"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:theme="@style/SCBSwitch"/>
 <!--            <ToggleButton-->
 <!--                android:layout_width="wrap_content"-->
 <!--                android:layout_height="wrap_content"-->

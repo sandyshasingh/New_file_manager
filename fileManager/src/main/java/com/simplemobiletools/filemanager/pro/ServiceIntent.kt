@@ -29,24 +29,27 @@ class ServiceIntent:IntentService(TAG) {
         val sorting = this.config.getFolderSorting(path)
         val isSortingBySize = sorting and SORT_BY_SIZE != 0
 
-        for(i in list)
-        {
-            if (i.isDirectory) {
-                val fileDirItem = getFileDirItemFromFile(i, isSortingBySize, HashMap())
-                if(fileDirItem != null)
-                {
-                    DatabaseforSearch.getInstance(applicationContext)?.searchDatabaseDao()?.insertSearchResult(fileDirItem)
-                    search(i.path)
+        if (list!=null && list.isNotEmpty()){
+            for(i in list)
+            {
+                if (i.isDirectory) {
+                    val fileDirItem = getFileDirItemFromFile(i, isSortingBySize, HashMap())
+                    if(fileDirItem != null)
+                    {
+                        DatabaseforSearch.getInstance(applicationContext)?.searchDatabaseDao()?.insertSearchResult(fileDirItem)
+                        search(i.path)
+                    }
                 }
-            }
-            else {
-                val fileDirItem = getFileDirItemFromFile(i, isSortingBySize, HashMap())
-                if(fileDirItem != null)
-                {
-                    DatabaseforSearch.getInstance(applicationContext)?.searchDatabaseDao()?.insertSearchResult(fileDirItem)
+                else {
+                    val fileDirItem = getFileDirItemFromFile(i, isSortingBySize, HashMap())
+                    if(fileDirItem != null)
+                    {
+                        DatabaseforSearch.getInstance(applicationContext)?.searchDatabaseDao()?.insertSearchResult(fileDirItem)
+                    }
                 }
             }
         }
+
 
     }
     private fun getFileDirItemFromFile(file: File, isSortingBySize: Boolean, lastModifieds: HashMap<String, Long>): SearchDatabase? {

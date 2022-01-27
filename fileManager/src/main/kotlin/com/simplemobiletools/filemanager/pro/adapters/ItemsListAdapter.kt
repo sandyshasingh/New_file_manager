@@ -875,8 +875,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
 
             }
 //   (activity as FileManagerMainActivity).updateDatabase
+
+       //     listener?.refreshItems(false)
             listenerUpdate?.updateDatabase(true)
-            listener?.refreshItems(false)
         }
     }
 
