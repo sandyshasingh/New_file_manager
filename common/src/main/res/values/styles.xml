@@ -171,6 +171,9 @@
         <item name="actionModeBackground">@color/white</item>
         <item name="filepicker_textcolor">@color/ic_plus_vector_light</item>
 
+
+<!--        <item name="popupMenuStyle">@style/PopupMenu</item>-->
+
         <item name="ic_home_vector">@drawable/ic_home_vector_black</item>
         <item name="filemanageritembackgroud">@drawable/rectangle_semitranparent_light_theme</item>
         <item name="ic_folder_icon">@drawable/ic_icon_folder__light2</item>
@@ -208,6 +211,9 @@
         <!--        <item name="bottom_sheet_tint">@color/bottom_sheet_color</item>-->
     </style>
 
+<!--    <style name="PopupMenu" parent="AppTheme2">-->
+<!--        <item name="android:popupBackground">@color/btm_background</item>-->
+<!--    </style>-->
 
 
     <style name="AppTheme0" parent="LightMode">

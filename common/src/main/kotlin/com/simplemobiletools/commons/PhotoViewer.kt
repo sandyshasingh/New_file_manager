@@ -18,12 +18,13 @@ class PhotoViewer : Fragment(),OnPagerItemsClickLister {
 
     private var listOfPaths : ArrayList<ListItem>? = null
     private var position : Int = 0
+   // private var position2 : Int = 0
     private var imagePagerAdapter : ImagePagerAdapter?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            if(arguments?.containsKey(ARG_IMAGE_LIST) == true)
+            if(arguments?.containsKey(ARG_POS) == true)
             position = it.getInt(ARG_POS)
         }
     }
