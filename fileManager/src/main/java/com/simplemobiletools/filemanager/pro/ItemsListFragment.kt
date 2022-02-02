@@ -1,6 +1,7 @@
 package com.simplemobiletools.filemanager.pro
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -619,6 +620,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             } else {
                var mime =  context?.getMimeTypeFromUri(Uri.parse(path))
                 var imageslist:ArrayList<ListItem> = ArrayList()
+                var videoslist:ArrayList<ListItem> = ArrayList()
                 if(mime?.contains("image") == true){
                         for (value in storedItems){
                             if(context?.getMimeTypeFromUri(Uri.parse(value.mPath))?.contains("image") == true)
@@ -626,6 +628,14 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                         }
                     DataHolderforImageViewer.mfinalValues = imageslist
                     (activity as? FileManagerMainActivity)?.loadPhotoViewerFragment(imageslist,position )
+                }
+                else if (mime?.contains("video") == true){
+                    for (value in storedItems){
+                        if(context?.getMimeTypeFromUri(Uri.parse(value.mPath))?.contains("video") == true)
+                            videoslist.add(value)
+                    }
+                    VideoDataHolder.data = videoslist
+                    (activity as? FileManagerMainActivity)?.startVideoPlayer(position)
                 }
                 else
                     requireActivity().tryOpenPathIntent(path, false)

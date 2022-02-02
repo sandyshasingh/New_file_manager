@@ -6,6 +6,10 @@
 android {
     compileSdk 30
     defaultConfig {
+
+        configurations.all {
+            resolutionStrategy { force 'androidx.core:core:1.6.0' }
+        }
         applicationId "com.example.new_file_manager"
         minSdk 21
         targetSdk 30

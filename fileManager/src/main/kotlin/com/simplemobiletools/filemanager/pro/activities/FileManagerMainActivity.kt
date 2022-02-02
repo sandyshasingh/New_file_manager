@@ -342,6 +342,13 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         itemsListFragtment?.refreshItems(false)
     }
 
+    fun startVideoPlayer(position: Int){
+        val intent = Intent(this, ExoPlayerMainActivity::class.java).apply {
+        }
+        intent.putExtra("pos",position)
+        startActivity(intent)
+    }
+
      fun createNewItem() {
          itemsListFragtment?.currentPath?.let {
              CreateNewItemDialog(this, "Create", "Cancel", pathList[pathList.size-1]) {

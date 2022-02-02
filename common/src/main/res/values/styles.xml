@@ -157,6 +157,7 @@
         <item name="rv_path">@color/path_dark</item>
         <item name="slct_icon_color">@color/iconcolor_dark</item>
         <item name="bottom_sheet_bg" >@color/toolbar_dark</item>
+        <item name="android:textColor">#ffffff</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="ic_folder_icon">@drawable/ic_file_manager_fldr</item>
         <item name="shortcut_btn_color">@color/add_btn_dark</item>
@@ -165,13 +166,17 @@
         <item name="ic_plus_vector">@color/ic_plus_vector_dark</item>
         <item name="filepicker_textcolor">@color/ic_plus_vector_dark</item>
     </style>
+    <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/btm_background</item>
+    </style>
+
 
     <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="cab_rename">@drawable/ic_file_manager_rename</item>
         <item name="actionModeBackground">@color/white</item>
         <item name="filepicker_textcolor">@color/ic_plus_vector_light</item>
-
-
+        <item name="android:textColor">#000000</item>
+        <item name="popupMenuStyle">@style/PopupMenu</item>
 <!--        <item name="popupMenuStyle">@style/PopupMenu</item>-->
 
         <item name="ic_home_vector">@drawable/ic_home_vector_black</item>
@@ -190,7 +195,7 @@
         <item name="ic_icon_next">@drawable/ic_icon_next_light</item>
         <item name="textcolorsecondrycustom">@color/material_gray_600</item>
         <item name="android:textColorPrimary">@color/material_gray_900</item>
-        <item name="android:textColor">@color/text_color2</item>
+<!--        <item name="android:textColor">@color/text_color2</item>-->
         <item name="bottom_sheet_bg" >@color/btm_background</item>
         <item name="ic_unhide_vector" >@drawable/ic_unhide_vector_black</item>
         <item name="ic_plus_vector" >@color/ic_plus_vector_light</item>
@@ -226,6 +231,8 @@
 
     <dimen name="text_medium">14dp</dimen>
     <color name="white">#FFFFFF</color>
+    <color name="semi_transparent_25">#25000000</color>
+    <color name="transparent">#00000000</color>
     <color name="translucent_black">#80000000</color>
     <color name="btn_blue">#AADFFF</color>
     <color name="grey400">#bdbdbd</color>

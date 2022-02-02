@@ -65,6 +65,11 @@ dependencies {
     //api 'com.github.GrenderG:Toasty:1.5.2'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
 
+    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+    api 'androidx.core:core:1.7.0'
+
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.16.1'
+
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
     implementation 'com.github.lzyzsd:circleprogress:1.1.0@aar'
     implementation 'com.github.lzyzsd:circleprogress:1.1.0@aar'

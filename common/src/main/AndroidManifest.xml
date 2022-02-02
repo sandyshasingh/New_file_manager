@@ -8,7 +8,10 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
-
+        <activity
+            android:name=".ExoPlayerMainActivity"
+            android:theme="@style/AppTheme2">
+        </activity>
     </application>
 
 </manifest>
