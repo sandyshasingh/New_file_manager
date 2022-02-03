@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -31,6 +32,7 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyLinearLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.filemanager.pro.AppDataHolder
+import com.simplemobiletools.filemanager.pro.ChildViewListener
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.SplashScreen
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
@@ -46,7 +48,7 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.BreadcrumbsListenerNew {
+class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.BreadcrumbsListenerNew,ChildViewListener {
 
     private var mProgressDialog: AppProgressDialog? = null
     var deleteShortcut: DeleteShortcut? = null
@@ -175,6 +177,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             { folder -> headerFolderClick(folder) },
             deleteShortcut,
             { storage -> storageFolderClick(storage) },
+            this@ItemsFragment
         )
         recent_file_line?.adapter = recent_file_line_adapter
 
@@ -1061,6 +1064,28 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             }
         }
 
+    }
+
+    override fun childItems(item: ListItem, position: Int, list: List<ListItem>) {
+        var mime =  context?.getMimeTypeFromUri(Uri.parse(item.path))
+        var imageslist:ArrayList<ListItem> = ArrayList()
+        var videoslist:ArrayList<ListItem> = ArrayList()
+        if(mime?.contains("image") == true){
+            for (value in list){
+                if(context?.getMimeTypeFromUri(Uri.parse(value.mPath))?.contains("image") == true)
+                    imageslist.add(value)
+            }
+            DataHolderforImageViewer.mfinalValues = imageslist
+            (activity as? FileManagerMainActivity)?.loadPhotoViewerFragment(imageslist,position )
+        }
+        else if (mime?.contains("video") == true){
+            for (value in list){
+                if(context?.getMimeTypeFromUri(Uri.parse(value.mPath))?.contains("video") == true)
+                    videoslist.add(value)
+            }
+            VideoDataHolder.data = videoslist
+            (activity as? FileManagerMainActivity)?.startVideoPlayer(position)
+        }
     }
 
 }

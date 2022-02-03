@@ -16,6 +16,7 @@ import com.simplemobiletools.commons.helpers.EXTERNAL_STORAGE
 import com.simplemobiletools.commons.helpers.INTERNAL_STORAGE
 import com.simplemobiletools.commons.models.FolderItem
 import com.simplemobiletools.commons.models.StorageItem
+import com.simplemobiletools.filemanager.pro.ChildViewListener
 import com.simplemobiletools.filemanager.pro.MoreItemsList
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.RecentUpdatedFiles
@@ -35,7 +36,8 @@ class AdapterForRecentFiles(
     var folderList: ArrayList<FolderItem>,
      val clickListener: (FolderItem) -> Unit,
    var deleteShortcut: DeleteShortcut?,
-    val clickListenerStorage: (StorageItem) -> Unit
+    val clickListenerStorage: (StorageItem) -> Unit,
+    var listenerOfChild: ChildViewListener?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //var mRecentwva: List<ListItem>? = null
     private var storageItems = ArrayList<StorageItem>()
@@ -174,7 +176,7 @@ class AdapterForRecentFiles(
                 holder.itemView.recent_file_text.text = keys
                 holder.itemView.recent_file_item.adapter = ChildAdapterForRecentFiles(mContext,
                     mRecent?.mValues?.get(position-2),listener,
-                    keys)
+                    keys, listenerOfChild)
             }
             is StorageCardViewHolder -> {
                 holder.bindItems()

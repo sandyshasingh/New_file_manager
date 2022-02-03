@@ -23,7 +23,15 @@ import kotlinx.android.synthetic.main.filepicker_list_item.view.*
 import java.util.*
 
 class FilepickerItemsAdapter(activity: BaseSimpleActivity, val fileDirItems: List<FileDirItem>, recyclerView: MyRecyclerView,
-                             itemClick: (Any,Int) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, null, itemClick,null,null) {
+                             itemClick: (Any,Int) -> Unit) : MyRecyclerViewAdapter(
+    activity,
+    recyclerView,
+    null,
+    itemClick,
+    null,
+    null,
+    false
+) {
 
     private lateinit var fileDrawable: Drawable
     private var folderDrawable: Drawable? = null

@@ -32,7 +32,6 @@ import com.simplemobiletools.commons.BottomNavigationVisible
 import com.simplemobiletools.commons.ListItem
 import com.simplemobiletools.commons.UpdateServiceIntent
 import com.simplemobiletools.filemanager.pro.ActionMenuClick
-import com.simplemobiletools.filemanager.pro.ItemsListFragment
 import com.simplemobiletools.filemanager.pro.ListItemDiffCallback
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
@@ -58,9 +57,9 @@ import kotlin.collections.ArrayList
 class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenuClick?,var folderItems: ArrayList<FolderItem>,
                         var bottomListener: BottomNavigationVisible?, var listItems: MutableList<ListItem>, var listener: ItemOperationsListener?,
                         fastScroller: FastScroller?,
-                        recyclerView: MyRecyclerView, var shortcutClicked:Boolean,
+                        recyclerView: MyRecyclerView, var shortCutClicked:Boolean,
                         itemClick: (Any,Int) -> Unit, isAddEnabled: (Boolean) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick,isAddEnabled,bottomListener) {
+    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick,isAddEnabled,bottomListener,shortCutClicked) {
 
     private var fontSize = 0f
     private var textToHighlight = ""

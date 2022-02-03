@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.simplemobiletools.commons.ListItem
+import com.simplemobiletools.filemanager.pro.ChildViewListener
 import com.simplemobiletools.filemanager.pro.MoreItemsList
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.extensions.openWith
@@ -17,7 +18,8 @@ class ChildAdapterForRecentFiles(
     var mContext: Activity,
     var mRecent: List<ListItem>?,
     var listener: MoreItemsList,
-    var key: String?
+    var key: String?,
+    var listenerOfChild: ChildViewListener?
 ): RecyclerView.Adapter<ChildAdapterForRecentFiles.ViewHolder>() {
 
     inner class ViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
@@ -27,8 +29,13 @@ class ChildAdapterForRecentFiles(
                 if(mRecent?.size!! > 5 && adapterPosition == 4){
                     listener.moreItemsList(mRecent!!)
                 }
-                else
-                    openWith(mRecent?.get(adapterPosition))
+                else{
+                    mRecent?.get(adapterPosition)?.let { it1 -> listenerOfChild?.childItems(it1,adapterPosition,
+                        mRecent!!
+                    ) }
+
+//                    openWith(mRecent?.get(adapterPosition))
+                }
             }
 
         }
@@ -83,4 +90,5 @@ class ChildAdapterForRecentFiles(
         else
             return 5
     }
+
 }

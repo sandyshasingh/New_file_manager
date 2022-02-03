@@ -51,6 +51,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     var pathList = ArrayList<String>()
     var showAdd = false
     var itemsListFragtment:ItemsListFragment?=null
+    var myFragment:MoreItemFragment?=null
   //  var searchFragment= SearchFragment()
     private var isSearchOpen = true
     private var searchMenuItem: MenuItem? = null
@@ -63,6 +64,7 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     private var folderItems = ArrayList<FolderItem>()
      var mProgressDialog: AppProgressDialog? = null
     var isSearchOnItemsFragment=false
+    var isSearchOnMoreItemsFragment=false
 
 
     /* override fun attachBaseContext(newBase: Context) {
@@ -159,8 +161,14 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                 isSearchOnItemsFragment = true
                 onCategoryClick(INTERNAL_STORAGE,"abc")
             }
-            else
+//            else if (fragment is MoreItemFragment){
+//                isSearchOnMoreItemsFragment = true
+//            }
+            else{
                 isSearchOnItemsFragment = false
+              //  isSearchOnMoreItemsFragment = false
+            }
+
 //            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
 //            fragmentTransaction.add(R.id.fragment_holder,itemsListFragtment!!).addToBackStack("")
 //            fragmentTransaction.commit()
@@ -222,6 +230,9 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                                    itemsListFragtment?.searchDataChanged(newText)!!
 
                                }
+//                               else if (isSearchOnMoreItemsFragment){
+//                                   myFragment?.search(newText)
+//                               }
                                else{
                                    itemsListFragtment?.searchInFolder(newText)!!
                                }
@@ -615,6 +626,10 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                 setting.visibility = View.VISIBLE
                 back_main.visibility = View.GONE
             }
+              else if (fragment is MoreItemFragment){
+                setting.visibility = View.VISIBLE
+                back_main.visibility = View.GONE
+              }
               add_the_folder.visibility = View.GONE
               pathList.clear()
               itemsListFragtment?.showZrp()
@@ -753,12 +768,12 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
 
     override fun moreItemsList(item: List<ListItem>) {
         val fragmentManager: FragmentManager = supportFragmentManager
-        val myFragment = MoreItemFragment()
-        myFragment.arrayList = item
+         myFragment = MoreItemFragment()
+        myFragment?.arrayList = item
         setting.visibility = View.GONE
         back_main.visibility = View.VISIBLE
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.fragment_holder,myFragment).addToBackStack("")
+        fragmentTransaction.add(R.id.fragment_holder, myFragment!!).addToBackStack("")
         fragmentTransaction.commit()
     }
 

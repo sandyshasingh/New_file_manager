@@ -22,10 +22,15 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 abstract class MyRecyclerViewAdapter(
-    val activity: BaseSimpleActivity,val recyclerView: MyRecyclerView, val fastScroller: FastScroller? = null,
+    val activity: BaseSimpleActivity,
+    val recyclerView: MyRecyclerView,
+    val fastScroller: FastScroller? = null,
     val itemClick: (Any, Int) -> Unit,
     val isAddEnabled: ((Boolean) -> Unit)?,
-    var btmListener: BottomNavigationVisible?
+
+    var btmListener: BottomNavigationVisible?,
+    var shortcutClicked: Boolean,
+//    var fromShortcut:Boolean = false
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected val baseConfig = activity.baseConfig
     protected val resources = activity.resources!!
@@ -352,14 +357,17 @@ abstract class MyRecyclerViewAdapter(
                         viewClicked(any, position, true)
                     }
                     setOnLongClickListener {
-                        if (allowLongClick) {
+                        if (!shortcutClicked){
+                            if (allowLongClick) {
 //                            isHeaderShow=false
-                            viewLongClicked(position)
-                            notifyDataSetChanged()
+                                viewLongClicked(position)
+                                notifyDataSetChanged()
+                            }
+                            else {
+                                viewClicked(any, position, false)
+                            }
                         }
-                        else {
-                            viewClicked(any, position, false)
-                        }
+
                         true
                     }
                 } else {

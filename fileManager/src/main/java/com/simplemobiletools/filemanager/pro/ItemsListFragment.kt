@@ -45,6 +45,7 @@ const val PARAM_ID = "idExtra"
 class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,AdapterForPath.BreadcrumbsListenerNew {
 
     var currentPath = ""
+    var shortcutFolderClicked = false
     private var lastSearchedText = ""
     var mainAdapter : ItemsListAdapter? = null
     private var currentViewType = VIEW_TYPE_LIST
@@ -233,6 +234,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             AUDIO_ID -> {
                 (activity as FileManagerMainActivity).pathText = AUDIO_NAME
                 (activity as FileManagerMainActivity).showAdd=false
+//                mainAdapter?.fromShortcut = false
                 threedot.visibility = View.GONE
                 AUDIO_CLICK++
                 model?.audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
@@ -252,6 +254,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             VIDEOS_ID -> {
                 (activity as FileManagerMainActivity).pathText = VIDEOS_NAME
                 VIDEOS_CLICK++
+//                mainAdapter?.fromShortcut = false
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
                 model?.videos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
@@ -271,7 +274,8 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             }
             SHORTCUT_ID -> {
                 (activity as FileManagerMainActivity).pathText = INTERNAL_STORAGE_NAME
-
+                threedot.visibility = View.GONE
+//                mainAdapter?.fromShortcut = true
                 (activity as FileManagerMainActivity).showAdd=true
                 (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "Internal"
@@ -281,7 +285,15 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             }
             SHORTCUT_FOLDER_ID ->{
                 (activity as FileManagerMainActivity).showAdd=false
-                (activity as FileManagerMainActivity).pathList.add(folderPath!!)
+
+//                mainAdapter?.fromShortcut = false
+                (activity as FileManagerMainActivity).pathText = INTERNAL_STORAGE_NAME
+                shortcutFolderClicked = true
+              //  var filename= folderPath?.lastIndexOf("/")?.plus(1)?.let { folderPath?.substring(it) }
+               // (activity as FileManagerMainActivity).pathList.add(filename!!)
+
+               (activity as FileManagerMainActivity).pathList.add(folderPath!!)
+
                 openPath(folderPath!!)
 
             }
@@ -291,6 +303,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 (activity as FileManagerMainActivity).pathText = PHOTOS_NAME
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
+//                mainAdapter?.fromShortcut = false
                 model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
@@ -308,13 +321,14 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             DOWNLOAD_ID -> {
                 DOWNLOAD_CLICK++
                 (activity as FileManagerMainActivity).showAdd=false
-
+//                mainAdapter?.fromShortcut = false
                 (activity as FileManagerMainActivity).pathText = DOWNLOAD_NAME
                 currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 refreshItems(true)
             }
             APPLICATIONS_ID ->{
                 APPLICATION_CLICK++
+//                mainAdapter?.fromShortcut = false
                 (activity as FileManagerMainActivity).pathText = APPLICATION_NAME
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
@@ -334,6 +348,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             }
             DOCUMENTS_ID ->{
                 DOCUMENTS_CLICK++
+//                mainAdapter?.fromShortcut = false
                 (activity as FileManagerMainActivity).pathText = DOCUMENTS_NAME
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
@@ -355,6 +370,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 ZIP_FILES_CLICK++
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
+//                mainAdapter?.fromShortcut = false
                 (activity as FileManagerMainActivity).pathText = ZIP_FILES_NAME
                 model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
@@ -373,7 +389,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             INTERNAL_STORAGE -> {
                 (activity as FileManagerMainActivity).pathText = INTERNAL_STORAGE_NAME
                 (activity as FileManagerMainActivity).showAdd=false
-
+//                mainAdapter?.fromShortcut = false
                 // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "Internal"
@@ -382,7 +398,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             EXTERNAL_STORAGE -> {
                 (activity as FileManagerMainActivity).pathText = SD_CARD_NAME
                 (activity as FileManagerMainActivity).showAdd=false
-
+//                mainAdapter?.fromShortcut = false
                 // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 (activity as FileManagerMainActivity).pathList.clear()
                 currentFolderHeader = "External"
@@ -606,6 +622,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 openedDirectory()
             }
             add_shortcut_path = item.path
+            firstTime = false
             openPath(item.path)
         } else {
             val path = item.path
@@ -690,7 +707,9 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 //                Color.parseColor("#bcbec0")
 //            )
             (activity as FileManagerMainActivity).add_the_folder.visibility = View.GONE
-            threedot.visibility = View.VISIBLE
+
+            threedot.visibility = View.GONE
+            select_all_folders.visibility = View.GONE
 
             // add_icon.setImageResource(R.drawable.ic_file_add_shortcut)
 
@@ -710,10 +729,15 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                // mProgressDialog!!.dismiss()
                 storedItems = items
                 //(activity as FileManagerMainActivity).pathList.add(currentPath)
-                if(firstTime) {
+                if(firstTime && !shortcutFolderClicked) {
                     (activity as FileManagerMainActivity).pathList.clear()
                     (activity as FileManagerMainActivity).pathList.add(currentPath)
                     firstTime = false
+                }
+                if (shortcutFolderClicked){
+                    (activity as FileManagerMainActivity).pathList.clear()
+                    (activity as FileManagerMainActivity).pathList.add(folderPath!!)
+                    shortcutFolderClicked = false
                 }
 
                 if(adapterForPath == null) {
@@ -1148,10 +1172,19 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 
                 }
             }else{
-                getRecyclerAdapter()?.finishActMode()
-                openPath(requireActivity().internalStoragePath)
-                zrp_file.visibility=View.GONE
-                item_list_rv.visibility = View.VISIBLE
+                if ((activity as FileManagerMainActivity).pathList[position] == requireActivity().internalStoragePath){
+                    getRecyclerAdapter()?.finishActMode()
+                    openPath(requireActivity().internalStoragePath)
+                    zrp_file.visibility=View.GONE
+                    item_list_rv.visibility = View.VISIBLE
+                }
+                else{
+                    getRecyclerAdapter()?.finishActMode()
+                    openPath((activity as FileManagerMainActivity).pathList[position])
+                    zrp_file.visibility=View.GONE
+                    item_list_rv.visibility = View.VISIBLE
+                }
+
             }
         } else {
             if(path!= "$internalStoragePath/$PHOTOS_NAME/"
