@@ -56,7 +56,16 @@ import kotlin.collections.ArrayList
 class ItemsAdapter(activity: BaseSimpleActivity, var isHeaderShow : Boolean, var folderItems: ArrayList<FolderItem>, val bottomnavigation: View?, var listItems: MutableList<ListItem>,
                    var listener: ItemOperationsListener?, fastScroller: FastScroller?, recyclerView: MyRecyclerView,
                    itemClick: (Any,Int) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick, null, null, false) {
+    MyRecyclerViewAdapter(
+        activity,
+        recyclerView,
+        fastScroller,
+        itemClick,
+        null,
+        null,
+        false,
+
+    ) {
 
     private lateinit var fileDrawable: Drawable
     private var folderDrawable: Drawable? = null
@@ -274,6 +283,10 @@ class ItemsAdapter(activity: BaseSimpleActivity, var isHeaderShow : Boolean, var
 
     override fun getItemSelectionKey(position: Int) =
         listItems.getOrNull(position)?.path?.hashCode()
+
+    override fun checkIsZipFile(position: Int): Boolean? {
+        return false
+    }
 
     override fun getItemKeyPosition(key: Int) = listItems.indexOfFirst { it.path.hashCode() == key }
 

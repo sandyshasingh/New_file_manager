@@ -161,12 +161,12 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                 isSearchOnItemsFragment = true
                 onCategoryClick(INTERNAL_STORAGE,"abc")
             }
-//            else if (fragment is MoreItemFragment){
-//                isSearchOnMoreItemsFragment = true
-//            }
+            else if (fragment is MoreItemFragment){
+                isSearchOnMoreItemsFragment = true
+            }
             else{
                 isSearchOnItemsFragment = false
-              //  isSearchOnMoreItemsFragment = false
+                isSearchOnMoreItemsFragment = false
             }
 
 //            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
@@ -230,9 +230,9 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                                    itemsListFragtment?.searchDataChanged(newText)!!
 
                                }
-//                               else if (isSearchOnMoreItemsFragment){
-//                                   myFragment?.search(newText)
-//                               }
+                               else if (isSearchOnMoreItemsFragment){
+                                   myFragment?.searchInMore(newText)
+                               }
                                else{
                                    itemsListFragtment?.searchInFolder(newText)!!
                                }
@@ -782,6 +782,16 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
             bottomnavigation?.visibility = View.VISIBLE
         else
             bottomnavigation?.visibility = View.GONE
+    }
+
+    override fun zipFile(yes: Boolean) {
+        if (yes){
+            bottom_decompress.visibility = View.VISIBLE
+        }
+        else{
+            bottom_decompress.visibility = View.GONE
+        }
+
     }
 
     override fun deleteFolder(item: String?) {

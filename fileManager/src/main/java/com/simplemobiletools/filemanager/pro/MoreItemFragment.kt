@@ -6,14 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.simplemobiletools.commons.DataHolderforImageViewer
-import com.simplemobiletools.commons.ListItem
-import com.simplemobiletools.commons.VideoDataHolder
+import com.simplemobiletools.commons.*
+import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.getMimeTypeFromUri
+import com.simplemobiletools.commons.helpers.SORT_BY_SIZE
+import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
+import com.simplemobiletools.filemanager.pro.adapters.ItemsListAdapter
 import com.simplemobiletools.filemanager.pro.adapters.MoreItemAdapter
+import com.simplemobiletools.filemanager.pro.extensions.config
+import kotlinx.android.synthetic.main.fragment_items_list.*
+import kotlinx.android.synthetic.main.fragment_items_list.view.*
 import kotlinx.android.synthetic.main.fragment_more_item.*
 import kotlinx.android.synthetic.main.this_is_it.*
+import java.io.File
+import java.util.HashMap
 
 
 class MoreItemFragment : Fragment(),MoreItemAdapter.MoreItemsListener {
@@ -62,5 +69,35 @@ class MoreItemFragment : Fragment(),MoreItemAdapter.MoreItemsListener {
         }
     }
 
+    fun searchInMore(text: String){
+        var uptext = text.toUpperCase()
+        var listItem:ArrayList<ListItem> = ArrayList()
+        for (value in arrayList!!)
+        {
+//            if (value.isDirectory){
+//                val aa = searchFiles(text,value.mPath)
+//                listItem.addAll(aa)
+////                value.
+////                        getfiledir
+//            }
+            if (value.mName.toUpperCase().contains("$uptext"))
+                listItem.add(value)
+        }
+        more_items_rv?.doVisible()
+        zrp?.beGone()
+        if (listItem.isEmpty()){
+            zrp?.doVisible()
+            more_items_rv?.doGone()
+        }
+
+        else
+        {
+            getRecyclerAdapter()?.updateItems(listItem)
+        }
+
+
+    }
+
+    private fun getRecyclerAdapter() = more_items_rv.adapter as? MoreItemAdapter
 
 }

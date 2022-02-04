@@ -37,7 +37,7 @@ class CompressAsDialog(val activity: BaseSimpleActivity, val path: String, val c
                 if (event.action == MotionEvent.ACTION_UP) {
                     if (event.rawX >= file_name.right - file_name.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
                         // your action here
-                        view.item_name.text.clear()
+                        view.file_name?.text?.clear()
                         return@OnTouchListener true
                     }
                 } else {

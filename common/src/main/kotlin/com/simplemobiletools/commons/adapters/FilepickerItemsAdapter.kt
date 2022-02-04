@@ -30,7 +30,8 @@ class FilepickerItemsAdapter(activity: BaseSimpleActivity, val fileDirItems: Lis
     itemClick,
     null,
     null,
-    false
+    false,
+
 ) {
 
     private lateinit var fileDrawable: Drawable
@@ -72,6 +73,9 @@ class FilepickerItemsAdapter(activity: BaseSimpleActivity, val fileDirItems: Lis
     override fun getItemKeyPosition(key: Int) = fileDirItems.indexOfFirst { it.path.hashCode() == key }
 
     override fun getItemSelectionKey(position: Int) = fileDirItems[position].path.hashCode()
+    override fun checkIsZipFile(position: Int): Boolean? {
+        return false
+    }
 
     override fun onActionModeCreated() {}
 

@@ -272,6 +272,8 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
     override fun getItemSelectionKey(position: Int) =
         listItems.getOrNull(position)?.path?.hashCode()
 
+    override fun checkIsZipFile(position: Int) : Boolean = listItems.getOrNull(position)?.path?.endsWith(".zip") == true
+
     override fun getItemKeyPosition(key: Int) = listItems.indexOfFirst { it.path.hashCode() == key }
 
     override fun onActionModeCreated() {

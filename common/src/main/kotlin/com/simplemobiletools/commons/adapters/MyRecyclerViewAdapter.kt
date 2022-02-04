@@ -30,6 +30,7 @@ abstract class MyRecyclerViewAdapter(
 
     var btmListener: BottomNavigationVisible?,
     var shortcutClicked: Boolean,
+
 //    var fromShortcut:Boolean = false
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected val baseConfig = activity.baseConfig
@@ -39,7 +40,7 @@ abstract class MyRecyclerViewAdapter(
     protected var actModeCallback: MyActionModeCallback
     protected var selectedKeys = LinkedHashSet<Int>()
     private var bottomNavigation: View? = null
-
+    var zipFileSelected = 0
     private var actMode: ActionMode? = null
     private var actBarTextView: TextView? = null
     private var lastLongPressedItem = -1
@@ -56,6 +57,7 @@ abstract class MyRecyclerViewAdapter(
     abstract fun getIsItemSelectable(position: Int): Boolean
 
     abstract fun getItemSelectionKey(position: Int): Int?
+    abstract fun checkIsZipFile(position: Int): Boolean?
 
     abstract fun getItemKeyPosition(key: Int): Int
 
@@ -142,15 +144,27 @@ abstract class MyRecyclerViewAdapter(
 //        }
 
         val itemKey = getItemSelectionKey(pos) ?: return
+        val checkZip = checkIsZipFile(pos) ?: return
         if ((select && selectedKeys.contains(itemKey)) || (!select && !selectedKeys.contains(itemKey))) {
             return
         }
 
         if (select) {
+
             selectedKeys.add(itemKey)
+
+            if (checkZip)
+                zipFileSelected++
+
+
         } else {
             selectedKeys.remove(itemKey)
+            if (checkZip)
+                zipFileSelected--
+
         }
+
+            btmListener?.zipFile(zipFileSelected>0)
 
         notifyItemChanged(pos)
 

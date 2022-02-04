@@ -3,12 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-
+    android:background="?attr/rv_path"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MoreItemFragment">
+   <FrameLayout
+       android:id="@+id/zrp"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:visibility="gone">
+
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:src="@drawable/zrpp"
+          android:scaleType="fitXY"
+          />
+      <LinearLayout
+          android:layout_marginTop="130dp"
+          android:layout_marginStart="30dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:orientation="vertical">
+
+         <TextView
+
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textColor="@color/white"
+             android:layout_gravity="center"
+             android:textSize="30sp"
+             android:text="No Files"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@color/white"
+             android:layout_marginTop="25dp"
+             android:text="Oops! The file you are looking for \ncannot be found..."/>
+
+      </LinearLayout>
+
+
+
+
+   </FrameLayout>
+
 
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/more_items_rv"
