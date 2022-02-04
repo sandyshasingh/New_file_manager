@@ -557,6 +557,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                 }
 
                 ensureBackgroundThread {
+
                     if (compressPaths(paths, destination)) {
                         activity.runOnUiThread {
                             activity.toast(R.string.compression_successful)

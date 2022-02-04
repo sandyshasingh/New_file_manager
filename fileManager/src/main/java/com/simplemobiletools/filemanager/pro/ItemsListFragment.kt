@@ -1,5 +1,6 @@
 package com.simplemobiletools.filemanager.pro
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -166,7 +167,10 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                             when(item.itemId) {
 
                                 R.id.sort_by_size ->{
-                                    itemsToSort.sortBy { it.mSize }
+//                                    for (value in itemsToSort){
+//                                        if (value.isDirectory)
+//                                    }
+                                    itemsToSort.sortBy { it.size}
                                     addItems(itemsToSort,true)
                                 }
 
@@ -176,7 +180,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 
                                 }
                                 R.id.sort_by_name ->{
-                                    itemsToSort.sortBy { it.mName }
+                                    itemsToSort.sortBy { it.mName.toLowerCase() }
                                     addItems(itemsToSort,true)
 
                                 }
@@ -720,6 +724,13 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
     private fun addItems(items: ArrayList<ListItem>,forceRefresh: Boolean = false) {
         skipItemUpdating = false
 
+        if (items.size == 0)
+        {
+            item_list_rv.visibility = View.GONE
+            zrp_file.visibility = View.VISIBLE
+
+        }
+
         mView.apply {
             activity?.runOnUiThread {
                 if (!forceRefresh && items.hashCode() == storedItems.hashCode()) {
@@ -782,6 +793,10 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 //                        item_list_rv?.adapter = mainAdapter
                     }*/
                 }
+//                else{
+//                    zrp_file.visibility = View.VISIBLE
+//                    item_list_rv.visibility = View.GONE
+//                }
 
 
                 //  items_fastscroller.setViews(item_list_rv, null) {}
@@ -828,21 +843,28 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 addItems(storedItems, true)
             }
         }else {
+            model?.fetchRecent(context as Activity)
+            context?.let { model?.fetchImages(it)
+                model?.fetchVideos(it)
+                model?.fetchApps(it)
+                model?.fetchDocuments(it)
+                model?.fetchZip(it)
+            }
 
             if(currentPath == "$internalStoragePath/$currentFolderHeader"){
                 context?.let{
 
                     when(folderClicked) {
-                        AUDIO_ID ->  model?.fetchAudios(it)
-                        PHOTOS_ID ->  model?.fetchImages(it)
-                        VIDEOS_ID ->
-                        {
-                            Log.d("salsa","fetch")
-                            model?.fetchVideos(it)
-                        }
-                        APPLICATIONS_ID ->   model?.fetchApps(it)
-                        DOCUMENTS_ID ->    model?.fetchDocuments(it)
-                        ZIP_FILES_ID ->  model?.fetchZip(it)
+//                        AUDIO_ID ->  model?.fetchAudios(it)
+//                        PHOTOS_ID ->  model?.fetchImages(it)
+//                        VIDEOS_ID ->
+//                        {
+//                            Log.d("salsa","fetch")
+//                            model?.fetchVideos(it)
+//                        }
+//                        APPLICATIONS_ID ->   model?.fetchApps(it)
+//                        DOCUMENTS_ID ->    model?.fetchDocuments(it)
+//                        ZIP_FILES_ID ->  model?.fetchZip(it)
                         else -> {}
                     }
                     //itemClicked()
@@ -1021,6 +1043,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                     i.dateModifiedInFormat,
                     i.mimeType))
             }
+            listItem.sort()
         }
         item_list_rv?.doVisible()
         zrp_file?.beGone()

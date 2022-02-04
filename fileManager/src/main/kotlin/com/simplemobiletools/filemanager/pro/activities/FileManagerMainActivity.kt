@@ -476,11 +476,15 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
 
     }
     fun loadPhotoViewerFragment(hiddenFiles: List<ListItem>, position: Int) {
-        supportFragmentManager.beginTransaction().add(
-            R.id.fragment_holder, PhotoViewer.newInstance(
-                position
-            )
-        ).addToBackStack(null).commit()
+//        supportFragmentManager.beginTransaction().add(
+//            R.id.fragment_holder, PhotoViewer.newInstance(
+//                position
+//            )
+//        ).addToBackStack(null).commit()
+        val intent = Intent(this, ImageViewer::class.java).apply {
+        }
+        intent.putExtra("pos",position)
+        startActivity(intent)
     }
 
     private fun initFileManager() {

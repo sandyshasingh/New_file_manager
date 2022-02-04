@@ -60,7 +60,7 @@ class AdapterForPath(var pathList: ArrayList<String>, var listener: BreadcrumbsL
                 folderNameTextView?.text = item.name
             }
             itemView.setOnClickListener{
-               if (File(pathList[adapterPosition]).listFiles().isNotEmpty())
+               if (File(pathList[adapterPosition]).listFiles()?.isNotEmpty() == true)
                  listener?.breadcrumbClickedNew(pathList[adapterPosition],adapterPosition)
 
             }

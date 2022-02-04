@@ -7,10 +7,14 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
+        <activity android:name=".ImageViewer"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme2">
+
+        </activity>
         <activity
             android:name=".Legal"
-            android:theme="@style/AppTheme2">
-        </activity>
+            android:theme="@style/AppTheme2"></activity>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppTheme2">
@@ -20,9 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".ServiceIntent"
             android:enabled="true" />
+
         <activity
             android:name=".SettingsBurger"
             android:screenOrientation="portrait"
@@ -37,8 +43,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme2">
-
-
             <meta-data
                 android:name="android.app.default_searchable"
                 android:resource="@xml/searchable" />
