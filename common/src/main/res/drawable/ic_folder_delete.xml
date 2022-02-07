@@ -7,8 +7,8 @@
       android:pathData="M24,24m-21.56,0a21.56,21.56 0,1 1,43.12 0a21.56,21.56 0,1 1,-43.12 0"
       android:strokeWidth="2"
       android:fillColor="#00000000"
-      android:strokeColor="?attr/shortcut_btn_color"/>
+      android:strokeColor="#ff0000"/>
   <path
       android:pathData="M10.55,21.77L37.46,21.77A2.23,2.23 0,0 1,39.69 24L39.69,24A2.23,2.23 0,0 1,37.46 26.23L10.55,26.23A2.23,2.23 0,0 1,8.32 24L8.32,24A2.23,2.23 0,0 1,10.55 21.77z"
-      android:fillColor="?attr/shortcut_btn_color"/>
+      android:fillColor="#ff0000"/>
 </vector>

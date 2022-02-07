@@ -7,7 +7,9 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -48,7 +50,7 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.BreadcrumbsListenerNew,ChildViewListener {
+class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.BreadcrumbsListenerNew,ChildViewListener{
 
     private var mProgressDialog: AppProgressDialog? = null
     var deleteShortcut: DeleteShortcut? = null
@@ -122,6 +124,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
        // Log.d("dataList",dataList?.toString()?:"null")
         if (dataList.isNullOrEmpty())
             showDialog()
+
+
+//        recent_file_line?.setOnTouchListener(this)
+
         recent_file_line_adapter?.mRecent = AppDataHolder.mfinalValues!!
         recent_file_line_adapter?.notifyDataSetChanged()
 
@@ -237,6 +243,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             requireActivity(),
             deleteShortcut
         )
+
 //        recyclerView?.layoutManager =
 //            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 //        recyclerView?.adapter = mainAdapter
@@ -1087,6 +1094,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             (activity as? FileManagerMainActivity)?.startVideoPlayer(position)
         }
     }
+
+
 
 }
 

@@ -244,13 +244,16 @@ const val PHOTOS_ID = 1
 
 const val VIDEOS_ID = 2
 const val AUDIO_ID = 3
-const val SHORTCUT_FOLDER_ID = 4
+const val SHORTCUT_FOLDER_ID = 44
 const val APPLICATIONS_ID = 5
 const val ZIP_FILES_ID = 6
 const val DOCUMENTS_ID = 7
 const val DOWNLOAD_ID = 8
 const val INTERNAL_STORAGE = 9
 const val EXTERNAL_STORAGE = 10
+
+
+ var DELETE_SHORTCUT = false
 
 
 

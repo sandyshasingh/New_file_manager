@@ -12,6 +12,7 @@ import com.simplemobiletools.commons.MemorySizeUtils
 import com.simplemobiletools.commons.adapters.AdapterForFolders
 import com.simplemobiletools.commons.adapters.AdapterForStorage
 import com.simplemobiletools.commons.extensions.hasExternalSDCard
+import com.simplemobiletools.commons.helpers.DELETE_SHORTCUT
 import com.simplemobiletools.commons.helpers.EXTERNAL_STORAGE
 import com.simplemobiletools.commons.helpers.INTERNAL_STORAGE
 import com.simplemobiletools.commons.models.FolderItem
@@ -65,6 +66,7 @@ class AdapterForRecentFiles(
 
         fun bindItems() {
            itemView.only_internal.setOnClickListener {
+               DELETE_SHORTCUT = false
                 (mContext as FileManagerMainActivity)?.onCategoryClick(
                     INTERNAL_STORAGE, "abc"
                 )

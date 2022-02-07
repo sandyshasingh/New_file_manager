@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.*
 import com.simplemobiletools.commons.extensions.isDarkTheme
+import com.simplemobiletools.commons.helpers.DELETE_SHORTCUT
 import com.simplemobiletools.commons.helpers.SHORTCUT_FOLDER_ID
 import com.simplemobiletools.commons.models.FolderItem
 import kotlinx.android.synthetic.main.folder_item_view.view.*
@@ -81,9 +82,19 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
             folderIcon.setImageResource(folder.folderIcon)
             itemView.setOnClickListener{ c1(folder) }
 
+            if (!DELETE_SHORTCUT){
+                deleteShortcut.visibility = View.GONE
+            }
+
             if(folder.id == SHORTCUT_FOLDER_ID){
                itemView.setOnLongClickListener {
-                    deleteShortcut.visibility = View.VISIBLE
+                   DELETE_SHORTCUT = true
+                   if (DELETE_SHORTCUT){
+                       deleteShortcut.visibility = View.VISIBLE
+
+                   }
+
+
                    true
                 }
 

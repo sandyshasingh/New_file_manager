@@ -91,6 +91,15 @@
                 android:layout_height="60dp"/>
 
             <ImageView
+                android:id="@+id/sortby"
+                android:layout_width="30dp"
+                android:visibility="gone"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_file_manager_image"
+                android:layout_height="60dp"/>
+
+            <ImageView
                 android:id="@+id/threedot"
                 android:layout_width="30dp"
                 android:layout_alignParentEnd="true"

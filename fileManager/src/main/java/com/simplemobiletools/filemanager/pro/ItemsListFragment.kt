@@ -153,6 +153,37 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 
         }
 
+        sortby.setOnClickListener {
+            itemsToSort = storedItems
+            val sortMenu: PopupMenu = PopupMenu(context,sortby)
+            sortMenu.menuInflater.inflate(R.menu.sortby_name_menu,sortMenu.menu)
+            sortMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when(item.itemId) {
+
+                    R.id.sort_bysize ->{
+//                                    for (value in itemsToSort){
+//                                        if (value.isDirectory)
+//                                    }
+                        itemsToSort.sortBy { it.size}
+                        addItems(itemsToSort,true)
+                    }
+
+                    R.id.sort_bydate ->{
+                        itemsToSort.sortBy { it.mModified }
+                        addItems(itemsToSort,true)
+
+                    }
+                    R.id.sort_byname ->{
+                        itemsToSort.sortBy { it.mName.toLowerCase() }
+                        addItems(itemsToSort,true)
+
+                    }
+                }
+                true
+            })
+            sortMenu.show()
+        }
+
         threedot.setOnClickListener {
             val config = requireContext().config
             val popupMenu: PopupMenu = PopupMenu(context,threedot)
@@ -240,6 +271,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 (activity as FileManagerMainActivity).showAdd=false
 //                mainAdapter?.fromShortcut = false
                 threedot.visibility = View.GONE
+                sortby.visibility = View.VISIBLE
                 AUDIO_CLICK++
                 model?.audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
@@ -261,6 +293,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 //                mainAdapter?.fromShortcut = false
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
+                sortby.visibility = View.VISIBLE
                 model?.videos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
@@ -307,6 +340,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 (activity as FileManagerMainActivity).pathText = PHOTOS_NAME
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
+                sortby.visibility = View.VISIBLE
 //                mainAdapter?.fromShortcut = false
                 model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
@@ -336,6 +370,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 (activity as FileManagerMainActivity).pathText = APPLICATION_NAME
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
+                sortby.visibility = View.VISIBLE
                 model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
@@ -356,6 +391,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 (activity as FileManagerMainActivity).pathText = DOCUMENTS_NAME
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
+                sortby.visibility = View.VISIBLE
                 model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
                     if (!it.isNullOrEmpty()) {
                         list = it as ArrayList<ListItem>
@@ -374,6 +410,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 ZIP_FILES_CLICK++
                 (activity as FileManagerMainActivity).showAdd=false
                 threedot.visibility = View.GONE
+                sortby.visibility = View.VISIBLE
 //                mainAdapter?.fromShortcut = false
                 (activity as FileManagerMainActivity).pathText = ZIP_FILES_NAME
                 model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
@@ -701,6 +738,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             (activity as FileManagerMainActivity).add_the_folder.visibility = View.VISIBLE
             select_all_folders.visibility = View.VISIBLE
             threedot.visibility = View.GONE
+            sortby.visibility = View.GONE
         }
 
           //  add_icon.setImageResource(R.drawable.ic_file_manager__add_icon2)
@@ -714,6 +752,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 
             threedot.visibility = View.GONE
             select_all_folders.visibility = View.GONE
+            sortby.visibility = View.GONE
 
             // add_icon.setImageResource(R.drawable.ic_file_add_shortcut)
 
