@@ -47,6 +47,10 @@ class AdapterForRecentFiles(
 
         init {
             itemView.setOnClickListener { DELETE_SHORTCUT = true
+                folderList.forEach()
+                {
+                    it.isShortcut = false
+                }
             notifyItemChanged(1)
             }
         }
@@ -61,6 +65,10 @@ class AdapterForRecentFiles(
         init {
             itemView.setOnClickListener {
                 DELETE_SHORTCUT = true
+                folderList.forEach()
+                {
+                    it.isShortcut = false
+                }
                 notifyItemChanged(1)
             }
         }
@@ -88,6 +96,10 @@ class AdapterForRecentFiles(
            itemView.only_internal.setOnClickListener {
               // DELETE_SHORTCUT = false
                DELETE_SHORTCUT = true
+               folderList.forEach()
+               {
+                   it.isShortcut = false
+               }
                notifyItemChanged(1)
                 (mContext as FileManagerMainActivity)?.onCategoryClick(
                     INTERNAL_STORAGE, "abc"

@@ -1043,6 +1043,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //        }
         folder.ClickCount++
         DELETE_SHORTCUT = true
+        folderItems.forEach()
+        {
+            it.isShortcut = false
+        }
         deleteListener()
 //        var USER_WALLET_PRICE = 0
 //        val intent = Intent(requireContext(), FileManagerMainActivity::class.java)
@@ -1055,6 +1059,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     override fun storageFolderClick(storage: StorageItem) {
         DELETE_SHORTCUT = true
+        folderItems.forEach()
+        {
+            it.isShortcut = false
+        }
         deleteListener()
         (activity as FileManagerMainActivity)?.onCategoryClick(storage.id, "abc")
     }

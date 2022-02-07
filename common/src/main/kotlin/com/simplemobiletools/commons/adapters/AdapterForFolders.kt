@@ -88,19 +88,26 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
                 deleteShortcut.visibility = View.GONE
             }
 
-            if(folder.id == SHORTCUT_FOLDER_ID){
+            if(folder.id == SHORTCUT_FOLDER_ID && folder.isShortcut == true){
+                deleteShortcut.visibility = View.VISIBLE
+            }
+            else
+            {
+                deleteShortcut.visibility = View.GONE
+            }
+
+
                itemView.setOnLongClickListener {
-                   DELETE_SHORTCUT = false
-                   if (!DELETE_SHORTCUT){
-                       deleteShortcut.visibility = View.VISIBLE
-
+                   if(folder.id == SHORTCUT_FOLDER_ID) {
+                       DELETE_SHORTCUT = false
+                       if (!DELETE_SHORTCUT) {
+                           folder.isShortcut = true
+                           deleteShortcut.visibility = View.VISIBLE
+                       }
                    }
-
-
                    true
                 }
 
-            }
 
 
 
