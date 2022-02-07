@@ -87,7 +87,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     var model: DataViewModel? = null
     var splash_recent: SplashScreen? = null
     var zrpImage: ImageView? = null
-
+    var DELETE_SHORTCUT = false
     //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //        supportLoaderManager.initLoader(0, null, this)
@@ -128,6 +128,11 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
 //        recent_file_line?.setOnTouchListener(this)
 
+
+
+//        container_recycler_view.setOnClickListener {
+//            Log.d("shagun","huh")
+//        }
         recent_file_line_adapter?.mRecent = AppDataHolder.mfinalValues!!
         recent_file_line_adapter?.notifyDataSetChanged()
 
@@ -183,7 +188,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             { folder -> headerFolderClick(folder) },
             deleteShortcut,
             { storage -> storageFolderClick(storage) },
-            this@ItemsFragment
+            this@ItemsFragment,
+            DELETE_SHORTCUT
         )
         recent_file_line?.adapter = recent_file_line_adapter
 
@@ -234,6 +240,11 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 
     }
 
+    fun deleteListener(){
+        recent_file_line_adapter?.notifyItemChanged(1)
+
+    }
+
     fun itemClick(list: Any, position: Int, forceRefresh: Boolean) {
         itemClicked(list as FileDirItem)
         var adad = folderItems
@@ -241,7 +252,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
             folderItems,
             { folder -> headerFolderClick(folder) },
             requireActivity(),
-            deleteShortcut
+            deleteShortcut,
+            true
         )
 
 //        recyclerView?.layoutManager =
@@ -1030,6 +1042,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
 //            pathList.add("$internalStoragePath/$currentFolderHeader")
 //        }
         folder.ClickCount++
+        DELETE_SHORTCUT = true
+        deleteListener()
 //        var USER_WALLET_PRICE = 0
 //        val intent = Intent(requireContext(), FileManagerMainActivity::class.java)
 //        intent.putExtra(USER_WALLET_PRICE,folder.id)
@@ -1040,6 +1054,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     }
 
     override fun storageFolderClick(storage: StorageItem) {
+        DELETE_SHORTCUT = true
+        deleteListener()
         (activity as FileManagerMainActivity)?.onCategoryClick(storage.id, "abc")
     }
 

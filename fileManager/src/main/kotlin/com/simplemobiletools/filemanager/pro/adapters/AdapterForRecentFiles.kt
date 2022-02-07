@@ -12,7 +12,6 @@ import com.simplemobiletools.commons.MemorySizeUtils
 import com.simplemobiletools.commons.adapters.AdapterForFolders
 import com.simplemobiletools.commons.adapters.AdapterForStorage
 import com.simplemobiletools.commons.extensions.hasExternalSDCard
-import com.simplemobiletools.commons.helpers.DELETE_SHORTCUT
 import com.simplemobiletools.commons.helpers.EXTERNAL_STORAGE
 import com.simplemobiletools.commons.helpers.INTERNAL_STORAGE
 import com.simplemobiletools.commons.models.FolderItem
@@ -38,24 +37,45 @@ class AdapterForRecentFiles(
      val clickListener: (FolderItem) -> Unit,
    var deleteShortcut: DeleteShortcut?,
     val clickListenerStorage: (StorageItem) -> Unit,
-    var listenerOfChild: ChildViewListener?
+    var listenerOfChild: ChildViewListener?,
+    var DELETE_SHORTCUT:Boolean?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //var mRecentwva: List<ListItem>? = null
     private var storageItems = ArrayList<StorageItem>()
-    class MainViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
+
+    inner class MainViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
+
+        init {
+            itemView.setOnClickListener { DELETE_SHORTCUT = true
+            notifyItemChanged(1)
+            }
+        }
+
 
 
     }
 
 
     inner class FolderViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
+
+        init {
+            itemView.setOnClickListener {
+                DELETE_SHORTCUT = true
+                notifyItemChanged(1)
+            }
+        }
+
         fun bindItemsFolders() {
-            val mainAdapter = AdapterForFolders(
-                folderList,
-                clickListener,
-                mContext,
-                deleteShortcut
-            )
+            val mainAdapter = DELETE_SHORTCUT?.let {
+                AdapterForFolders(
+                    folderList,
+                    clickListener,
+                    mContext,
+                    deleteShortcut,
+                    it
+                )
+            }
+
             //recyclerView?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
             itemView.recyclerView?.adapter = mainAdapter
         }
@@ -66,7 +86,9 @@ class AdapterForRecentFiles(
 
         fun bindItems() {
            itemView.only_internal.setOnClickListener {
-               DELETE_SHORTCUT = false
+              // DELETE_SHORTCUT = false
+               DELETE_SHORTCUT = true
+               notifyItemChanged(1)
                 (mContext as FileManagerMainActivity)?.onCategoryClick(
                     INTERNAL_STORAGE, "abc"
                 )
@@ -155,6 +177,7 @@ class AdapterForRecentFiles(
             val v =
                 LayoutInflater.from(parent.context).inflate(R.layout.text_recent, parent, false)
             return FolderViewHolder(v, mContext)
+
         }
         else if(viewType==1){
             val v =

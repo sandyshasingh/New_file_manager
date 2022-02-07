@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.*
 import com.simplemobiletools.commons.extensions.isDarkTheme
-import com.simplemobiletools.commons.helpers.DELETE_SHORTCUT
 import com.simplemobiletools.commons.helpers.SHORTCUT_FOLDER_ID
 import com.simplemobiletools.commons.models.FolderItem
 import kotlinx.android.synthetic.main.folder_item_view.view.*
 
-class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val clickListener: (FolderItem) -> Unit, var mContext: Context, var deleteShortcut: DeleteShortcut?) : RecyclerView.Adapter<AdapterForFolders.HeaderViewHolder>()
+class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val clickListener: (FolderItem) -> Unit, var mContext: Context, var deleteShortcut: DeleteShortcut?,var DELETE_SHORTCUT:Boolean) : RecyclerView.Adapter<AdapterForFolders.HeaderViewHolder>()
 {
 
 
@@ -31,6 +30,7 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
 
         holder.deleteShortcut.setOnClickListener {
 //                folderList.removeAt(position)
+
             deleteShortcut?.deleteFolder(folderList[position].sizeString)
             folderList.removeAt(position)
             notifyDataSetChanged()
@@ -43,7 +43,7 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    class HeaderViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
+   inner  class HeaderViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
         val totalSize = MemorySizeUtils.getTotalInternalMemorySizeInLong()
         var darkThemeBackground : Drawable? = null
         var isDarkTheme = false
@@ -62,6 +62,8 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
 //            val folderSize = itemView.folder_size
 //            val usedMemoryProgress = itemView.usedMemoryProgress
             val folderLayout = itemView.folder_layout
+
+
 
 //            usedMemoryProgress.max = (totalSize / 1024).toInt()
 //            usedMemoryProgress.progress= folder.size.toInt()
@@ -82,14 +84,14 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
             folderIcon.setImageResource(folder.folderIcon)
             itemView.setOnClickListener{ c1(folder) }
 
-            if (!DELETE_SHORTCUT){
+            if (DELETE_SHORTCUT){
                 deleteShortcut.visibility = View.GONE
             }
 
             if(folder.id == SHORTCUT_FOLDER_ID){
                itemView.setOnLongClickListener {
-                   DELETE_SHORTCUT = true
-                   if (DELETE_SHORTCUT){
+                   DELETE_SHORTCUT = false
+                   if (!DELETE_SHORTCUT){
                        deleteShortcut.visibility = View.VISIBLE
 
                    }
@@ -99,6 +101,7 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
                 }
 
             }
+
 
 
 

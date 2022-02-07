@@ -253,7 +253,7 @@ const val INTERNAL_STORAGE = 9
 const val EXTERNAL_STORAGE = 10
 
 
- var DELETE_SHORTCUT = false
+
 
 
 
