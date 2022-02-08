@@ -119,6 +119,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
         mView = inflater.inflate(R.layout.fragment_items_list, container, false)
         baseSimpleActivity = activity as BaseSimpleActivity
 
+
         model = ViewModelProvider(baseSimpleActivity!!).get(DataViewModel::class.java)
 //        model?.photoSize?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
 //            //updatePhotosSize(it)

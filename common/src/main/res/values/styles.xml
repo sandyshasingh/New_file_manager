@@ -182,7 +182,7 @@
         <item name="ic_home_vector">@drawable/ic_home_vector_black</item>
         <item name="filemanageritembackgroud">@drawable/rectangle_semitranparent_light_theme</item>
         <item name="ic_folder_icon">@drawable/ic_icon_folder__light2</item>
-        <item name="ic_icon_decompress">@drawable/ic_icon_decompress_black</item>
+        <item name="ic_icon_decompress">@drawable/ic_file_manager_decompress</item>
         <item name="ic_icon_compress">@drawable/ic_icon_compress_black</item>
         <item name="ic_icon_hide">@drawable/ic_icon_hide_black</item>
         <item name="windowActionModeOverlay">true</item>

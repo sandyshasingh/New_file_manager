@@ -96,7 +96,7 @@
                 android:visibility="gone"
                 android:layout_alignParentEnd="true"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_file_manager_image"
+                android:src="@drawable/ic_file_manager_sortby"
                 android:layout_height="60dp"/>
 
             <ImageView
