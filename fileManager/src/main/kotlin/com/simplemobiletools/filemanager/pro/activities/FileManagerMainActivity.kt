@@ -249,7 +249,16 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         val searchView = findViewById<View>(R.id.search_df) as SearchView?
         val searchEditText =
             searchView?.findViewById<View>(R.id.search_src_text) as EditText?
-        searchEditText?.setTextColor(resources.getColor(R.color.btm_background))
+        val nightMode = AppThemePrefrences.GetBooleanSharedPreference(this,
+            ThemeUtils.NIGHT_MODE,false)
+        if (nightMode){
+            searchEditText?.setTextColor(resources.getColor(R.color.search_text_dark))
+
+        }
+        else{
+            searchEditText?.setTextColor(resources.getColor(R.color.file_manager_textcolor_light))
+
+        }
         searchEditText?.setHintTextColor(resources.getColor(R.color.hint_black))
 
         if (savedInstanceState == null) {

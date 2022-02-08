@@ -24,6 +24,17 @@
         android:layout_marginStart="15dp"
         android:textColor="?attr/filemanagertextcolor"/>
 
+    <TextView
+        android:id="@+id/view_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="10dp"
+        android:text="View all"
+        android:paddingEnd="10dp"
+        android:textColor="?attr/filemanagertextcolor"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <View
         android:layout_width="1dp"
         android:layout_height="120dp"

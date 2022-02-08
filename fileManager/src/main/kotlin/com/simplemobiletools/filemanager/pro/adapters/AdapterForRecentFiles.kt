@@ -214,6 +214,12 @@ class AdapterForRecentFiles(
                 holder.itemView.recent_file_item.adapter = ChildAdapterForRecentFiles(mContext,
                     mRecent?.mValues?.get(position-2),listener,
                     keys, listenerOfChild)
+
+                holder.itemView.view_all.setOnClickListener {
+                    listener.moreItemsList(mRecent?.mValues?.get(position-2)!!)
+                }
+//                if (mRecent?.mValues?.get(position-2)!!.size>4)
+//                    holder.itemView.view_all.visibility = View.VISIBLE
             }
             is StorageCardViewHolder -> {
                 holder.bindItems()
