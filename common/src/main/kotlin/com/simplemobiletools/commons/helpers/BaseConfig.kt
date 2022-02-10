@@ -37,7 +37,7 @@ open class BaseConfig(val context: Context) {
         get() = prefs.getString(SD_CARD_PATH, getDefaultSDCardPath())!!
         set(sdCardPath) = prefs.edit().putString(SD_CARD_PATH, sdCardPath).apply()
 
-    private fun getDefaultSDCardPath() = if (prefs.contains(SD_CARD_PATH)) "" else context.getSDCardPath()
+    private fun getDefaultSDCardPath() = context.getSDCardPath()
 
     var internalStoragePath: String
         get() = prefs.getString(INTERNAL_STORAGE_PATH, getDefaultInternalPath())!!

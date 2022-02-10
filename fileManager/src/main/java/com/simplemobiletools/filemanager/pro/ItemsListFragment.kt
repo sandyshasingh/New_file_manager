@@ -275,7 +275,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 sortby.visibility = View.VISIBLE
                 AUDIO_CLICK++
                 model?.audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
+                    if (!it.isNullOrEmpty()|| it.size==0) {
                         list = it as ArrayList<ListItem>
                         if(list == null || list.size == 0){
                             zrp_file.visibility=View.VISIBLE
@@ -296,7 +296,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 threedot.visibility = View.GONE
                 sortby.visibility = View.VISIBLE
                 model?.videos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
+                    if (!it.isNullOrEmpty() || it.size==0) {
                         list = it as ArrayList<ListItem>
                         if(list == null || list.size == 0){
                             zrp_file.visibility=View.VISIBLE
@@ -323,6 +323,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             }
             SHORTCUT_FOLDER_ID ->{
                 (activity as FileManagerMainActivity).showAdd=false
+                threedot.visibility = View.VISIBLE
 
 //                mainAdapter?.fromShortcut = false
                 (activity as FileManagerMainActivity).pathText = INTERNAL_STORAGE_NAME
@@ -344,7 +345,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 sortby.visibility = View.VISIBLE
 //                mainAdapter?.fromShortcut = false
                 model?.photos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
+                    if (!it.isNullOrEmpty()|| it.size==0) {
                         list = it as ArrayList<ListItem>
                         if(list == null || list.size == 0){
                             zrp_file.visibility=View.VISIBLE
@@ -373,7 +374,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 threedot.visibility = View.GONE
                 sortby.visibility = View.VISIBLE
                 model?.apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
+                    if (!it.isNullOrEmpty()|| it.size==0) {
                         list = it as ArrayList<ListItem>
                         if(list == null || list.size == 0){
                             zrp_file.visibility=View.VISIBLE
@@ -394,7 +395,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 threedot.visibility = View.GONE
                 sortby.visibility = View.VISIBLE
                 model?.documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
+                    if (!it.isNullOrEmpty()|| it.size==0) {
                         list = it as ArrayList<ListItem>
                         if(list == null || list.size == 0){
                             zrp_file.visibility=View.VISIBLE
@@ -415,7 +416,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 //                mainAdapter?.fromShortcut = false
                 (activity as FileManagerMainActivity).pathText = ZIP_FILES_NAME
                 model?.zip_files?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
-                    if (!it.isNullOrEmpty()) {
+                    if (!it.isNullOrEmpty()|| it.size==0) {
                         list = it as ArrayList<ListItem>
                         if(list == null || list.size == 0){
                             zrp_file.visibility=View.VISIBLE
@@ -431,6 +432,8 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             INTERNAL_STORAGE -> {
                 (activity as FileManagerMainActivity).pathText = INTERNAL_STORAGE_NAME
                 (activity as FileManagerMainActivity).showAdd=false
+                threedot.visibility = View.VISIBLE
+
 //                mainAdapter?.fromShortcut = false
                 // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 (activity as FileManagerMainActivity).pathList.clear()
@@ -440,6 +443,8 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             EXTERNAL_STORAGE -> {
                 (activity as FileManagerMainActivity).pathText = SD_CARD_NAME
                 (activity as FileManagerMainActivity).showAdd=false
+                threedot.visibility = View.VISIBLE
+
 //                mainAdapter?.fromShortcut = false
                 // currentFolderHeader = Environment.DIRECTORY_DOWNLOADS
                 (activity as FileManagerMainActivity).pathList.clear()
@@ -738,8 +743,8 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
         if((activity as FileManagerMainActivity).showAdd){
             (activity as FileManagerMainActivity).add_the_folder.visibility = View.VISIBLE
             select_all_folders.visibility = View.VISIBLE
-            threedot.visibility = View.GONE
-            sortby.visibility = View.GONE
+//            threedot.visibility = View.GONE
+//            sortby.visibility = View.GONE
         }
 
           //  add_icon.setImageResource(R.drawable.ic_file_manager__add_icon2)
@@ -751,9 +756,9 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 //            )
             (activity as FileManagerMainActivity).add_the_folder.visibility = View.GONE
 
-            threedot.visibility = View.GONE
+//            threedot.visibility = View.GONE
             select_all_folders.visibility = View.GONE
-            sortby.visibility = View.GONE
+//            sortby.visibility = View.GONE
 
             // add_icon.setImageResource(R.drawable.ic_file_add_shortcut)
 
@@ -764,8 +769,9 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
     private fun addItems(items: ArrayList<ListItem>,forceRefresh: Boolean = false) {
         skipItemUpdating = false
 
-        if (items.size == 0)
+        if (items.size == 0 || items.isEmpty())
         {
+
             item_list_rv.visibility = View.GONE
             zrp_file.visibility = View.VISIBLE
 
@@ -862,7 +868,8 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
     override fun refreshItems(isHeaderFolder: Boolean) {
         val internalStoragePath = context?.config?.internalStoragePath
         val externalStoragePath = context?.config?.sdCardPath
-
+        Log.d("SD_CARD_PATH", "$externalStoragePath empty")
+        Log.d("hasSDCARD",context?.hasExternalSDCard().toString()+" "+context?.getSDCardPath()+" empty")
         if(isHeaderFolder){
             //currentFolderHeader= Environment.DIRECTORY_DOWNLOADS
             currentPath = "$internalStoragePath/$currentFolderHeader"
@@ -880,6 +887,7 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
             }
             else {
                 storedItems = list
+                Log.d("dfdf","${storedItems.size}")
                 addItems(storedItems, true)
             }
         }else {

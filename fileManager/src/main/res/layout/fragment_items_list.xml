@@ -105,6 +105,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
+                android:visibility="gone"
+
                 android:src="@drawable/ic_icon_dot_light"
                 android:layout_height="30dp"/>
 

@@ -2,6 +2,7 @@ package com.simplemobiletools.filemanager.pro.adapters
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.simplemobiletools.filemanager.pro.MoreItemsList
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.RecentUpdatedFiles
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
+import com.simplemobiletools.filemanager.pro.extensions.config
 import kotlinx.android.synthetic.main.card_storage.view.*
 import kotlinx.android.synthetic.main.folder_items.view.*
 import kotlinx.android.synthetic.main.recent_files.view.*
@@ -105,14 +107,8 @@ class AdapterForRecentFiles(
                     INTERNAL_STORAGE, "abc"
                 )
             }
-            itemView.rv_storage?.layoutManager =
-                LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-            val storageAdapter = AdapterForStorage(
-                storageList,
-                clickListenerStorage,
-                mContext
-            )
-            itemView.rv_storage?.adapter = storageAdapter
+
+//            Log.d("masan","$storageItems")
             val totalSizeInternal = MemorySizeUtils.getTotalInternalMemorySize()
             val availableSizeInternal = MemorySizeUtils.getAvailableInternalMemorySize()
 
@@ -125,6 +121,7 @@ class AdapterForRecentFiles(
             }
 
             var total = totalSizeInternal?.getAmount()?.toDouble()
+//            Log.d("masan","$total")
             var available = availableSizeInternal?.getAmount()?.toDouble()
             var arcPercent = (available!! / total!!) * 100
 
@@ -134,11 +131,13 @@ class AdapterForRecentFiles(
             itemView. arc_progress2.max = 100
             itemView.arc_progress2.progress = arcPercent.toInt()
             itemView.arc_progress2.suffixText = "%"
-
             if (mContext.hasExternalSDCard()) {
-                total = totalSizeExternal?.getAmount()?.toDouble()
-                available = availableSizeExternal?.getAmount()?.toDouble()
-                arcPercent = (available!! / total!!) * 100
+                Log.d("masan","hii")
+               var  total_external = totalSizeExternal?.getAmount()?.toDouble()
+                Log.d("masan","$total_external")
+                var available_external = availableSizeExternal?.getAmount()?.toDouble()
+                Log.d("masan","$available_external")
+                var arcPercent_external = (available_external!! / total_external!!) * 100
 
                 itemView.rv_storage.visibility = View.VISIBLE
                 itemView.only_internal.visibility = View.GONE
@@ -156,9 +155,17 @@ class AdapterForRecentFiles(
                         EXTERNAL_STORAGE,
                         "External storage",
                         R.drawable.ic_file_manager_external_storage,
-                        "$availableSizeExternal/$totalSizeExternal", arcPercent
+                        "$availableSizeExternal/$totalSizeExternal", arcPercent_external
                     )
                 )
+                itemView.rv_storage?.layoutManager =
+                    LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+                val storageAdapter = AdapterForStorage(
+                    storageItems,
+                    clickListenerStorage,
+                    mContext
+                )
+                itemView.rv_storage?.adapter = storageAdapter
             }
             //val usedMemoryProgress = itemView.usedMemoryProgress
             //  val folderLayout = itemView.folder_layout

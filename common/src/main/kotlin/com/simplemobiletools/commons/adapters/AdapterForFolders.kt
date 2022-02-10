@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,15 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
 
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         holder.bindItems(folderList[position], clickListener)
+        Log.d("countoffiles","${folderList[position].count_files} in the adapter")
+
+        if(folderList[position].count_files>0){
+//            holder.itemView.count_file.visibility = View.VISIBLE
+            holder.itemView.count_text.visibility = View.VISIBLE
+            holder.itemView.count_text.text = folderList[position].count_files.toString()
+//            Log.d("imahe","${folderList[position].count_files.toString()}")
+
+        }
 
         holder.deleteShortcut.setOnClickListener {
 //                folderList.removeAt(position)

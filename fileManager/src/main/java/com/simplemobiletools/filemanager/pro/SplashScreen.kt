@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.commons.extensions.getSDCardPath
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.filemanager.pro.activities.FileManagerMainActivity
 
@@ -20,8 +21,7 @@ class SplashScreen : BaseSimpleActivity(),GroupVideoPhotoAsyncTask.RecentFetchAs
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-
-
+        getSDCardPath()
 
         //   viewModel = ViewModelProvider(this).get(DataViewModel::class.java)
         handlePermission(PERMISSION_WRITE_STORAGE) {

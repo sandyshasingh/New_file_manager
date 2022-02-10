@@ -43,6 +43,7 @@ import com.simplemobiletools.filemanager.pro.extensions.*
 import com.simplemobiletools.filemanager.pro.extensions.getPositionOfImage
 import com.simplemobiletools.filemanager.pro.helpers.DataViewModel
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
+import kotlinx.android.synthetic.main.fragment_items_list.*
 import kotlinx.android.synthetic.main.this_is_it.*
 
 import kotlinx.android.synthetic.main.this_is_it.view.*
@@ -80,6 +81,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
     lateinit var mView: View
     private var baseSimpleActivity: BaseSimpleActivity? = null
     var list: ArrayList<ListItem> = ArrayList()
+    var countAudio:Int=0
     var adapterForPath: AdapterForPath? = null
     var sharedPrefrences: SharedPreferences? = null
     private var internalStoragePath: String? = ""
@@ -119,12 +121,54 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         super.onViewCreated(view, savedInstanceState)
 
 
+        model?.count_audios?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            countAudio = it as Int
+            Log.d("countoffiles","$countAudio count")
+            folderItems[AUDIO_ID].count_files = countAudio
+            recent_file_line_adapter?.notifyItemChanged(1)
+        })
+        model?.count_videos?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            countAudio = it as Int
+            Log.d("countoffiles","$countAudio count")
+            folderItems[VIDEOS_ID].count_files = countAudio
+            recent_file_line_adapter?.notifyItemChanged(1)
+        })
+          model?.count_images?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            countAudio = it as Int
+            Log.d("countoffiles","$countAudio count")
+            folderItems[PHOTOS_ID].count_files = countAudio
+            recent_file_line_adapter?.notifyItemChanged(1)
+        })
+          model?.count_apps?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            countAudio = it as Int
+            Log.d("countoffiles","$countAudio count")
+            folderItems[APPLICATIONS_ID].count_files = countAudio
+            recent_file_line_adapter?.notifyItemChanged(1)
+        })
+          model?.count_documents?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            countAudio = it as Int
+            Log.d("countoffiles","$countAudio count")
+            folderItems[DOCUMENTS_ID].count_files = countAudio
+            recent_file_line_adapter?.notifyItemChanged(1)
+        })
+          model?.count_zip?.observe(baseSimpleActivity!!, androidx.lifecycle.Observer {
+            countAudio = it as Int
+            Log.d("countoffiles","$countAudio count")
+            folderItems[ZIP_FILES_ID].count_files = countAudio
+            recent_file_line_adapter?.notifyItemChanged(1)
+        })
+
+//        folderItems[SHORTCUT_ID].count_files = -1
+//        recent_file_line_adapter?.notifyItemChanged(1)
+//
+//        folderItems[SHORTCUT_FOLDER_ID].count_files = -1
+//        recent_file_line_adapter?.notifyItemChanged(1)
+
         var dataList:List<String>? = null
         dataList = AppDataHolder.mfinalValues?.mKeys
        // Log.d("dataList",dataList?.toString()?:"null")
         if (dataList.isNullOrEmpty())
             showDialog()
-
 
 //        recent_file_line?.setOnTouchListener(this)
 
@@ -323,6 +367,8 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                 getDrawable(R.drawable.rectangle_semitranparent_audio),
                 requireActivity().resources.getColor(R.color.photo_text_color),
                 AUDIO_CLICK
+
+
             )
         )
 

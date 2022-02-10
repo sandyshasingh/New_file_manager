@@ -643,6 +643,18 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
                 setting.visibility = View.VISIBLE
                 back_main.visibility = View.GONE
               }
+              else if (fragment is ItemsFragment){
+                val sharedPreferences: SharedPreferences? = getSharedPreferences(sharedPrefFile,
+                    Context.MODE_PRIVATE)
+
+
+                sharedPreferences?.edit().apply(){
+                    this?.putLong("LAST_LOGIN",System.currentTimeMillis()/1000)
+                    this?.apply()
+                }
+
+
+              }
               add_the_folder.visibility = View.GONE
               pathList.clear()
               itemsListFragtment?.showZrp()
@@ -733,14 +745,14 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
     fun onCategoryClick(id: Int,path: String) {
         val fragmentManager: FragmentManager = supportFragmentManager
 
-
-        itemsListFragtment = ItemsListFragment.newInstance(id,path)
-        itemsListFragtment?.listener = this
-        itemsListFragtment?.listenerUpdate = this
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.fragment_holder, itemsListFragtment!!).addToBackStack("")
-        fragmentTransaction.commit()
-
+        if(itemsListFragtment == null || itemsListFragtment?.isAdded == false) {
+            itemsListFragtment = ItemsListFragment.newInstance(id, path)
+            itemsListFragtment?.listener = this
+            itemsListFragtment?.listenerUpdate = this
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.fragment_holder, itemsListFragtment!!).addToBackStack("")
+            fragmentTransaction.commit()
+        }
         setting.visibility = View.GONE
         back_main.visibility = View.VISIBLE
 

@@ -94,6 +94,7 @@ class GroupVideoPhotoAsyncTask(
                 null,
                 sortOrder
             )!!
+
         } catch (e: Exception) {
         }
         cursor?.use { cursor ->

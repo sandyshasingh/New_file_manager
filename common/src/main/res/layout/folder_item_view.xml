@@ -15,12 +15,14 @@
         android:layout_marginStart="10dp"
         >
 
+
         <androidx.cardview.widget.CardView
             android:id="@+id/fdr"
+
             android:layout_width="62dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:layout_centerHorizontal="true"
             android:layout_height="62dp">
             <ImageView
@@ -37,22 +39,22 @@
                 android:visibility="gone"
                 android:src="@drawable/ic_folder_delete"/>
 
-            <ImageView
-                android:id="@+id/count_file"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="right"
-                android:visibility="gone"
-                android:src="@drawable/count_files"/>
-            <TextView
-                android:id="@+id/count_text"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="right"
-                android:visibility="gone"/>
-
         </androidx.cardview.widget.CardView>
-
+        <TextView
+            android:id="@+id/count_text"
+            android:layout_width="wrap_content"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:visibility="gone"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:textStyle="bold"
+            android:textSize="10dp"
+            android:layout_marginStart="60dp"
+            android:background="@drawable/count_files_background"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            />
 
         <TextView
             android:id="@+id/folder_name"
