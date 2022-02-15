@@ -762,6 +762,10 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
     private fun getSelectedFileDirItems() = listItems.filter {
         selectedKeys.contains(it.path.hashCode()) } as ArrayList<FileDirItem>
     private fun getItemWithKey(key: Int): FileDirItem? = listItems.firstOrNull { it.path.hashCode() == key }
+    private fun getItemPosition(item:FileDirItem)  =
+         (listItems.indices)
+            .firstOrNull { i: Int -> item == listItems[i] }
+
 
     private fun checkHideBtnVisibility(mHide: LinearLayout, mUnHide: LinearLayout, listItem: ListItem?) {
 
@@ -936,8 +940,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
 
      fun displayRenameDialog(listItem: ListItem?) {
         var fileDirItems = getSelectedFileDirItems()
+         var position = getItemPosition(fileDirItems[0])
 
-        if(listItem!=null) {
+             if(listItem!=null) {
 
             fileDirItems = arrayListOf(listItem)
         }
@@ -951,7 +956,10 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                        // updateDatabase
 
                         fileDirItems[0].name = it.getFilenameFromPath()
-                        notifyItemRangeChanged(0,15)
+                        if (position != null) {
+                            notifyItemChanged(position)
+                        }
+//                        notifyItemRangeChanged(0,15)
 
                         listener?.refreshItems(false)
                         listenerUpdate?.updateDatabase(true)
