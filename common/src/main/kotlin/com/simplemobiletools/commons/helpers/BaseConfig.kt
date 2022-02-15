@@ -66,6 +66,34 @@ open class BaseConfig(val context: Context) {
             prefs.edit().putBoolean(USE_ENGLISH, useEnglish).commit()
         }
 
+    var sdTreeUri: String
+        get() = prefs.getString(SD_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(SD_TREE_URI, uri).apply()
+
+    var primaryAndroidDataTreeUri: String
+        get() = prefs.getString(PRIMARY_ANDROID_DATA_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(PRIMARY_ANDROID_DATA_TREE_URI, uri).apply()
+
+    var primaryAndroidObbTreeUri: String
+        get() = prefs.getString(PRIMARY_ANDROID_OBB_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(PRIMARY_ANDROID_OBB_TREE_URI, uri).apply()
+
+    var otgAndroidObbTreeUri: String
+        get() = prefs.getString(OTG_ANDROID_OBB_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(OTG_ANDROID_OBB_TREE_URI, uri).apply()
+
+    var sdAndroidDataTreeUri: String
+        get() = prefs.getString(SD_ANDROID_DATA_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(SD_ANDROID_DATA_TREE_URI, uri).apply()
+
+    var sdAndroidObbTreeUri: String
+        get() = prefs.getString(SD_ANDROID_OBB_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(SD_ANDROID_OBB_TREE_URI, uri).apply()
+
+    var otgAndroidDataTreeUri: String
+        get() = prefs.getString(OTG_ANDROID_DATA_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(OTG_ANDROID_DATA_TREE_URI, uri).apply()
+
     var wasUseEnglishToggled: Boolean
         get() = prefs.getBoolean(WAS_USE_ENGLISH_TOGGLED, false)
         set(wasUseEnglishToggled) = prefs.edit().putBoolean(WAS_USE_ENGLISH_TOGGLED, wasUseEnglishToggled).apply()

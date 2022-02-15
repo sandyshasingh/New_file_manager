@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.PersistableBundle
 import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.telecom.TelecomManager
 import android.util.Log
 import android.view.MenuItem
@@ -44,9 +45,14 @@ open class BaseSimpleActivity : AppCompatActivity() {
     var isAskingPermissions = false
 
     private val GENERIC_PERM_HANDLER = 100
-
+    private val DELETE_FILE_SDK_30_HANDLER = 300
+    private val RECOVERABLE_SECURITY_HANDLER = 301
+    private val UPDATE_FILE_SDK_30_HANDLER = 302
     companion object {
         var funAfterSAFPermission: ((success: Boolean) -> Unit)? = null
+        var funAfterDelete30File: ((success: Boolean) -> Unit)? = null
+        var funAfterUpdate30File: ((success: Boolean) -> Unit)? = null
+        var funRecoverableSecurity: ((success: Boolean) -> Unit)? = null
     }
 
 
@@ -90,12 +96,38 @@ open class BaseSimpleActivity : AppCompatActivity() {
         }
         val sdOtgPattern = Pattern.compile(SD_OTG_SHORT)
 
-        if (requestCode == OPEN_DOCUMENT_TREE) {
+        if (requestCode == OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB) {
             if (resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-                val isProperPartition = partition.isEmpty() || !sdOtgPattern.matcher(partition)
-                    .matches() || (sdOtgPattern.matcher(partition)
+                if (isProperAndroidRoot(checkedDocumentPath, resultData.data!!)) {
+                    if (resultData.dataString == baseConfig.OTGTreeUri || resultData.dataString == baseConfig.sdTreeUri) {
+                        toast(R.string.wrong_root_selected)
+                        return
+                    }
+
+                    val treeUri = resultData.data
+                    storeAndroidTreeUri(checkedDocumentPath, treeUri.toString())
+
+                    val takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    applicationContext.contentResolver.takePersistableUriPermission(treeUri!!, takeFlags)
+                    funAfterSAFPermission?.invoke(true)
+                    funAfterSAFPermission = null
+                } else {
+                    toast(R.string.wrong_root_selected)
+                    Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
+                        if (isRPlus()) {
+                            putExtra(DocumentsContract.EXTRA_INITIAL_URI, createAndroidDataOrObbUri(checkedDocumentPath))
+                        }
+                        startActivityForResult(this, requestCode)
+                    }
+                }
+            } else {
+                funAfterSAFPermission?.invoke(false)
+            }
+        } else if (requestCode == OPEN_DOCUMENT_TREE_SD) {
+            if (resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+                val isProperPartition = partition.isEmpty() || !sdOtgPattern.matcher(partition).matches() || (sdOtgPattern.matcher(partition)
                     .matches() && resultData.dataString!!.contains(partition))
-                if (isProperSDFolder(resultData.data!!) && isProperPartition) {
+                if (isProperSDRootFolder(resultData.data!!) && isProperPartition) {
                     if (resultData.dataString == baseConfig.OTGTreeUri) {
                         toast(R.string.sd_card_usb_same)
                         return
@@ -114,20 +146,20 @@ open class BaseSimpleActivity : AppCompatActivity() {
             }
         } else if (requestCode == OPEN_DOCUMENT_TREE_OTG) {
             if (resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-                val isProperPartition = partition.isEmpty() || !sdOtgPattern.matcher(partition)
-                    .matches() || (sdOtgPattern.matcher(partition)
+                val isProperPartition = partition.isEmpty() || !sdOtgPattern.matcher(partition).matches() || (sdOtgPattern.matcher(partition)
                     .matches() && resultData.dataString!!.contains(partition))
-                if (isProperOTGFolder(resultData.data!!) && isProperPartition) {
-                    if (resultData.dataString == baseConfig.treeUri) {
+                if (isProperOTGRootFolder(resultData.data!!) && isProperPartition) {
+                    if (resultData.dataString == baseConfig.sdTreeUri) {
                         funAfterSAFPermission?.invoke(false)
                         toast(R.string.sd_card_usb_same)
                         return
                     }
                     baseConfig.OTGTreeUri = resultData.dataString!!
-                    baseConfig.OTGPartition =
-                        baseConfig.OTGTreeUri.removeSuffix("%3A").substringAfterLast('/')
-                            .trimEnd('/')
+                    baseConfig.OTGPartition = baseConfig.OTGTreeUri.removeSuffix("%3A").substringAfterLast('/').trimEnd('/')
                     updateOTGPathFromPartition()
+
+                    val takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    applicationContext.contentResolver.takePersistableUriPermission(resultData.data!!, takeFlags)
 
                     funAfterSAFPermission?.invoke(true)
                     funAfterSAFPermission = null
@@ -142,6 +174,43 @@ open class BaseSimpleActivity : AppCompatActivity() {
         } else if (requestCode == SELECT_EXPORT_SETTINGS_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
             val outputStream = contentResolver.openOutputStream(resultData.data!!)
             exportSettingsTo(outputStream, configItemsToExport)
+        } else if (requestCode == DELETE_FILE_SDK_30_HANDLER) {
+            funAfterDelete30File?.invoke(resultCode == Activity.RESULT_OK)
+        } else if (requestCode == RECOVERABLE_SECURITY_HANDLER) {
+            funRecoverableSecurity?.invoke(resultCode == Activity.RESULT_OK)
+            funRecoverableSecurity = null
+        } else if (requestCode == UPDATE_FILE_SDK_30_HANDLER) {
+            funAfterUpdate30File?.invoke(resultCode == Activity.RESULT_OK)
+        }
+    }
+
+    private fun isProperOTGRootFolder(uri: Uri) = isExternalStorageDocument(uri) && isRootUri(uri) && !isInternalStorage(uri)
+
+    private fun isProperSDRootFolder(uri: Uri) = isExternalStorageDocument(uri) && isRootUri(uri) && !isInternalStorage(uri)
+    private fun isInternalStorageAndroidDir(uri: Uri) = isInternalStorage(uri) && isAndroidDir(uri)
+    private fun isOTGAndroidDir(uri: Uri) = isProperOTGFolder(uri) && isAndroidDir(uri)
+    private fun isSDAndroidDir(uri: Uri) = isProperSDFolder(uri) && isAndroidDir(uri)
+    private fun isAndroidDir(uri: Uri) = isExternalStorageDocument(uri) && DocumentsContract.getTreeDocumentId(uri).contains(":Android")
+    private fun isProperAndroidRoot(path: String, uri: Uri): Boolean {
+        return when {
+            isPathOnOTG(path) -> isOTGAndroidDir(uri)
+            isPathOnSD(path) -> isSDAndroidDir(uri)
+            else -> isInternalStorageAndroidDir(uri)
+        }
+    }
+
+    @SuppressLint("NewApi")
+    fun updateSDK30Uris(uris: List<Uri>, callback: (success: Boolean) -> Unit) {
+        if (isRPlus()) {
+            funAfterUpdate30File = callback
+            try {
+                val writeRequest = MediaStore.createWriteRequest(contentResolver, uris).intentSender
+                startIntentSenderForResult(writeRequest, UPDATE_FILE_SDK_30_HANDLER, null, 0, 0, 0)
+            } catch (e: Exception) {
+                showErrorToast(e)
+            }
+        } else {
+            callback(false)
         }
     }
 
@@ -189,6 +258,26 @@ open class BaseSimpleActivity : AppCompatActivity() {
         }
     }
 
+    fun Context.getAndroidTreeUri(path: String): String {
+        return when {
+            isPathOnOTG(path) -> if (isAndroidDataDir(path)) baseConfig.otgAndroidDataTreeUri else baseConfig.otgAndroidObbTreeUri
+            isPathOnSD(path) -> if (isAndroidDataDir(path)) baseConfig.sdAndroidDataTreeUri else baseConfig.sdAndroidObbTreeUri
+            else -> if (isAndroidDataDir(path)) baseConfig.primaryAndroidDataTreeUri else baseConfig.primaryAndroidObbTreeUri
+        }
+    }
+
+    fun handleAndroidSAFDialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
+        return if (!packageName.startsWith("com.simplemobiletools")) {
+            callback(true)
+            false
+        } else if (isShowingAndroidSAFDialog(path)) {
+            funAfterSAFPermission = callback
+            true
+        } else {
+            callback(true)
+            false
+        }
+    }
     fun handleOTGPermission(callback: (success: Boolean) -> Unit) {
         if (baseConfig.OTGTreeUri.isNotEmpty()) {
             callback(true)
@@ -414,7 +503,6 @@ open class BaseSimpleActivity : AppCompatActivity() {
                 GENERIC_PERM_HANDLER
             )*/
         }
-
     }
 
     fun checkPermission(permissionId: Int) : Boolean{

@@ -4,12 +4,13 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Looper
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import java.util.*
 
-
+const val EXTERNAL_STORAGE_PROVIDER_AUTHORITY = "com.android.externalstorage.documents"
 const val APP_ID = "app_id"
 const val REAL_FILE_PATH = "real_file_path_2"
 const val IS_FROM_GALLERY = "is_from_gallery"
@@ -73,7 +74,13 @@ const val REQUEST_SET_AS = 1002
 const val REQUEST_EDIT_IMAGE = 1003
 const val SELECT_EXPORT_SETTINGS_FILE_INTENT = 1004
 const val REQUEST_CODE_SET_DEFAULT_DIALER = 1005
-
+const val OTG_ANDROID_DATA_TREE_URI = "otg_android_data_tree__uri_2"
+const val OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB = 1000
+const val SD_ANDROID_DATA_TREE_URI = "sd_android_data_tree_uri_2"
+const val SD_ANDROID_OBB_TREE_URI = "sd_android_obb_tree_uri_2"
+const val OTG_ANDROID_OBB_TREE_URI = "otg_android_obb_tree_uri_2"
+const val PRIMARY_ANDROID_DATA_TREE_URI = "primary_android_data_tree_uri_2"
+const val PRIMARY_ANDROID_OBB_TREE_URI = "primary_android_obb_tree_uri_2"
 // sorting
 const val SORT_ORDER = "sort_order"
 const val SORT_FOLDER_PREFIX = "sort_folder_"       // storing folder specific values at using "Use for this folder only"
@@ -88,8 +95,11 @@ const val SORT_USE_NUMERIC_VALUE = 32768
 // renaming
 const val RENAME_SIMPLE = 0
 const val RENAME_PATTERN = 1
+const val SD_TREE_URI = "tree_uri_2"
 
-
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.R)
+fun isRPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+const val OPEN_DOCUMENT_TREE_SD = 1002
 // permissions
 const val PERMISSION_READ_STORAGE = 1
 const val PERMISSION_WRITE_STORAGE = 2
@@ -155,7 +165,7 @@ fun isOreoPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 fun isOreoMr1Plus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
 fun isPiePlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
 fun isQPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-fun isRPlus() = Build.VERSION.SDK_INT >= 30
+
 
 val normalizeRegex = "\\p{InCombiningDiacriticalMarks}+".toRegex()
 

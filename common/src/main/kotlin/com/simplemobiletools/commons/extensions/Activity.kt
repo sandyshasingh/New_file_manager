@@ -1,15 +1,13 @@
 package com.simplemobiletools.commons.extensions
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.ApplicationInfo
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.TransactionTooLargeException
 import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -20,15 +18,15 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.core.graphics.PathUtils
 import androidx.documentfile.provider.DocumentFile
+import com.simplemobiletools.commons.ConfirmationAdvancedDialog
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.ThemeUtils.GetBooleanSharedPreference
 import com.simplemobiletools.commons.ThemeUtils.NIGHT_MODE
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.dialogs.WritePermissionDialog
-import com.simplemobiletools.commons.helpers.OPEN_DOCUMENT_TREE
-import com.simplemobiletools.commons.helpers.OPEN_DOCUMENT_TREE_OTG
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.setTypeFaceOpenSensSmBold
 import com.simplemobiletools.commons.views.MyTextView
@@ -37,6 +35,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.nio.file.Files.createTempFile
 import java.util.*
 
 fun Activity.isAppInstalledOnSDCard(): Boolean = try {
@@ -58,20 +57,24 @@ fun Activity.isDarkTheme() : Boolean{
 //            sTheme==19 || sTheme==20)
 }
 fun BaseSimpleActivity.isShowingSAFDialog(path: String): Boolean {
-    return if (isPathOnSD(path) && !isSDCardSetAsDefaultStorage() && (baseConfig.treeUri.isEmpty() || !hasProperStoredTreeUri(false))) {
+    return if ((!isRPlus() && isPathOnSD(path) && !isSDCardSetAsDefaultStorage() && (baseConfig.sdTreeUri.isEmpty() || !hasProperStoredTreeUri(false)))) {
         runOnUiThread {
             if (!isDestroyed && !isFinishing) {
                 WritePermissionDialog(this, false) {
                     Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
                         putExtra("android.content.extra.SHOW_ADVANCED", true)
-                        if (resolveActivity(packageManager) == null) {
+                        try {
+                            startActivityForResult(this, OPEN_DOCUMENT_TREE_SD)
+                            checkedDocumentPath = path
+                            return@apply
+                        } catch (e: Exception) {
                             type = "*/*"
                         }
 
-                        if (resolveActivity(packageManager) != null) {
+                        try {
+                            startActivityForResult(this, OPEN_DOCUMENT_TREE_SD)
                             checkedDocumentPath = path
-                            startActivityForResult(this, OPEN_DOCUMENT_TREE)
-                        } else {
+                        } catch (e: Exception) {
                             toast(R.string.unknown_error_occurred)
                         }
                     }
@@ -401,9 +404,68 @@ fun Activity.rescanPath(path: String, callback: (() -> Unit)? = null) {
 fun Activity.rescanPaths(paths: List<String>, callback: (() -> Unit)? = null) {
     applicationContext.rescanPaths(paths, callback)
 }
+fun BaseSimpleActivity.isShowingAndroidSAFDialog(path: String): Boolean {
+    return if (isRestrictedSAFOnlyRoot(path) && (getAndroidTreeUri(path).isEmpty() || !hasProperStoredAndroidTreeUri(path))) {
+        runOnUiThread {
+            if (!isDestroyed && !isFinishing) {
+                ConfirmationAdvancedDialog(this, "", R.string.confirm_storage_access_android_text, R.string.ok, R.string.cancel) { success ->
+                    if (success) {
+                        Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
+                            putExtra("android.content.extra.SHOW_ADVANCED", true)
+                            putExtra(DocumentsContract.EXTRA_INITIAL_URI, createAndroidDataOrObbUri(path))
+                            try {
+                                startActivityForResult(this, OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB)
+                                checkedDocumentPath = path
+                                return@apply
+                            } catch (e: Exception) {
+                                type = "*/*"
+                            }
 
-fun BaseSimpleActivity.renameFile(oldPath: String, newPath: String, callback: ((success: Boolean) -> Unit)? = null) {
-    if (needsStupidWritePermissions(newPath)) {
+                            try {
+                                startActivityForResult(this, OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB)
+                                checkedDocumentPath = path
+                            } catch (e: Exception) {
+                                toast(R.string.unknown_error_occurred)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        true
+    } else {
+        false
+    }
+}
+
+fun BaseSimpleActivity.renameFile(
+    oldPath: String,
+    newPath: String,
+    isRenamingMultipleFiles: Boolean,
+    callback: ((success: Boolean, useAndroid30Way: Boolean) -> Unit)? = null
+) {
+    if (isRestrictedSAFOnlyRoot(oldPath)) {
+        handleAndroidSAFDialog(oldPath) {
+            if (!it) {
+                runOnUiThread {
+                    callback?.invoke(false, false)
+                }
+                return@handleAndroidSAFDialog
+            }
+
+            try {
+                val success = renameAndroidSAFDocument(oldPath, newPath)
+                runOnUiThread {
+                    callback?.invoke(success, false)
+                }
+            } catch (e: Exception) {
+                showErrorToast(e)
+                runOnUiThread {
+                    callback?.invoke(false, false)
+                }
+            }
+        }
+    } else if (needsStupidWritePermissions(newPath)) {
         handleSAFDialog(newPath) {
             if (!it) {
                 return@handleSAFDialog
@@ -412,7 +474,7 @@ fun BaseSimpleActivity.renameFile(oldPath: String, newPath: String, callback: ((
             val document = getSomeDocumentFile(oldPath)
             if (document == null || (File(oldPath).isDirectory != document.isDirectory)) {
                 runOnUiThread {
-                    callback?.invoke(false)
+                    callback?.invoke(false, false)
                 }
                 return@handleSAFDialog
             }
@@ -420,14 +482,12 @@ fun BaseSimpleActivity.renameFile(oldPath: String, newPath: String, callback: ((
             try {
                 ensureBackgroundThread {
                     try {
-                        //File(oldPath).renameTo(File(newPath))
-                        //val  file=File(getRealPathFromURI(document.uri))
-                        DocumentsContract.renameDocument(applicationContext.contentResolver, document.uri, newPath.getFilenameFromPath().replace(" ","%20"))
+                        DocumentsContract.renameDocument(applicationContext.contentResolver, document.uri, newPath.getFilenameFromPath())
                     } catch (ignored: FileNotFoundException) {
                         // FileNotFoundException is thrown in some weird cases, but renaming works just fine
                     } catch (e: Exception) {
                         showErrorToast(e)
-                        callback?.invoke(false)
+                        callback?.invoke(false, false)
                         return@ensureBackgroundThread
                     }
 
@@ -438,44 +498,99 @@ fun BaseSimpleActivity.renameFile(oldPath: String, newPath: String, callback: ((
                         }
                         deleteFromMediaStore(oldPath)
                         runOnUiThread {
-                            callback?.invoke(true)
+                            callback?.invoke(true, false)
                         }
                     }
                 }
             } catch (e: Exception) {
                 showErrorToast(e)
                 runOnUiThread {
-                    callback?.invoke(false)
-                }
-            }
-        }
-    } else if (File(oldPath).renameTo(File(newPath))) {
-        if (File(newPath).isDirectory) {
-            deleteFromMediaStore(oldPath)
-            rescanPath(newPath) {
-                runOnUiThread {
-                    callback?.invoke(true)
-                }
-                scanPathRecursively(newPath)
-            }
-        } else {
-            if (!baseConfig.keepLastModified) {
-                File(newPath).setLastModified(System.currentTimeMillis())
-            }
-            deleteFromMediaStore(oldPath)
-
-            scanPathsRecursively(arrayListOf(newPath)) {
-                runOnUiThread {
-                    callback?.invoke(true)
+                    callback?.invoke(false, false)
                 }
             }
         }
     } else {
-        runOnUiThread {
-            callback?.invoke(false)
+        val oldFile = File(oldPath)
+        val newFile = File(newPath)
+        val tempFile = try {
+            createTempFile(oldFile) ?: return
+        } catch (exception: Exception) {
+            if (isRPlus() && exception is java.nio.file.FileSystemException) {
+                // if we are renaming multiple files at once, we should give the Android 30+ permission dialog all uris together, not one by one
+                if (isRenamingMultipleFiles) {
+                    callback?.invoke(false, true)
+                } else {
+                    val fileUris = getFileUrisFromFileDirItems(arrayListOf(File(oldPath).toFileDirItem(this))).second
+                    updateSDK30Uris(fileUris) { success ->
+                        if (success) {
+                            val values = ContentValues().apply {
+                                put(MediaStore.Images.Media.DISPLAY_NAME, newPath.getFilenameFromPath())
+                            }
+
+                            try {
+                                contentResolver.update(fileUris.first(), values, null, null)
+                                callback?.invoke(true, false)
+                            } catch (e: Exception) {
+                                showErrorToast(e)
+                                callback?.invoke(false, false)
+                            }
+                        } else {
+                            callback?.invoke(false, false)
+                        }
+                    }
+                }
+            } else {
+                showErrorToast(exception)
+                callback?.invoke(false, false)
+            }
+            return
+        }
+
+        val oldToTempSucceeds = oldFile.renameTo(tempFile)
+        val tempToNewSucceeds = tempFile.renameTo(newFile)
+        if (oldToTempSucceeds && tempToNewSucceeds) {
+            if (newFile.isDirectory) {
+                updateInMediaStore(oldPath, newPath)
+                rescanPath(newPath) {
+                    runOnUiThread {
+                        callback?.invoke(true, false)
+                    }
+                    deleteFromMediaStore(oldPath)
+                    scanPathRecursively(newPath)
+                }
+            } else {
+                if (!baseConfig.keepLastModified) {
+                    newFile.setLastModified(System.currentTimeMillis())
+                }
+                updateInMediaStore(oldPath, newPath)
+                scanPathsRecursively(arrayListOf(newPath)) {
+                    deleteFromMediaStore(oldPath)
+                    runOnUiThread {
+                        callback?.invoke(true, false)
+                    }
+                }
+            }
+        } else {
+            tempFile.delete()
+            runOnUiThread {
+                callback?.invoke(false, false)
+            }
         }
     }
 }
+fun Activity.createTempFile(file: File): File? {
+    return if (file.isDirectory) {
+        createTempDir("temp", "${System.currentTimeMillis()}", file.parentFile)
+    } else {
+//        if (isRPlus()) {
+            // this can throw FileSystemException, lets catch and handle it at the place calling this function
+//            PathUtils.createTempFile(file.parentFile.toPath(), "temp", "${System.currentTimeMillis()}").toFile()
+//        } else {
+            createTempFile("temp", "${System.currentTimeMillis()}", file.parentFile)
+        }
+    }
+//}
+
 
 fun Activity.hideKeyboard() {
     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

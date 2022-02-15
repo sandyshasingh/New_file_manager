@@ -31,6 +31,7 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
         Log.d("countoffiles","${folderList[position].count_files} in the adapter")
 
         if(folderList[position].count_files>0){
+
 //            holder.itemView.count_file.visibility = View.VISIBLE
             holder.itemView.count_text.visibility = View.VISIBLE
             holder.itemView.count_text.text = folderList[position].count_files.toString()

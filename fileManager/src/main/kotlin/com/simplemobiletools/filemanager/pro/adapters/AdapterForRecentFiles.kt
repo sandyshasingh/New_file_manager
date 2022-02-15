@@ -26,6 +26,9 @@ import com.simplemobiletools.filemanager.pro.extensions.config
 import kotlinx.android.synthetic.main.card_storage.view.*
 import kotlinx.android.synthetic.main.folder_items.view.*
 import kotlinx.android.synthetic.main.recent_files.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 //import kotlinx.android.synthetic.main.recent_files.view.*
@@ -44,6 +47,8 @@ class AdapterForRecentFiles(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //var mRecentwva: List<ListItem>? = null
     private var storageItems = ArrayList<StorageItem>()
+    val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+    val currentDate = sdf.format(Date())
 
     inner class MainViewHolder(itemView: View, mContext: Context) : RecyclerView.ViewHolder(itemView) {
 
@@ -217,7 +222,12 @@ class AdapterForRecentFiles(
         when (holder) {
             is MainViewHolder -> {
                 val keys = mRecent?.mKeys?.get(position-2)
-                holder.itemView.recent_file_text.text = keys
+                if (keys != null) {
+                    if (keys<currentDate)
+                        holder.itemView.recent_file_text.text = keys
+                    else if (keys == currentDate)
+                        holder.itemView.recent_file_text.text = "Today"
+                }
                 holder.itemView.recent_file_item.adapter = ChildAdapterForRecentFiles(mContext,
                     mRecent?.mValues?.get(position-2),listener,
                     keys, listenerOfChild)

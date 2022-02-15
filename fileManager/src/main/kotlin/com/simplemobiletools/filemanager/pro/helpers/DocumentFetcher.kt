@@ -1,6 +1,7 @@
 package com.simplemobiletools.filemanager.pro.helpers
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Environment
 import com.simplemobiletools.commons.ListItem
@@ -25,12 +26,20 @@ class DocumentFetcher(var context: Context, var fetchAudioAsyncCompleteListener:
         val docPattern1 = ".pdf"
         val docPattern2 = ".docx"
         val fileList = dir.listFiles()
+        val sharedPrefFile = "com.example.new_file_manager"
+        var last_login_time :Long =0L
+        val sharedPreferences: SharedPreferences? = context.getSharedPreferences(sharedPrefFile,
+            Context.MODE_PRIVATE)
+        last_login_time = sharedPreferences?.getLong("LAST_LOGIN",0L)!!
         if (fileList != null) {
             for (i in fileList.indices) {
                 if (fileList[i].isDirectory) {
                     searchDir(fileList[i])
                 }
                 else if(fileList[i].path.endsWith(docPattern1)) {
+                    var isNew = false
+                    if (fileList[i].lastModified()> last_login_time)
+                        isNew = true
                     //val size = format(fileList[i].length().toDouble(),2)
                     val hoho = ListItem(
                         fileList[i].path,
@@ -42,11 +51,15 @@ class DocumentFetcher(var context: Context, var fetchAudioAsyncCompleteListener:
                         false,
                         null,
                         "",
-                        ""
+                        "",
+                        isNew
                     )
                     fileDataClassList.add(hoho)
                 }
                 else if(fileList[i].path.endsWith(docPattern2)) {
+                    var isNew = false
+                    if (fileList[i].lastModified()> last_login_time)
+                        isNew = true
                     //val size = format(fileList[i].length().toDouble(),2)
                     val hoho = ListItem(
                         fileList[i].path,
@@ -58,7 +71,8 @@ class DocumentFetcher(var context: Context, var fetchAudioAsyncCompleteListener:
                         false,
                         null,
                         "",
-                        ""
+                        "",
+                        isNew
                     )
                     fileDataClassList.add(hoho)
                 }

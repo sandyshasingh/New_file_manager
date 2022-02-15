@@ -38,6 +38,18 @@
             android:layout_toEndOf="@+id/item_icon"
             android:orientation="vertical">
 
+           <TextView
+               android:id="@+id/new_text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="NEW"
+               android:textStyle="bold"
+               android:visibility="gone"
+               android:textSize="10dp"
+               android:textColor="#0112FF"
+               />
+
+
             <TextView
                 android:id="@+id/item_name"
                 android:layout_width="wrap_content"

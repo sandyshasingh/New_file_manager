@@ -23,8 +23,8 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.6' // Java 7 not supported by kotlinOptions jvmTarget
@@ -66,7 +66,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
 
     implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
-    api 'androidx.core:core:1.7.0'
+    api 'androidx.core:core-ktx:1.7.0'
 
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.16.1'
 

@@ -1,5 +1,6 @@
 package com.simplemobiletools.commons.extensions
 
+import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore.*
 import android.text.TextUtils
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.helpers.*
@@ -139,10 +141,142 @@ fun Context.isPathOnSD(path: String) = sdCardPath.isNotEmpty() && path.startsWit
 fun Context.isPathOnOTG(path: String) = otgPath.isNotEmpty() && path.startsWith(otgPath)
 
 // no need to use DocumentFile if an SD card is set as the default storage
-fun Context.needsStupidWritePermissions(path: String) = (isPathOnSD(path) || isPathOnOTG(path)) && !isSDCardSetAsDefaultStorage()
-
+fun Context.needsStupidWritePermissions(path: String) = !isRPlus() && (isPathOnSD(path) || isPathOnOTG(path)) && !isSDCardSetAsDefaultStorage()
 fun Context.isSDCardSetAsDefaultStorage() = sdCardPath.isNotEmpty() && Environment.getExternalStorageDirectory().absolutePath.equals(sdCardPath, true)
+fun Context.isSAFOnlyRoot(path: String): Boolean {
+    return getSAFOnlyDirs().any { "${path.trimEnd('/')}/".startsWith(it) }
+}
+fun Context.getSAFOnlyDirs(): List<String> {
+    return DIRS_ACCESSIBLE_ONLY_WITH_SAF.map { "$internalStoragePath$it" }
+}
+private const val ANDROID_DATA_DIR = "/Android/data/"
+private const val ANDROID_OBB_DIR = "/Android/obb/"
+val DIRS_ACCESSIBLE_ONLY_WITH_SAF = listOf(ANDROID_DATA_DIR, ANDROID_OBB_DIR)
+fun Context.isRestrictedSAFOnlyRoot(path: String): Boolean {
+    return isRPlus() && isSAFOnlyRoot(path)
+}
+fun isAndroidDataDir(path: String): Boolean {
+    val resolvedPath = "${path.trimEnd('/')}/"
+    return resolvedPath.contains(ANDROID_DATA_DIR)
+}
+fun Context.hasProperStoredAndroidTreeUri(path: String): Boolean {
+    val uri = getAndroidTreeUri(path)
+    val hasProperUri = contentResolver.persistedUriPermissions.any { it.uri.toString() == uri }
+    if (!hasProperUri) {
+        storeAndroidTreeUri(path, "")
+    }
+    return hasProperUri
+}
 
+fun Context.createAndroidDataOrObbUri(fullPath: String): Uri {
+    val path = if (isAndroidDataDir(fullPath)) {
+        fullPath.getBasePath(this).trimEnd('/').plus(ANDROID_DATA_DIR)
+    } else {
+        fullPath.getBasePath(this).trimEnd('/').plus(ANDROID_OBB_DIR)
+    }
+
+    return createDocumentUri(path)
+}
+fun Context.createDocumentUri(fullPath: String): Uri {
+    val storageId = if (fullPath.startsWith('/')) {
+        when {
+            fullPath.startsWith(internalStoragePath) -> "primary"
+            else -> fullPath.substringAfter("/storage/", "").substringBefore('/')
+        }
+    } else {
+        fullPath.substringBefore(':', "").substringAfterLast('/')
+    }
+
+    val relativePath = when {
+        fullPath.startsWith(internalStoragePath) -> fullPath.substring(internalStoragePath.length).trim('/')
+        else -> fullPath.substringAfter(storageId).trim('/')
+    }
+
+    val treeUri = DocumentsContract.buildTreeDocumentUri(EXTERNAL_STORAGE_PROVIDER_AUTHORITY, "$storageId:")
+    val documentId = "${storageId}:$relativePath"
+    return DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
+}
+fun Context.getFileUrisFromFileDirItems(fileDirItems: List<FileDirItem>): Pair<ArrayList<String>, ArrayList<Uri>> {
+    val fileUris = ArrayList<Uri>()
+    val successfulFilePaths = ArrayList<String>()
+    val allIds = getMediaStoreIds(this)
+    val filePaths = fileDirItems.map { it.path }
+    filePaths.forEach { path ->
+        for ((filePath, mediaStoreId) in allIds) {
+            if (filePath.equals(path, ignoreCase = true)) {
+                val baseUri = getFileUri(filePath)
+                val uri = ContentUris.withAppendedId(baseUri, mediaStoreId)
+                fileUris.add(uri)
+                successfulFilePaths.add(path)
+            }
+        }
+    }
+
+    return Pair(successfulFilePaths, fileUris)
+}
+
+fun getMediaStoreIds(context: Context): HashMap<String, Long> {
+    val ids = HashMap<String, Long>()
+    val projection = arrayOf(
+        Images.Media.DATA,
+        Images.Media._ID
+    )
+
+    val uri = Files.getContentUri("external")
+
+    try {
+        context.queryCursor(uri, projection) { cursor ->
+            try {
+                val id = cursor.getLongValue(Images.Media._ID)
+                if (id != 0L) {
+                    val path = cursor.getStringValue(Images.Media.DATA)
+                    ids[path] = id
+                }
+            } catch (e: Exception) {
+            }
+        }
+    } catch (e: Exception) {
+    }
+
+    return ids
+}
+
+fun Context.renameAndroidSAFDocument(oldPath: String, newPath: String): Boolean {
+    return try {
+        val treeUri = Uri.parse(getAndroidTreeUri(oldPath))
+        val documentId = getAndroidSAFDocumentId(oldPath)
+        val parentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
+        DocumentsContract.renameDocument(contentResolver, parentUri, newPath.getFilenameFromPath()) != null
+    } catch (e: IllegalStateException) {
+        showErrorToast(e)
+        false
+    }
+}
+
+fun Context.getAndroidSAFDocumentId(path: String): String {
+    val basePath = path.getBasePath(this)
+    val relativePath = path.substring(basePath.length).trim('/')
+    val storageId = getStorageRootId(path)
+    return "$storageId:$relativePath"
+}
+
+fun Context.getStorageRootId(path: String) =
+    getAndroidTreeUri(path).removeSuffix(if (isAndroidDataDir(path)) "%3AAndroid%2Fdata" else "%3AAndroid%2Fobb").substringAfterLast('/').trimEnd('/')
+
+fun Context.storeAndroidTreeUri(path: String, treeUri: String) {
+    return when {
+        isPathOnOTG(path) -> if (isAndroidDataDir(path)) baseConfig.otgAndroidDataTreeUri = treeUri else baseConfig.otgAndroidObbTreeUri = treeUri
+        isPathOnSD(path) -> if (isAndroidDataDir(path)) baseConfig.sdAndroidDataTreeUri = treeUri else baseConfig.otgAndroidObbTreeUri = treeUri
+        else -> if (isAndroidDataDir(path)) baseConfig.primaryAndroidDataTreeUri = treeUri else baseConfig.primaryAndroidObbTreeUri = treeUri
+    }
+}
+fun Context.getAndroidTreeUri(path: String): String {
+    return when {
+        isPathOnOTG(path) -> if (isAndroidDataDir(path)) baseConfig.otgAndroidDataTreeUri else baseConfig.otgAndroidObbTreeUri
+        isPathOnSD(path) -> if (isAndroidDataDir(path)) baseConfig.sdAndroidDataTreeUri else baseConfig.sdAndroidObbTreeUri
+        else -> if (isAndroidDataDir(path)) baseConfig.primaryAndroidDataTreeUri else baseConfig.primaryAndroidObbTreeUri
+    }
+}
 fun Context.hasProperStoredTreeUri(isOTG: Boolean): Boolean {
     val uri = if (isOTG) baseConfig.OTGTreeUri else baseConfig.treeUri
     val hasProperUri = contentResolver.persistedUriPermissions.any { it.uri.toString() == uri }

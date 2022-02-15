@@ -245,7 +245,6 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
                 activity as BaseSimpleActivity,
                 this@ItemsListFragment,
                 folderItems,
-
                 listener,
                 storedItems,
                 this@ItemsListFragment,

@@ -3,6 +3,7 @@ package com.simplemobiletools.filemanager.pro.adapters
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
@@ -70,6 +71,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
     private var isDarkTheme = false
     private var currentItemsHash = listItems.hashCode()
      var listenerUpdate: UpdateServiceIntent? = null
+    private val sharedPrefFile = "com.example.new_file_manager"
+    var last_login_time :Long ?=0L
+    private var currentposition = 0
 
     init {
 
@@ -84,6 +88,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
 //            bottomnavigation?.visibility = View.GONE
             bottomListener?.btmVisible(false)
         }
+        val sharedPreferences: SharedPreferences? = activity.getSharedPreferences(sharedPrefFile,
+            Context.MODE_PRIVATE)
+        last_login_time=sharedPreferences?.getLong("LAST_LOGIN",0L)
 
 //        updateFontSizes()
     }
@@ -194,6 +201,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
 
 
         val fileDirItem = listItems[position]
+        if(listItems[position].modified > last_login_time!!) {
+            holder.itemView.new_text.visibility = View.VISIBLE
+        }
         if(holder is ViewHolder)
         {
             holder.bindView(
@@ -939,8 +949,13 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
 //                    activity.config.moveFavorite(oldPath, it)
                     activity.runOnUiThread {
                        // updateDatabase
-                        listenerUpdate?.updateDatabase(true)
+
+                        fileDirItems[0].name = it.getFilenameFromPath()
+                        notifyItemRangeChanged(0,15)
+
                         listener?.refreshItems(false)
+                        listenerUpdate?.updateDatabase(true)
+
                         finishActMode()
                     }
                 }
