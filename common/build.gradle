@@ -55,7 +55,9 @@ dependencies {
     implementation ('com.github.Stericson:RootTools:5.0') {
         exclude group: 'com.github.Stericson'
     }*/
-   
+    api project(':hiderx')
+
+
     /* api 'com.github.bumptech.glide:glide:4.12.0'
     kapt 'com.github.bumptech.glide:compiler:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'*/

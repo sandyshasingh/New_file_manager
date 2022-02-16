@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingStart="16dp"
+    android:layout_height="300dp"
+    android:paddingEnd="16dp">
+
+    <ImageView
+        android:id="@+id/img_cross"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_multiply"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_folders_to_hide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_cross"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="@dimen/spacing16"
+            android:clipToPadding="false"
+            />
+
+</RelativeLayout>

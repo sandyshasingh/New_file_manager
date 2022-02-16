@@ -20,6 +20,7 @@ import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import com.editor.hiderx.activity.HiderxSplashScreen
 import com.simplemobiletools.commons.*
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
@@ -112,6 +113,14 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
         }
         if(intent!=null){
             intent.extras
+        }
+
+        hiderx.setOnClickListener {
+            val intent = Intent(this, HiderxSplashScreen::class.java).apply {
+
+            }
+            startActivity(intent)
+
         }
 
 

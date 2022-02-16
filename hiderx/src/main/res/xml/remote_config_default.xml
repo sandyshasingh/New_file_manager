@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>disable_back_on_rateus</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>rateus_msg</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>rateus_button</key>
+        <value></value>
+    </entry>
+
+</defaultsMap>
+
+
+    <!-- END xml_defaults -->

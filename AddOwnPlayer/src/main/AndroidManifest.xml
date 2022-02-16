@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.rocks.addownplayer">
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+        <service
+            android:name="com.rocks.addownplayer.RocksPlayerService"
+            android:exported="false" />
+        <activity android:name="com.rocks.addownplayer.PlayerActivity"
+                android:theme="@style/Theme.AddOwnPlayer"
+                android:launchMode="singleTask"
+                android:screenOrientation="portrait">
+                <intent-filter>
+                    <action android:name="CALLOCK_AUDIO_PLAYER" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

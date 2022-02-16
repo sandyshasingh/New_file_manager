@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+
+            android:visibility="visible"
+            android:id="@+id/bottomholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="vertical"
+            android:elevation="@dimen/spacing8">
+
+            <androidx.cardview.widget.CardView
+                android:elevation="@dimen/spacing10"
+                android:layout_marginTop="80dp"
+                android:layout_width="match_parent"
+                app:cardCornerRadius="@dimen/spacing16"
+                android:layout_marginBottom="@dimen/spacing16"
+                app:cardBackgroundColor="@color/white"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:background="@color/white"
+                    android:paddingTop="@dimen/spacing16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing8">
+
+                    <ImageView
+                        android:id="@+id/cancelLayerButton"
+                        android:layout_marginEnd="@dimen/spacing16"
+                        android:layout_gravity="end"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:scaleType="centerInside"
+                        app:tint="@color/grey800"
+                        app:srcCompat="@drawable/ic_cross_vector"/>
+
+                    <LinearLayout
+                        android:id="@+id/firstlayer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        >
+                        <TextView
+                            android:visibility="visible"
+                            fontPath="fonts/OpenSans-SemiBold.ttf"
+                            tools:ignore="MissingPrefix"
+                            android:id="@+id/txtHeading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginTop="50dp"
+                            android:gravity="center"
+                            android:fontFamily="sans-serif-medium"
+                            android:typeface="sans"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="24sp" />
+
+
+                        <TextView
+                            android:lineSpacingExtra="@dimen/spacing4"
+                            fontPath="fonts/OpenSans-SemiBold.ttf"
+                            tools:ignore="MissingPrefix"
+                            android:id="@+id/txtsubheading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:fontFamily="sans-serif-medium"
+                            android:typeface="sans"
+                            android:text="@string/rate_us_title"
+                            android:textColor="@color/black"
+                            android:textSize="15dp" />
+
+                        <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="350dp"
+                            android:layout_marginBottom="@dimen/spacing8"
+                            android:layout_height="wrap_content">
+
+                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                android:layout_centerHorizontal="true"
+                                style="@style/CustomRatingBarStyle"
+                                app:srb_starSize="44dp"
+                                app:srb_numberOfStars="5"
+                                app:srb_rating="0"
+                                app:srb_stepSize="1"
+                                app:srb_borderColor="#7F47DD"
+                                app:srb_fillColor="#7F47DD"
+                                app:srb_starCornerRadius="11"
+                                app:srb_pressedBorderColor="#7F47DD"
+                                app:srb_starsSeparation="@dimen/spacing16"
+                                android:id="@+id/rating"
+                                app:srb_starBorderWidth="2"
+                                android:layout_width="350dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                />
+
+                        </RelativeLayout>
+
+
+                        <Button
+                            android:layout_marginTop="30dp"
+                            fontPath="fonts/OpenSans-SemiBold.ttf"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/rating_positive_button"
+                            android:layout_width="240dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/rateus_button"
+                            android:text="@string/rate_us_positive_button_text"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_big"
+                            tools:ignore="MissingPrefix"/>
+
+
+                        <Button
+                            android:layout_marginBottom="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/rating_dismiss_button"
+                            android:layout_width="240dp"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="30dp"
+                            android:text="@string/cancel"
+                            android:background="@color/transparent"
+                            android:textAllCaps="true"
+                            android:textColor="@color/grey600"
+                            android:textSize="@dimen/text_medium"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/secondfeedbackLayer"
+                        android:layout_marginTop="40dp"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:lineSpacingExtra="@dimen/spacing4"
+                            fontPath="fonts/OpenSans-SemiBold.ttf"
+                            tools:ignore="MissingPrefix"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:fontFamily="sans-serif-medium"
+                            android:typeface="sans"
+                            android:text="We are always open to feedback and Suggestion. How can we improve?"
+                            android:textColor="@color/black"
+                            android:textSize="15dp" />
+
+                        <!--<me.zhanghai.android.materialratingbar.MaterialRatingBar
+                            android:id="@+id/naseekaabar"
+                            android:layout_marginTop="@dimen/spacing16"
+                            android:layout_below="@+id/indicator"
+                            android:layout_centerHorizontal="true"
+                            app:srb_starSize="24dp"
+                            app:srb_numberOfStars="5"
+                            app:srb_rating="4"
+                            app:srb_stepSize="1"
+                            app:srb_borderColor="#7F47DD"
+                            app:srb_fillColor="#7F47DD"
+                            app:srb_starCornerRadius="11"
+                            app:srb_pressedBorderColor="#7F47DD"
+                            app:srb_starsSeparation="@dimen/spacing4"
+                            app:srb_starBorderWidth="2"
+                            android:layout_width="350dp"
+                            app:srb_isIndicator="true"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            />-->
+
+                        <androidx.cardview.widget.CardView
+
+                            android:id="@+id/editTextCard"
+                            android:visibility="visible"
+                            android:layout_marginTop="@dimen/spacing24"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="match_parent"
+                            android:elevation="@dimen/spacing8"
+                            app:cardCornerRadius="@dimen/spacing8"
+                            android:layout_marginEnd="@dimen/spacing16"
+                            android:layout_marginStart="@dimen/spacing16"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:background="@drawable/rectangle_corner_border_white"
+                                android:gravity="left"
+                                android:paddingStart="@dimen/spacing8"
+                                android:paddingTop="@dimen/spacing8"
+                                android:textColorHint="@color/grey600"
+                                android:hint="Enter your feedback"
+                                android:id="@+id/feedbackEditText"
+                                android:layout_width="400dp"
+                                android:layout_height="200dp">
+
+                            </androidx.appcompat.widget.AppCompatEditText>
+                        </androidx.cardview.widget.CardView>
+
+                        <Button
+                            android:layout_marginBottom="50dp"
+                            android:layout_marginTop="30dp"
+                            fontPath="fonts/OpenSans-SemiBold.ttf"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/feedback_button"
+                            android:layout_width="240dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/rateus_button_white"
+                            android:text="Submit"
+                            android:textAllCaps="true"
+                            android:textColor="@color/grey900"
+                            android:textSize="@dimen/text_big"
+                            tools:ignore="MissingPrefix"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_marginTop="@dimen/spacing16"
+            android:elevation="10dp"
+            android:layout_alignTop="@+id/bottomholder"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/smile"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/feedback_2_screen"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

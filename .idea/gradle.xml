@@ -10,11 +10,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/AddOwnPlayer" />
             <option value="$PROJECT_DIR$/RootShell-1.6" />
             <option value="$PROJECT_DIR$/RootTools-5.0" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/fileManager" />
+            <option value="$PROJECT_DIR$/hiderx" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

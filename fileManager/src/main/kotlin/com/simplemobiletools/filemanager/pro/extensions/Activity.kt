@@ -228,11 +228,17 @@ fun Activity.setAs(path: String) {
 //    setAsIntent(path, "com.rocks.music.videoplayer.provider")
 }
 
-fun BaseSimpleActivity.toggleItemVisibility(oldPath: String, hide: Boolean, callback: ((newPath: String) -> Unit)? = null) {
+fun BaseSimpleActivity.toggleItemVisibility(oldPath: String, hide: Boolean, callback: ((newPath: String,message:String) -> Unit)? = null) {
     val path = oldPath.getParentPath()
+    var message = ""
     var filename = oldPath.getFilenameFromPath()
     if ((hide && filename.startsWith('.')) || (!hide && !filename.startsWith('.'))) {
-        callback?.invoke(oldPath)
+        message = if(hide)
+            "Already hidden"
+        else
+            "Already not hidden"
+
+        callback?.invoke(oldPath,message)
         return
     }
 
@@ -245,7 +251,7 @@ fun BaseSimpleActivity.toggleItemVisibility(oldPath: String, hide: Boolean, call
     val newPath = "$path/$filename"
     if (oldPath != newPath) {
         renameFile(oldPath, newPath,false) {success, useAndroid30Way ->
-            callback?.invoke(newPath)
+            callback?.invoke(newPath,"")
         }
     }
 }

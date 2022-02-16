@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <com.editor.hiderx.camera.AutoFitTextureView
+        android:id="@+id/camera_texture_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_holder"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="30dp"
+        />
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_back"
+        android:layout_below="@id/toolbar"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        />
+
+    <ImageView
+        android:id="@+id/capture_black_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/toolbar"
+        >
+       <!-- <ImageView
+            android:id="@+id/settings"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_camera_settings"/>
+-->
+        <ImageView
+            android:id="@+id/toggle_camera"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_camera_front_vector"/>
+
+        <ImageView
+            android:id="@+id/toggle_flash"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_flash_off_vector"/>
+
+        <ImageView
+            android:id="@+id/img_settings"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_camera_settings"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        >
+        <ImageView
+            android:id="@+id/toggle_photo_video"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_video_vector"
+            android:layout_below="@+id/video_rec_curr_timer"
+            android:layout_marginStart="32dp"/>
+
+        <!-- <ImageView
+             android:id="@+id/change_resolution"
+             android:layout_width="@dimen/icon_size"
+             android:layout_height="@dimen/icon_size"
+             android:layout_below="@+id/toggle_photo_video"
+             android:layout_alignParentRight="true"
+             android:padding="@dimen/normal_margin"
+             android:src="@drawable/ic_resolution_vector"/>-->
+
+        <RelativeLayout
+            android:id="@+id/rl_folders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="32dp"
+            android:layout_below="@+id/video_rec_curr_timer"
+            >
+            <com.editor.hiderx.CircleImageView
+                android:id="@+id/last_photo_video_preview"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerHorizontal="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/last_photo_video_preview"
+                android:text="Go to folder"
+                android:textColor="@color/white"
+                android:layout_marginTop="3dp"
+                />
+        </RelativeLayout>
+
+
+
+
+        <ImageView
+            android:id="@+id/shutter"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/video_rec_curr_timer"
+            android:src="@drawable/ic_shutter_vector"/>
+
+
+        <TextView
+            android:id="@+id/video_rec_curr_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:visibility="invisible"
+            />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

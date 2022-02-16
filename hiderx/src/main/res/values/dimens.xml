@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="direction_scale_factor" format="float" type="dimen">1</item>
+    <dimen name="spacing8">8dp</dimen>
+    <dimen name="spacing10">10dp</dimen>
+    <dimen name="spacing16">16dp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="spacing24">24dp</dimen>
+    <dimen name="text_big">16sp</dimen>
+    <dimen name="spacing4">4dp</dimen>
+    <dimen name="spacing12">12dp</dimen>
+    <dimen name="size_30dp">30dp</dimen>
+    <dimen name="small_margin">4dp</dimen>
+    <dimen name="normal_margin">12dp</dimen>
+</resources>

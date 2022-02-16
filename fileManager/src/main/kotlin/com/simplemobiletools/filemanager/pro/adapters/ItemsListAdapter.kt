@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -533,9 +534,15 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
         ensureBackgroundThread {
             if(listItem!=null){
                 activity.toggleItemVisibility(listItem.mPath, hide)
+//                {
+//                    Toast.makeText(this,"Already unhide ", Toast.LENGTH_SHORT).show()
+//                }
             }else {
                 getSelectedFileDirItems().forEach {
                     activity.toggleItemVisibility(it.path, hide)
+                    { _, message ->
+                        Toast.makeText(activity,"$message ",Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             activity.runOnUiThread {
