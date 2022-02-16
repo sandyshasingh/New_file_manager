@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.filemanager.pro.R
 import com.simplemobiletools.filemanager.pro.helpers.RootHelpers
 import kotlinx.android.synthetic.main.dialog_create_new.view.*
@@ -78,6 +79,27 @@ class CreateNewItemDialog(val activity: BaseSimpleActivity,
 
     private fun createDirectory(path: String, alertDialog: AlertDialog, callback: (Boolean) -> Unit) {
         when {
+            isRPlus() || path.startsWith(activity.internalStoragePath, true) -> {
+                if (activity.isRestrictedSAFOnlyRoot(path)) {
+                    activity.handleAndroidSAFDialog(path) {
+                        if (!it) {
+                            callback(false)
+                            return@handleAndroidSAFDialog
+                        }
+                        if (activity.createAndroidSAFDirectory(path)) {
+                            success(alertDialog)
+                        } else {
+                            val error = String.format(activity.getString(R.string.could_not_create_folder), path)
+                            activity.showErrorToast(error)
+                            callback(false)
+                        }
+                    }
+                } else {
+                    if (File(path).mkdirs()) {
+                        success(alertDialog)
+                    }
+                }
+            }
             activity.needsStupidWritePermissions(path) -> activity.handleSAFDialog(path) {
                 if (!it) {
                     return@handleSAFDialog
@@ -90,30 +112,13 @@ class CreateNewItemDialog(val activity: BaseSimpleActivity,
                     callback(false)
                     return@handleSAFDialog
                 }
-                /* Handler(Looper.getMainLooper()).postDelayed({
-                    // documentFile.createDirectory(path.getFilenameFromPath())
-                 }, 3000)*/
-
                 documentFile.createDirectory(path.getFilenameFromPath())
-
-
                 success(alertDialog)
-                callback(true)
-
-            }
-            path.startsWith(activity.internalStoragePath, true) -> {
-                if (File(path).mkdirs()) {
-                    success(alertDialog)
-                    callback(true)
-
-                }
             }
             else -> {
                 RootHelpers(activity).createFileFolder(path, false) {
                     if (it) {
                         success(alertDialog)
-                        callback(true)
-
                     } else {
                         callback(false)
                     }

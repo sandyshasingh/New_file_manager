@@ -6,6 +6,8 @@ import com.simplemobiletools.commons.models.StorageItem
 import java.util.*
 
 interface ItemOperationsListener {
+    fun refreshFragment()
+
     fun refreshItems(isHeaderFolder : Boolean)
 
     fun deleteFiles(files: ArrayList<FileDirItem>)

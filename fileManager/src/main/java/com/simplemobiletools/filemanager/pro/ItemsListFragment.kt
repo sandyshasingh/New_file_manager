@@ -862,6 +862,9 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
         }
     }
 
+    override fun refreshFragment() {
+       openPath(currentPath)
+    }
 
 
     override fun refreshItems(isHeaderFolder: Boolean) {

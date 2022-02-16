@@ -906,26 +906,51 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
     }
 
      fun copyMoveTo(isCopyOperation: Boolean, listItem: ListItem?) {
-        var files = getSelectedFileDirItems()
-        if(listItem!=null) {
-            files = arrayListOf(listItem)
-        }
-        val firstFile = files[0]
-        val source = firstFile.getParentPath()
-        val positiveButtonText = if(isCopyOperation) "Copy" else "Move"
-        FilePickerDialog(activity, source, positiveButtonText,"Cancel",false, activity.config.shouldShowHidden, true, true) {
-            if (activity.isPathOnRoot(it) || activity.isPathOnRoot(firstFile.path)) {
-                copyMoveRootItems(files, it, isCopyOperation)
-            } else {
-                activity.copyMoveFilesTo(files, source, it, isCopyOperation, false, activity.config.shouldShowHidden) {
-                  //  updateDatabase
-                    listenerUpdate?.updateDatabase(true)
-                    listener?.refreshItems(false)
-                    finishActMode()
-                }
-            }
-        }
-    }
+         val files = getSelectedFileDirItems()
+         val firstFile = files[0]
+         val positiveButtonText = if(isCopyOperation) "Copy" else "Move"
+         val source = firstFile.getParentPath()
+         FilePickerDialog(activity, source,  positiveButtonText,"Cancel",false, activity.config.shouldShowHidden, true,  true) {
+             if (activity.isPathOnRoot(it) || activity.isPathOnRoot(firstFile.path)) {
+                 copyMoveRootItems(files, it, isCopyOperation)
+             } else {
+                 activity.copyMoveFilesTo(files, source, it, isCopyOperation, false, activity.config.shouldShowHidden) {
+                     if (!isCopyOperation) {
+                         files.forEach { sourceFileDir ->
+                             val sourcePath = sourceFileDir.path
+                             if (activity.isRestrictedSAFOnlyRoot(sourcePath) && activity.getDoesFilePathExist(sourcePath)) {
+                                 activity.deleteFile(sourceFileDir, true) {
+                                     listener?.refreshFragment()
+                                     activity.runOnUiThread {
+                                         finishActMode()
+                                     }
+                                 }
+                             } else {
+                                 val sourceFile = File(sourcePath)
+                                 if (activity.getDoesFilePathExist(source) && activity.getIsPathDirectory(source) &&
+                                     sourceFile.list()?.isEmpty() == true && sourceFile.getProperSize(true) == 0L && sourceFile.getFileCount(true) == 0
+                                 ) {
+                                     val sourceFolder = sourceFile.toFileDirItem(activity)
+                                     activity.deleteFile(sourceFolder, true) {
+                                         listener?.refreshFragment()
+                                         activity.runOnUiThread {
+                                             finishActMode()
+                                         }
+                                     }
+                                 } else {
+                                     listener?.refreshFragment()
+                                     finishActMode()
+                                 }
+                             }
+                         }
+                     } else {
+                         listener?.refreshFragment()
+                         finishActMode()
+                     }
+                 }
+             }
+         }
+     }
 
     private fun copyMoveRootItems(files: ArrayList<FileDirItem>, destinationPath: String, isCopyOperation: Boolean) {
         activity.toast(R.string.copying)

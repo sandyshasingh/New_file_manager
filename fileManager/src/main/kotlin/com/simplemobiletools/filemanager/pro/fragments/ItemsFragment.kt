@@ -1034,6 +1034,10 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         //calculateContentHeight(storedItems)
     }
 
+    override fun refreshFragment() {
+        TODO("Not yet implemented")
+    }
+
     override fun refreshItems(isHeaderFolder: Boolean) {
         val internalStoragePath = context?.config?.internalStoragePath
         if (isHeaderFolder) {
