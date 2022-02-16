@@ -22,6 +22,7 @@
     <attr name="ic_three_dot" format="reference"/>
     <attr name="shortcut_btn_color" format="reference"/>
     <attr name="filepicker_textcolor" format="reference"/>
+    <attr name="folder_icon_color" format="reference"/>
 
 
     <attr name="dark_theme_icon" format="reference"/>
@@ -165,6 +166,8 @@
         <item name="ic_unhide_vector_dialog">@color/unhide_vector_dark</item>
         <item name="ic_plus_vector">@color/ic_plus_vector_dark</item>
         <item name="filepicker_textcolor">@color/ic_plus_vector_dark</item>
+        <item name="folder_icon_color">@color/ic_plus_vector_dark</item>
+
     </style>
     <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="android:popupBackground">@color/btm_background</item>
@@ -213,6 +216,8 @@
         <item name="rv_path">@color/path_light</item>
         <item name="slct_icon_color">@color/iconcolor_light</item>
         <item name="shortcut_btn_color">@color/add_btn_light</item>
+        <item name="folder_icon_color">@color/iconcolor_light</item>
+
         <!--        <item name="bottom_sheet_tint">@color/bottom_sheet_color</item>-->
     </style>
 

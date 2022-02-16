@@ -541,7 +541,8 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                 getSelectedFileDirItems().forEach {
                     activity.toggleItemVisibility(it.path, hide)
                     { _, message ->
-                        Toast.makeText(activity,"$message ",Toast.LENGTH_SHORT).show()
+                        if (message!=null)
+                        activity.toast("$message")
                     }
                 }
             }

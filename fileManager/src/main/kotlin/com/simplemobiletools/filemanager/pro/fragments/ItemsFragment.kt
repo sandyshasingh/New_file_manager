@@ -436,6 +436,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                         i
                     )
                 )
+
                 //            FolderItem(ZIP_FILES_ID, ZIP_FILES_NAME, R.drawable.ic_file_manager_zip, getDrawable(R.drawable.rectangle_semitranparent_filter),
                 //                this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK))
             }
