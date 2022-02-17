@@ -25,56 +25,38 @@ class CreateNewItemDialog(val activity: BaseSimpleActivity,
     private val view = activity.layoutInflater.inflate(R.layout.dialog_create_new, null)
 
     init {
-        AlertDialog.Builder(activity, R.style.MyDialogTheme)
+        AlertDialog.Builder(activity)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
+            .create().apply {
+                activity.setupDialogStuff(view, this, R.string.create_new) {
+                    showKeyboard(view.item_name)
+                    getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(View.OnClickListener {
+                        val name = view.item_name.value
+                        if (name.isEmpty()) {
+                            activity.toast(R.string.empty_name)
+                        } else if (name.isAValidFilename()) {
+                            val newPath = "$path/$name"
+                            if (activity.getDoesFilePathExist(newPath)) {
+                                activity.toast(R.string.name_taken)
+                                return@OnClickListener
+                            }
 
-                .setPositiveButton(positiveButtonText, null)
-                .setNegativeButton(negativeButtonText, null)
-                .create().apply {
-                    activity.setupDialogStuff(view, this, R.string.create_new) {
-
-                        view.item_name.setOnTouchListener(View.OnTouchListener { v, event ->
-
-                            val DRAWABLE_RIGHT = 2
-                            if (event.action == MotionEvent.ACTION_UP) {
-                                if (event.rawX >= view.item_name.right - view.item_name.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
-                                    // your action here
-                                    view.item_name.text.clear()
-                                    return@OnTouchListener true
+                            if (view.dialog_radio_group.checkedRadioButtonId == R.id.dialog_radio_directory) {
+                                createDirectory(newPath, this) {
+                                    callback(it)
                                 }
                             } else {
-                                view.item_name.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-                            }
-                            false
-                        })
-
-                        showKeyboard(view.item_name)
-                        getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(View.OnClickListener {
-                            val name = view.item_name.value
-                            when {
-                                name.isEmpty() -> {
-                                    activity.toast(R.string.empty_name)
-                                }
-                                name.isAValidFilename() -> {
-                                    val newPath = "$path/$name"
-                                    if (activity.getDoesFilePathExist(newPath)) {
-                                        activity.toast(R.string.name_taken)
-                                        return@OnClickListener
-                                    }
-
-                                    success(this)
-                                    Handler(Looper.getMainLooper()).postDelayed({
-                                        createDirectory(newPath, this) {
-                                            callback(it)
-                                        }
-                                    }, 1500)
-                                }
-                                else -> {
-                                    activity.toast(R.string.invalid_name)
+                                createFile(newPath, this) {
+                                    callback(it)
                                 }
                             }
-                        })
-                    }
+                        } else {
+                            activity.toast(R.string.invalid_name)
+                        }
+                    })
                 }
+            }
     }
 
     private fun createDirectory(path: String, alertDialog: AlertDialog, callback: (Boolean) -> Unit) {
@@ -130,6 +112,23 @@ class CreateNewItemDialog(val activity: BaseSimpleActivity,
     private fun createFile(path: String, alertDialog: AlertDialog, callback: (Boolean) -> Unit) {
         try {
             when {
+                activity.isRestrictedSAFOnlyRoot(path) -> {
+                    activity.handleAndroidSAFDialog(path) {
+                        if (!it) {
+                            callback(false)
+                            return@handleAndroidSAFDialog
+                        }
+                        if (activity.createAndroidSAFFile(path)) {
+                            success(alertDialog)
+                        } else {
+                            val error = String.format(activity.getString(R.string.could_not_create_file), path)
+                            activity.showErrorToast(error)
+                            callback(false)
+                        }
+                    }
+                }
+
+
                 activity.needsStupidWritePermissions(path) -> {
                     activity.handleSAFDialog(path) {
                         if (!it) {
@@ -145,23 +144,18 @@ class CreateNewItemDialog(val activity: BaseSimpleActivity,
                         }
                         documentFile.createFile(path.getMimeType(), path.getFilenameFromPath())
                         success(alertDialog)
-                        callback(true)
-
                     }
                 }
-                path.startsWith(activity.internalStoragePath, true) -> {
+
+                isRPlus() || path.startsWith(activity.internalStoragePath, true) -> {
                     if (File(path).createNewFile()) {
                         success(alertDialog)
-                        callback(true)
-
                     }
                 }
                 else -> {
                     RootHelpers(activity).createFileFolder(path, true) {
                         if (it) {
                             success(alertDialog)
-                            callback(true)
-
                         } else {
                             callback(false)
                         }
@@ -176,5 +170,6 @@ class CreateNewItemDialog(val activity: BaseSimpleActivity,
 
     private fun success(alertDialog: AlertDialog) {
         alertDialog.dismiss()
+        callback(true)
     }
 }

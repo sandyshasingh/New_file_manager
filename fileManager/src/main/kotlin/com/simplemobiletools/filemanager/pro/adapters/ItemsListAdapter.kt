@@ -921,7 +921,9 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                              if (activity.isRestrictedSAFOnlyRoot(sourcePath) && activity.getDoesFilePathExist(sourcePath)) {
                                  activity.deleteFile(sourceFileDir, true) {
                                      listener?.refreshFragment()
+
                                      activity.runOnUiThread {
+                                         listenerUpdate?.updateDatabase(true)
                                          finishActMode()
                                      }
                                  }
@@ -933,17 +935,24 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                                      val sourceFolder = sourceFile.toFileDirItem(activity)
                                      activity.deleteFile(sourceFolder, true) {
                                          listener?.refreshFragment()
+
                                          activity.runOnUiThread {
+                                             listenerUpdate?.updateDatabase(true)
+
                                              finishActMode()
                                          }
                                      }
                                  } else {
+                                     listenerUpdate?.updateDatabase(true)
+
                                      listener?.refreshFragment()
                                      finishActMode()
                                  }
                              }
                          }
                      } else {
+                         listenerUpdate?.updateDatabase(true)
+
                          listener?.refreshFragment()
                          finishActMode()
                      }

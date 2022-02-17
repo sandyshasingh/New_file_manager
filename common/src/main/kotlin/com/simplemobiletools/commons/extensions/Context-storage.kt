@@ -62,6 +62,24 @@ fun Context.getSDCardPath(): String {
     return finalPath
 }
 
+fun Context.createAndroidSAFFile(path: String): Boolean {
+    return try {
+        val treeUri = Uri.parse(getAndroidTreeUri(path))
+        val parentPath = path.getParentPath()
+        if (!getDoesFilePathExist(parentPath)) {
+            createAndroidSAFDirectory(parentPath)
+        }
+
+        val documentId = getAndroidSAFDocumentId(path.getParentPath())
+        val parentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
+        DocumentsContract.createDocument(contentResolver, parentUri, path.getMimeType(), path.getFilenameFromPath()) != null
+    } catch (e: IllegalStateException) {
+        showErrorToast(e)
+        false
+    }
+}
+
+
 fun Context.hasExternalSDCard() = sdCardPath.isNotEmpty()
 fun Context.createAndroidSAFDirectory(path: String): Boolean {
     return try {
