@@ -14,7 +14,7 @@ const val PUBLIC_DIRECTORY_HIDERBACKUP_FOR_VIDEOS: String = "Unhide videos"
 const val PUBLIC_DIRECTORY_HIDERBACKUP_FOR_AUDIOS: String = "Unhide audios"
 const val PUBLIC_DIRECTORY_HIDERBACKUP_FOR_DOCUMENTS: String = "Unhide documents"
 const val PUBLIC_DIRECTORY_HIDERBACKUP_FOR_OTHERS: String = "Unhide OTHERS"
-const val PASSWORD_FILE_NAME : String = "password.txt"
+const val PASSWORD_FILE_NAME : String = "file_manager_password.txt"
 
 object StorageUtils {
 

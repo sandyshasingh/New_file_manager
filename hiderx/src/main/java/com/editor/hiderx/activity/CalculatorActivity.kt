@@ -110,12 +110,12 @@ class CalculatorActivity : AppCompatActivity() {
 
     private fun setPassword() {
         HiderUtils.setSharedPreference(this, PASSWORD_KEY, input_password)
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("passwords")
-        val exists = myRef.child(android_id!!).key!=null
-        if(exists)
-            myRef.child(android_id!!).removeValue()
-        myRef.child(android_id!!).push().setValue(input_password)
+//        val database = FirebaseDatabase.getInstance()
+//        val myRef = database.getReference("passwords")
+//        val exists = myRef.child(android_id!!).key!=null
+//        if(exists)
+//            myRef.child(android_id!!).removeValue()
+//        myRef.child(android_id!!).push().setValue(input_password)
         val file = File(StorageUtils.getHiderDirectory().path + "/$PASSWORD_FILE_NAME")
         if(file.exists())
         {

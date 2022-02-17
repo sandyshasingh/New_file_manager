@@ -33,7 +33,7 @@ object HiderUtils {
     const val PRIMARY_COLOR_KEY: String = "primaryColor"
     const val FOCUS_BEFORE_CAPTURE: String = "focusBeforeCapture"
     const val ALWAYS_OPEN_BACK_CAMERA : String = "alwaysOpenBackCamera"
-    const val PASSWORD_KEY = "PASSWORD"
+    const val PASSWORD_KEY = "PASS_WORD"
     const val KEY_FOR_USER_NAME = "USER_NAME"
     const val FRONT_VIDEO_RES_INDEX_KEY = "frontVideoResIndex"
     const val FRONT_PHOTO_RES_INDEX_KEY = "frontPhotoResIndex"

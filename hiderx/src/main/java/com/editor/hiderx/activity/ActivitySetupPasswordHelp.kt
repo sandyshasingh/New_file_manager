@@ -4,7 +4,9 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -65,14 +67,17 @@ class ActivitySetupPasswordHelp : AppCompatActivity() {
     }
 
     private fun hasStoragePermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
+        return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+            Environment.isExternalStorageManager()
+        else
+            ContextCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.READ_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(
+            ) == PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )== PackageManager.PERMISSION_GRANTED
+            )== PackageManager.PERMISSION_GRANTED
     }
 
     private fun startPermissionActivityForStorage() {

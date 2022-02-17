@@ -12,12 +12,12 @@ public class FirebaseAnalyticsUtils {
         try {
             if (activity!=null) {
                 FirebaseAnalytics mFirebaseAnalytics;
-                mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+//                mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
 
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName);
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, activity.getClass().getSimpleName());
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+//                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
             }
         }catch (Exception e){
         }
@@ -27,10 +27,10 @@ public class FirebaseAnalyticsUtils {
     public static void sendEvent(Context context, String click_event, String event){
         if (context!=null) {
             FirebaseAnalytics mFirebaseAnalytics;
-            mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+//            mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
             Bundle params = new Bundle();
             params.putString(FirebaseAnalytics.Param.ITEM_NAME, click_event);
-            mFirebaseAnalytics.logEvent(event, params);
+//            mFirebaseAnalytics.logEvent(event, params);
         }
     }
 }

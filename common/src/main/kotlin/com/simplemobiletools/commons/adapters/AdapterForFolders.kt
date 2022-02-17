@@ -59,6 +59,7 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
         var darkThemeBackground : Drawable? = null
         var isDarkTheme = false
         var deleteShortcut = itemView.delete_shortcut
+        var increaseClickable = itemView.increase_clickable
 
         init {
             isDarkTheme = mContext.isDarkTheme()
@@ -96,14 +97,18 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
             itemView.setOnClickListener{ c1(folder) }
 
             if (DELETE_SHORTCUT){
+                increaseClickable.visibility = View.GONE
                 deleteShortcut.visibility = View.GONE
             }
 
             if(folder.id == SHORTCUT_FOLDER_ID && folder.isShortcut == true){
                 deleteShortcut.visibility = View.VISIBLE
+                increaseClickable.visibility = View.VISIBLE
             }
             else
             {
+                increaseClickable.visibility = View.GONE
+
                 deleteShortcut.visibility = View.GONE
             }
 
@@ -113,6 +118,8 @@ class AdapterForFolders(var folderList: ArrayList<FolderItem>, private val click
                        DELETE_SHORTCUT = false
                        if (!DELETE_SHORTCUT) {
                            folder.isShortcut = true
+                           increaseClickable.visibility = View.VISIBLE
+
                            deleteShortcut.visibility = View.VISIBLE
                        }
                    }

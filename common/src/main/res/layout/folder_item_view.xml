@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginStart="10dp"
-        >
+        android:layout_marginStart="10dp">
 
 
         <androidx.cardview.widget.CardView
@@ -33,6 +32,13 @@
                 android:layout_height="56dp" />
             <ImageView
                 android:id="@+id/delete_shortcut"
+                android:layout_gravity="right"
+                android:visibility="gone"
+
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
+            <ImageView
+                android:id="@+id/increase_clickable"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="right"
