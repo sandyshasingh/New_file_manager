@@ -923,7 +923,7 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                                      listener?.refreshFragment()
 
                                      activity.runOnUiThread {
-                                         listenerUpdate?.updateDatabase(true)
+//                                         listenerUpdate?.updateDatabase(true)
                                          finishActMode()
                                      }
                                  }
@@ -937,13 +937,13 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                                          listener?.refreshFragment()
 
                                          activity.runOnUiThread {
-                                             listenerUpdate?.updateDatabase(true)
+//                                             listenerUpdate?.updateDatabase(true)
 
                                              finishActMode()
                                          }
                                      }
                                  } else {
-                                     listenerUpdate?.updateDatabase(true)
+//                                     listenerUpdate?.updateDatabase(true)
 
                                      listener?.refreshFragment()
                                      finishActMode()
@@ -951,12 +951,13 @@ class ItemsListAdapter (activity: BaseSimpleActivity, var isClickable:ActionMenu
                              }
                          }
                      } else {
-                         listenerUpdate?.updateDatabase(true)
+//                         listenerUpdate?.updateDatabase(true)
 
                          listener?.refreshFragment()
                          finishActMode()
                      }
                  }
+                 listenerUpdate?.updateDatabase(true)
              }
          }
      }
