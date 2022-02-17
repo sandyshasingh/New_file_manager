@@ -23,6 +23,7 @@
     <attr name="shortcut_btn_color" format="reference"/>
     <attr name="filepicker_textcolor" format="reference"/>
     <attr name="folder_icon_color" format="reference"/>
+    <attr name="lottie" format="reference"/>
 
 
     <attr name="dark_theme_icon" format="reference"/>
@@ -167,6 +168,7 @@
         <item name="ic_plus_vector">@color/ic_plus_vector_dark</item>
         <item name="filepicker_textcolor">@color/ic_plus_vector_dark</item>
         <item name="folder_icon_color">@color/ic_plus_vector_dark</item>
+        <item name="lottie">@raw/white</item>
 
     </style>
     <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
@@ -181,7 +183,7 @@
         <item name="android:textColor">#000000</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
 <!--        <item name="popupMenuStyle">@style/PopupMenu</item>-->
-
+        <item name="lottie">@raw/hiderx</item>
         <item name="ic_home_vector">@drawable/ic_home_vector_black</item>
         <item name="filemanageritembackgroud">@drawable/rectangle_semitranparent_light_theme</item>
         <item name="ic_folder_icon">@drawable/ic_icon_folder__light2</item>

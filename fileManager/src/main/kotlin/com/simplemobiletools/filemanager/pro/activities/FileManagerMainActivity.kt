@@ -380,7 +380,10 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
 
      fun createNewItem() {
          itemsListFragtment?.currentPath?.let {
-             CreateNewItemDialog(this, "Create", "Cancel", pathList[pathList.size-1]) {
+             if (pathList.isEmpty()){
+                 pathList.add("/storage/emulated/0")
+             }
+             CreateNewItemDialog(this, "Create", "Cancel", pathList[pathList.size-1].toString()) {
                  if (it) {
                      itemsListFragtment?.refreshItems(false)
                      updateDatabase(true)

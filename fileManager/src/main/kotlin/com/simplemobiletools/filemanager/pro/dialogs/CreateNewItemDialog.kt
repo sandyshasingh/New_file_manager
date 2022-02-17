@@ -51,7 +51,14 @@ class CreateNewItemDialog(val activity: BaseSimpleActivity,
                                     callback(it)
                                 }
                             }
-                        } else {
+                        }
+                        else if (path.isEmpty())
+                        {
+
+                                activity.toast(R.string.invalid_name)
+
+                        }
+                        else {
                             activity.toast(R.string.invalid_name)
                         }
                     })

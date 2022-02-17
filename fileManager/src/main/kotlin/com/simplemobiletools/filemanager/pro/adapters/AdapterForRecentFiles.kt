@@ -181,37 +181,38 @@ class AdapterForRecentFiles(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position==0)
-            return 0
-        else if (position==1)
-            return 1
-        else if(position==2)
-            return 2
-        else (position==3)
+        when (position) {
+            0 -> return 0
+            1 -> return 1
+            2 -> return 2
+            else -> (position==3)
+        }
             return 3
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType==3) {
-            val v =
-                LayoutInflater.from(parent.context).inflate(R.layout.recent_files, parent, false)
-            return MainViewHolder(v, mContext)
-        }
-        else if(viewType==2){
-            val v =
-                LayoutInflater.from(parent.context).inflate(R.layout.text_recent, parent, false)
-            return FolderViewHolder(v, mContext)
+        when (viewType) {
+            3 -> {
+                val v =
+                    LayoutInflater.from(parent.context).inflate(R.layout.recent_files, parent, false)
+                return MainViewHolder(v, mContext)
+            }
+            2 -> {
+                val v =
+                    LayoutInflater.from(parent.context).inflate(R.layout.text_recent, parent, false)
+                return FolderViewHolder(v, mContext)
 
-        }
-        else if(viewType==1){
-            val v =
-                LayoutInflater.from(parent.context).inflate(R.layout.folder_items, parent, false)
-            return FolderViewHolder(v, mContext)
-        }
-        else{
-            val v =
-                LayoutInflater.from(parent.context).inflate(R.layout.card_storage, parent, false)
-            return StorageCardViewHolder(v, mContext)
+            }
+            1 -> {
+                val v =
+                    LayoutInflater.from(parent.context).inflate(R.layout.folder_items, parent, false)
+                return FolderViewHolder(v, mContext)
+            }
+            else -> {
+                val v =
+                    LayoutInflater.from(parent.context).inflate(R.layout.card_storage, parent, false)
+                return StorageCardViewHolder(v, mContext)
+            }
         }
     }
 
@@ -222,12 +223,11 @@ class AdapterForRecentFiles(
         when (holder) {
             is MainViewHolder -> {
                 val keys = mRecent?.mKeys?.get(position-2)
-                if (keys != null) {
-                    if (keys<currentDate)
+
+
                         holder.itemView.recent_file_text.text = keys
-                    else if (keys == currentDate)
-                        holder.itemView.recent_file_text.text = "Today"
-                }
+
+
                 holder.itemView.recent_file_item.adapter = ChildAdapterForRecentFiles(mContext,
                     mRecent?.mValues?.get(position-2),listener,
                     keys, listenerOfChild)

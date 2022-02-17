@@ -97,6 +97,6 @@ class AdapterForStorage(var storageList:ArrayList<StorageItem>, private val clic
     }
 
     override fun getItemCount(): Int {
-        return storageList.size    }
+        return 2    }
 
 }

@@ -272,7 +272,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
         for (i in arrayList) {
             folderItems.add(
                 FolderItem(
-                    SHORTCUT_FOLDER_ID, i.getFilenameFromPath(), R.drawable.ic_icon_folder__light2,
+                    SHORTCUT_FOLDER_ID, i.getFilenameFromPath(), R.drawable.file_manager_folder_icon,
                     getDrawable(R.drawable.rectangle_semitranparent_filter)!!,
                     this.resources.getColor(R.color.photo_text_color), ZIP_FILES_CLICK, 0, i
                 )
@@ -428,7 +428,7 @@ class ItemsFragment : Fragment(), ItemOperationsListener, AdapterForPath.Breadcr
                     FolderItem(
                         SHORTCUT_FOLDER_ID,
                         i.getFilenameFromPath(),
-                        R.drawable.ic_icon_folder__light2,
+                        R.drawable.file_manager_folder_icon,
                         getDrawable(R.drawable.rectangle_semitranparent_filter)!!,
                         this.resources.getColor(R.color.photo_text_color),
                         ZIP_FILES_CLICK,
