@@ -171,6 +171,7 @@
         <item name="folder_icon_color">@color/ic_plus_vector_dark</item>
         <item name="lottie">@raw/white_final</item>
         <item name="properties_bg_color">@color/properties_color_dark</item>
+        <item name="ic_icon_next">@drawable/ic_icon_next_dark</item>
 
     </style>
     <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu.Overflow">

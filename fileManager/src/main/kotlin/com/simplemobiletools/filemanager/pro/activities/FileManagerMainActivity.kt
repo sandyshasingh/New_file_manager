@@ -805,13 +805,27 @@ class FileManagerMainActivity : BaseSimpleActivity(),MoreItemsList, BottomNaviga
 
     override fun moreItemsList(item: List<ListItem>) {
         val fragmentManager: FragmentManager = supportFragmentManager
-         myFragment = MoreItemFragment()
-        myFragment?.arrayList = item
+
+        if(itemsListFragtment == null || itemsListFragtment?.isAdded == false) {
+            itemsListFragtment = ItemsListFragment()
+            itemsListFragtment?.arrayList = item
+            itemsListFragtment?.from_view_all = true
+            itemsListFragtment?.listener = this
+            itemsListFragtment?.listenerUpdate = this
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.fragment_holder, itemsListFragtment!!).addToBackStack("")
+            fragmentTransaction.commit()
+        }
         setting.visibility = View.GONE
         back_main.visibility = View.VISIBLE
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.fragment_holder, myFragment!!).addToBackStack("")
-        fragmentTransaction.commit()
+
+
+
+//        itemsListFragtment = ItemsListFragment()
+//        itemsListFragtment?.arrayList = item
+//        itemsListFragtment?.from_view_all = true
+
+
     }
 
     override fun btmVisible(yes: Boolean) {

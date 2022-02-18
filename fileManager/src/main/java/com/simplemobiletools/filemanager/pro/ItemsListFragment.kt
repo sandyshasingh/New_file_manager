@@ -69,6 +69,9 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
      var listener : BottomNavigationVisible? = null
     var itemsToSort : ArrayList<ListItem> = ArrayList()
     var listenerUpdate: UpdateServiceIntent? = null
+
+    var from_view_all = false
+    var arrayList : List<ListItem>? = null
 //    var mainAdapter : AdapterForFolders? = null
 
 
@@ -140,6 +143,10 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 //        itemsAdapter = ItemsListAdapter(storageItems,requireActivity() )
 //        item_list_rv?.adapter = itemsAdapter
 
+        if (from_view_all){
+            val myRecentFiles = arrayList as ArrayList
+            addItems(myRecentFiles, true)
+        }
         zrp_file.setOnClickListener {
                             val imm =
                     context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
@@ -770,9 +777,11 @@ class ItemsListFragment : Fragment(), ActionMenuClick,ItemOperationsListener,Ada
 
         if (items.size == 0 || items.isEmpty())
         {
-
-            item_list_rv.visibility = View.GONE
-            zrp_file.visibility = View.VISIBLE
+            if (!from_view_all)
+            {
+                item_list_rv.visibility = View.GONE
+                zrp_file.visibility = View.VISIBLE
+            }
 
         }
 

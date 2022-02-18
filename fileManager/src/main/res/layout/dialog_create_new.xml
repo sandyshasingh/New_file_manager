@@ -34,6 +34,7 @@
         <com.simplemobiletools.commons.views.MyCompatRadioButton
             android:id="@+id/dialog_radio_file"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="@string/file" />
     </RadioGroup>
